@@ -62,7 +62,7 @@ class LLLaplace(ParametricLaplace):
         super().__init__(model, likelihood, sigma_noise=sigma_noise, prior_precision=1.,
                          prior_mean=0., temperature=temperature, backend=backend,
                          backend_kwargs=backend_kwargs)
-        self.model = FeatureExtractor(model, last_layer_name=last_layer_name)
+        self.model = FeatureExtractor(deepcopy(model), last_layer_name=last_layer_name)
         if self.model.last_layer is None:
             self.mean = None
             self.n_params = None
@@ -97,24 +97,19 @@ class LLLaplace(ParametricLaplace):
         self.model.eval()
 
         if self.model.last_layer is None:
-            X, _ = train_loader[:,0:1], train_loader[:,1:] 
-            #X, _ = next(iter(train_loader))
+            X, _ = next(iter(train_loader))
             with torch.no_grad():
                 try:
-                    self.model.find_last_layer(X.to(self._device))
-                    #self.model.find_last_layer(X[:1].to(self._device))
+                    self.model.find_last_layer(X[:1].to(self._device))
                 except (TypeError, AttributeError):
                     self.model.find_last_layer(X.to(self._device))
             params = parameters_to_vector(self.model.last_layer.parameters()).detach()
-            params = torch.cat((params , torch.tensor([self.model.dnn.get_parameter("alpha").detach()])))
-
             self.n_params = len(params)
-            self.n_layers = len(list(self.model.last_layer.parameters()))+1
+            self.n_layers = len(list(self.model.last_layer.parameters()))
             # here, check the already set prior precision again
             self.prior_precision = self._prior_precision
             self.prior_mean = self._prior_mean
             self._init_H()
-         
 
         super().fit(train_loader, override=override)
         self.mean = parameters_to_vector(self.model.last_layer.parameters()).detach()

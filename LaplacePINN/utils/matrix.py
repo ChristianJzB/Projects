@@ -3,7 +3,7 @@ import torch
 import numpy as np
 from typing import Union
 
-from laplace.utils import _is_valid_scalar, symeig, kron, block_diag
+from LaplacePINN.utils import _is_valid_scalar, symeig, kron, block_diag
 
 
 __all__ = ['Kron', 'KronDecomposed']

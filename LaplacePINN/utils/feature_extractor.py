@@ -75,7 +75,7 @@ class FeatureExtractor(nn.Module):
         """
         # set last_layer attributes and check if it is linear
         self._last_layer_name = last_layer_name
-        self.last_layer = dict(self.model.dnn.named_modules())[last_layer_name]
+        self.last_layer = dict(self.model.named_modules())[last_layer_name]
         if not isinstance(self.last_layer, nn.Linear):
             raise ValueError('Use model with a linear last layer.')
 
@@ -118,7 +118,7 @@ class FeatureExtractor(nn.Module):
 
         # set hooks for all modules
         handles = dict()
-        for name, module in self.model.dnn.named_modules():
+        for name, module in self.model.named_modules():
             handles[name] = module.register_forward_hook(get_act_hook(name))
 
         # check if model has more than one module
@@ -127,13 +127,12 @@ class FeatureExtractor(nn.Module):
             raise ValueError('The model only has one module.')
 
         # forward pass to find execution order
-        #out = self.model(x)
-        out = self.model.dnn(x)
+        out = self.model(x)
 
         # find the last layer, store features, return output of forward pass
         keys = list(act_out.keys())
         for key in reversed(keys):
-            layer = dict(self.model.dnn.named_modules())[key]
+            layer = dict(self.model.named_modules())[key]
             if len(list(layer.children())) == 0:
                 self.set_last_layer(key)
 
