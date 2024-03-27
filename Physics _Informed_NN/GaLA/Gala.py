@@ -152,7 +152,7 @@ class llaplace:
 
         self.model = FeatureExtractor(deepcopy(model), last_layer_name = last_layer_name)
         self._device = next(model.parameters()).device
-        self.loss = torch.nn.MSELoss(reduction ='mean')
+        self.loss = torch.nn.MSELoss(reduction ='sum')
         self.jacobians_gn = dict()
         self.loss_laplacian = dict()
         self.H = None
@@ -218,7 +218,7 @@ class llaplace:
         elif self.hessian_structure == "full":
             self.full_Hessian(pde)
             
-        self.H = (N/2) * self.H
+        self.H = (1/2) * self.H
         
     def _init_H(self):
         if self.hessian_structure == "diag":
