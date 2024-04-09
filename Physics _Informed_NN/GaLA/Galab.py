@@ -160,6 +160,7 @@ class llaplace:
         self.H = None
         self.hessian_structure = None
         self.loss = 0
+        self.temperature =1
         if self.model.last_layer is None:
             self.mean = None
             self.n_params = None
@@ -260,6 +261,7 @@ class llaplace:
         self.jacobians_GN(pde)
         for cond in pde["PDE"]:
             self.H += torch.sum(torch.einsum("bcd,ba->bcd",torch.einsum('bc,bd->bcd', self.jacobians_gn[cond], self.jacobians_gn[cond]), self.loss_laplacian[cond]),axis=0)
+        self.H += torch.diag(torch.ones(self.H.shape[0])*1e-3) 
 
     def __call__(self, x):
         """Compute the posterior predictive on input data `X`.
@@ -363,7 +365,7 @@ class llaplace:
     @property
     def _H_factor(self):
         sigma2 = self.sigma_noise.square()
-        return 1 / sigma2 
+        return 1 / sigma2 / self.temperature
     
     @property
     def prior_precision_diag(self):
