@@ -176,160 +176,6 @@ class llaplace:
             self.mean = self.prior_mean
             self.sigma_noise = torch.tensor(sigma_noise).float()
             #self._init_H()
-
-    def fit(self,pde, hessian_structure ='diag', override = True):
-        """Fit the local Laplace approximation at the parameters of the model.
-
-        Parameters
-        ----------
-            train_loader : torch.data.utils.DataLoader
-            each iterate is a training batch (X, y);
-            `train_loader.dataset` needs to be set to access \\(N\\), size of the data set
-            override : bool, default=True
-            whether to initialize H, loss, and n_data again; setting to False is useful for
-            online learning settings to accumulate a sequential posterior approximation.
-        """
-        if not override:
-            raise ValueError('Last-layer Laplace approximations do not support `override=False`.')
-        
-        self.hessian_structure = hessian_structure
-
-        self.model.eval()
-
-        if self.model.last_layer is None:
-            X = pde["data_set"][pde["PDE"][0]]
-            self.n_data = pde["data_set"][pde["PDE"][0]].shape[0]
-            with torch.no_grad():
-                try:
-                    self.model.find_last_layer(X[:1].to(self._device))
-                except (TypeError, AttributeError):
-                    self.model.find_last_layer(X.to(self._device))
-            params = parameters_to_vector(self.model.last_layer.parameters()).detach()
-            self.n_params = len(params)
-            #self.n_layers = len(list(self.model.last_layer.parameters()))
-            # here, check the already set prior precision again
-            self.prior_precision = self._prior_precision
-            self.prior_mean = self._prior_mean
-            self._init_H()
-
-        #super().fit(train_loader, override=override)
-        self.mean = parameters_to_vector(self.model.last_layer.parameters()).detach()
-
-        if self.hessian_structure == 'diag':
-            self.diagonal_Hessian(pde)
-
-        elif self.hessian_structure == "full":
-            self.full_Hessian(pde)
-            
-        self.H = (1/2) * self.H
-        
-    def _init_H(self):
-        if self.hessian_structure == "diag":
-            self.H = torch.zeros(self.n_params)
-
-        elif self.hessian_structure == "full":
-            self.H = torch.zeros(self.n_params,self.n_params)
-        
-    def jacobians_GN (self,pde):
-        for cond in pde["PDE"]:
-            self.model.zero_grad()
-        
-            fout = getattr(self.model.model, cond)(pde["data_set"][cond])
-                    
-            features = self.model._features[self.model._last_layer_name]
-
-            loss_f = self.lossfunc(fout,torch.zeros_like(fout))
-            self.loss += loss_f
-
-            df = grad(loss_f, fout, create_graph=True,retain_graph=True)[0]
-            
-            ddf = 0 
-            for i in range(fout.shape[1]):
-                ddf_ = grad(df[:,i], fout, torch.ones_like(df[:,i]),retain_graph=True)[0]
-                ddf += ddf_[:,i].reshape(-1,1)          
-
-            self.loss_laplacian[cond] = ddf
-            self.jacobians_gn[cond] = torch.cat((features,torch.ones_like(fout)),1) 
-                    
-
-    def diagonal_Hessian(self,pde):
-        self.jacobians_GN(pde)
-        for cond in pde["PDE"]:
-            self.H += torch.sum(self.jacobians_gn[cond]*self.loss_laplacian[cond]*self.jacobians_gn[cond],axis=0)
-
-    def full_Hessian(self,pde):
-        self.jacobians_GN(pde)
-        for cond in pde["PDE"]:
-            print(self.jacobians_gn[cond].shape)
-            self.H += torch.sum(torch.einsum("bcd,ba->bcd",torch.einsum('bc,bd->bcd', self.jacobians_gn[cond], self.jacobians_gn[cond]), self.loss_laplacian[cond]),axis=0)
-        self.H += torch.diag(torch.ones(self.H.shape[0])*1e-3) 
-
-    def __call__(self, x):
-        """Compute the posterior predictive on input data `X`.
-
-        Parameters
-        ----------
-        x : torch.Tensor
-            `(batch_size, input_shape)`
-
-        pred_type : {'glm', 'nn'}, default='glm'
-            type of posterior predictive, linearized GLM predictive or neural
-            network sampling predictive. The GLM predictive is consistent with
-            the curvature approximations used here
-
-        Returns
-        -------
-        predictive: torch.Tensor or Tuple[torch.Tensor]
-            For `likelihood='classification'`, a torch.Tensor is returned with
-            a distribution over classes (similar to a Softmax).
-            For `likelihood='regression'`, a tuple of torch.Tensor is returned
-            with the mean and the predictive variance.
-        """
-        f_mu, f_var = self._glm_predictive_distribution(x)
-        return f_mu, f_var
-
-
-    def _glm_predictive_distribution(self, X):
-        Js, f_mu = self.last_layer_jacobians(X)
-        f_var = self.functional_variance(Js)
-        return f_mu.detach(), f_var.detach()
-
-    def last_layer_jacobians(self, x):
-        """Compute Jacobians \\(\\nabla_{\\theta_\\textrm{last}} f(x;\\theta_\\textrm{last})\\) 
-        only at current last-layer parameter \\(\\theta_{\\textrm{last}}\\).
-
-        Parameters
-        ----------
-        x : torch.Tensor
-
-        Returns
-        -------
-        Js : torch.Tensor
-            Jacobians `(batch, last-layer-parameters, outputs)`
-        f : torch.Tensor
-            output function `(batch, outputs)`
-        """
-        f, phi = self.model.forward_with_features(x)
-        bsize = phi.shape[0]
-        output_size = f.shape[-1]
-
-        # calculate Jacobians using the feature vector 'phi'
-        identity = torch.eye(output_size, device=x.device).unsqueeze(0).tile(bsize, 1, 1)
-        # Jacobians are batch x output x params
-        Js = torch.einsum('kp,kij->kijp', phi, identity).reshape(bsize, output_size, -1)
-        if self.model.last_layer.bias is not None:
-            Js = torch.cat([Js, identity], dim=2)
-        return Js, f.detach()
-    
-
-    def functional_variance(self, Js: torch.Tensor) -> torch.Tensor:
-        if self.hessian_structure == "diag":
-            return torch.einsum('ncp,p,nkp->nck', Js, self.posterior_covariance, Js)
-
-        elif self.hessian_structure == "full":
-            return torch.einsum('ncp,pq,nkq->nck', Js, self.posterior_covariance, Js)
-
-        
     
     @property
     def posterior_precision(self):
@@ -382,37 +228,7 @@ class llaplace:
 
         elif len(self.prior_precision) == self.n_params:  # diagonal
             return self.prior_precision
-    
-    def log_marginal_likelihood(self, prior_precision=None, sigma_noise=None):
-        """Compute the Laplace approximation to the log marginal likelihood subject
-        to specific Hessian approximations that subclasses implement.
-        Requires that the Laplace approximation has been fit before.
-        The resulting torch.Tensor is differentiable in `prior_precision` and
-        `sigma_noise` if these have gradients enabled.
-        By passing `prior_precision` or `sigma_noise`, the current value is
-        overwritten. This is useful for iterating on the log marginal likelihood.
-
-        Parameters
-        ----------
-        prior_precision : torch.Tensor, optional
-            prior precision if should be changed from current `prior_precision` value
-        sigma_noise : [type], optional
-            observation noise standard deviation if should be changed
-
-        Returns
-        -------
-        log_marglik : torch.Tensor
-        """
-        # update prior precision (useful when iterating on marglik)
-        if prior_precision is not None:
-            self.prior_precision = prior_precision
-
-        # update sigma_noise (useful when iterating on marglik)
-        if sigma_noise is not None:
-            self.sigma_noise = sigma_noise
-
-        return self.log_likelihood - 0.5 * (self.log_det_ratio + self.scatter)
-    
+        
     @property
     def scatter(self):
         """Computes the _scatter_, a term of the log marginal likelihood that
@@ -483,4 +299,226 @@ class llaplace:
         c = self.n_data  * torch.log(self.sigma_noise * sqrt(2 * pi))
         return factor * self.loss - c
 
+    
 
+    def fit(self,pde, hessian_structure ='diag', override = True):
+        """Fit the local Laplace approximation at the parameters of the model.
+
+        Parameters
+        ----------
+            train_loader : torch.data.utils.DataLoader
+            each iterate is a training batch (X, y);
+            `train_loader.dataset` needs to be set to access \\(N\\), size of the data set
+            override : bool, default=True
+            whether to initialize H, loss, and n_data again; setting to False is useful for
+            online learning settings to accumulate a sequential posterior approximation.
+        """
+        if not override:
+            raise ValueError('Last-layer Laplace approximations do not support `override=False`.')
+        
+        self.hessian_structure = hessian_structure
+
+        self.model.eval()
+
+        if self.model.last_layer is None:
+            X = pde["data_set"][pde["PDE"][0]]
+            self.n_data = pde["data_set"][pde["PDE"][0]].shape[0]
+            with torch.no_grad():
+                try:
+                    self.model.find_last_layer(X[:1].to(self._device))
+                except (TypeError, AttributeError):
+                    self.model.find_last_layer(X.to(self._device))
+            params = parameters_to_vector(self.model.last_layer.parameters()).detach()
+            self.n_params = len(params)
+            self.prior_precision = self._prior_precision
+            self.prior_mean = self._prior_mean
+            self._init_H()
+
+        self.mean = parameters_to_vector(self.model.last_layer.parameters()).detach()
+
+        if self.hessian_structure == 'diag':
+            self.diagonal_Hessian(pde)
+
+        elif self.hessian_structure == "full":
+            self.full_Hessian(pde)
+            
+        self.H = (1/2) * self.H
+        
+    def _init_H(self):
+        if self.hessian_structure == "diag":
+            self.H = torch.zeros(self.n_params)
+
+        elif self.hessian_structure == "full":
+            self.H = torch.zeros(self.n_params,self.n_params)
+        
+    def jacobians_GN (self,pde):
+        for cond in pde["PDE"]:
+            self.model.zero_grad()
+        
+            fout = getattr(self.model.model, cond)(pde["data_set"][cond])
+                    
+            features = self.model._features[self.model._last_layer_name]
+
+            loss_f = self.lossfunc(fout,torch.zeros_like(fout))
+            self.loss += loss_f
+
+            if fout.shape[1] > 1:
+                self.jacobians_gn[cond] = torch.cat((features,torch.ones((fout.shape[0],1))),1) 
+                loss_laplacian = torch.zeros_like(fout)
+
+                for out_indx in range(fout.shape[1]):
+
+                    f_output = fout[:,out_indx]
+                    loss_f = self.lossfunc(f_output,torch.zeros_like(f_output))
+
+                    df = grad(loss_f, f_output, create_graph=True)[0]
+                    ddf = grad(df, f_output, torch.ones_like(df))[0]
+
+                    loss_laplacian[:,out_indx] = ddf
+
+                self.loss_laplacian[cond] = loss_laplacian
+            else:
+                df = grad(loss_f, fout, create_graph=True)[0]
+                ddf = grad(df, fout, torch.ones_like(df))[0]
+
+                self.jacobians_gn[cond] = torch.cat((features,torch.ones_like(fout)),1) 
+                self.loss_laplacian[cond] = ddf
+
+                    
+
+    def diagonal_Hessian(self,pde):
+        self.jacobians_GN(pde)
+
+        if self.loss_laplacian["de"].shape[1] > 1:
+            dim =  (self.loss_laplacian["de"].shape[1],self.jacobians_gn["de"].shape[1],self.jacobians_gn["de"].shape[1])
+            H_indv = torch.zeros(dim)
+
+            for output in range(dim[0]):
+                for cond in pde["PDE"]:
+                    loss_laplacian = self.loss_laplacian[cond][:,output].reshape(-1,1)
+                    H_indv[output,:,:] += torch.sum(self.jacobians_gn[cond]*loss_laplacian*self.jacobians_gn[cond],axis=0)
+            
+            self.H += torch.block_diag(*H_indv) 
+        else:
+            for cond in pde["PDE"]:
+                self.H += torch.sum(self.jacobians_gn[cond]*self.loss_laplacian[cond]*self.jacobians_gn[cond],axis=0)
+        
+
+    def full_Hessian(self,pde):
+        self.jacobians_GN(pde)
+
+        if self.loss_laplacian["de"].shape[1] > 1:
+            dim =  (self.loss_laplacian["de"].shape[1],self.jacobians_gn["de"].shape[1],self.jacobians_gn["de"].shape[1])
+            H_indv = torch.zeros(dim)
+
+            for output in range(dim[0]):
+                for cond in pde["PDE"]:
+                    loss_laplacian = self.loss_laplacian[cond][:,output].reshape(-1,1)
+                    H_indv[output,:,:] += torch.sum(torch.einsum("bcd,ba->bcd",torch.einsum('bc,bd->bcd', self.jacobians_gn[cond], self.jacobians_gn[cond]),loss_laplacian),axis=0)
+            
+            self.H += torch.block_diag(*H_indv) 
+        else:
+            for cond in pde["PDE"]:
+                self.H += torch.sum(torch.einsum("bcd,ba->bcd",torch.einsum('bc,bd->bcd', self.jacobians_gn[cond], self.jacobians_gn[cond]), self.loss_laplacian[cond]),axis=0)
+        
+        self.H += torch.diag(torch.ones(self.H.shape[0])*1e-3) 
+
+    def __call__(self, x):
+        """Compute the posterior predictive on input data `X`.
+
+        Parameters
+        ----------
+        x : torch.Tensor
+            `(batch_size, input_shape)`
+
+        pred_type : {'glm', 'nn'}, default='glm'
+            type of posterior predictive, linearized GLM predictive or neural
+            network sampling predictive. The GLM predictive is consistent with
+            the curvature approximations used here
+
+        Returns
+        -------
+        predictive: torch.Tensor or Tuple[torch.Tensor]
+            For `likelihood='classification'`, a torch.Tensor is returned with
+            a distribution over classes (similar to a Softmax).
+            For `likelihood='regression'`, a tuple of torch.Tensor is returned
+            with the mean and the predictive variance.
+        """
+        f_mu, f_var = self._glm_predictive_distribution(x)
+        return f_mu, f_var
+
+
+    def _glm_predictive_distribution(self, X):
+        Js, f_mu = self.last_layer_jacobians(X)
+        f_var = self.functional_variance(Js)
+        if f_mu.shape[-1] > 1:
+            f_var = torch.diagonal(f_var, dim1 = 1, dim2 = 2)
+        return f_mu.detach(), f_var.detach()
+
+    def last_layer_jacobians(self, x):
+        """Compute Jacobians \\(\\nabla_{\\theta_\\textrm{last}} f(x;\\theta_\\textrm{last})\\) 
+        only at current last-layer parameter \\(\\theta_{\\textrm{last}}\\).
+
+        Parameters
+        ----------
+        x : torch.Tensor
+
+        Returns
+        -------
+        Js : torch.Tensor
+            Jacobians `(batch, last-layer-parameters, outputs)`
+        f : torch.Tensor
+            output function `(batch, outputs)`
+        """
+        f, phi = self.model.forward_with_features(x)
+        bsize = phi.shape[0]
+        output_size = f.shape[-1]
+
+        if self.model.last_layer.bias is not None:
+            phi = torch.cat([phi, torch.ones(f.shape[0],1)], dim=1)
+        # calculate Jacobians using the feature vector 'phi'
+        identity = torch.eye(output_size, device=x.device).unsqueeze(0).tile(bsize, 1, 1)
+        # Jacobians are batch x output x params
+        Js = torch.einsum('kp,kij->kijp', phi, identity).reshape(bsize, output_size, -1)
+        # if self.model.last_layer.bias is not None:
+        #     Js = torch.cat([Js, identity], dim=2)
+        return Js, f.detach()
+    
+
+    def functional_variance(self, Js: torch.Tensor) -> torch.Tensor:
+        if self.hessian_structure == "diag":
+            return torch.einsum('ncp,p,nkp->nck', Js, self.posterior_covariance, Js)
+
+        elif self.hessian_structure == "full":
+            return torch.einsum('ncp,pq,nkq->nck', Js, self.posterior_covariance, Js)
+    
+  
+    def log_marginal_likelihood(self, prior_precision=None, sigma_noise=None):
+        """Compute the Laplace approximation to the log marginal likelihood subject
+        to specific Hessian approximations that subclasses implement.
+        Requires that the Laplace approximation has been fit before.
+        The resulting torch.Tensor is differentiable in `prior_precision` and
+        `sigma_noise` if these have gradients enabled.
+        By passing `prior_precision` or `sigma_noise`, the current value is
+        overwritten. This is useful for iterating on the log marginal likelihood.
+
+        Parameters
+        ----------
+        prior_precision : torch.Tensor, optional
+            prior precision if should be changed from current `prior_precision` value
+        sigma_noise : [type], optional
+            observation noise standard deviation if should be changed
+
+        Returns
+        -------
+        log_marglik : torch.Tensor
+        """
+        # update prior precision (useful when iterating on marglik)
+        if prior_precision is not None:
+            self.prior_precision = prior_precision
+
+        # update sigma_noise (useful when iterating on marglik)
+        if sigma_noise is not None:
+            self.sigma_noise = sigma_noise
+
+        return self.log_likelihood - 0.5 * (self.log_det_ratio + self.scatter)
