@@ -161,7 +161,7 @@ class llaplace:
         self.H_pde = None
         self.hessian_structure = None
         self.loss = 0
-        self.temperature =1
+        self.temperature = 1
         if self.model.last_layer is None:
             self.mean = None
             self.n_params = None
@@ -207,8 +207,13 @@ class llaplace:
             return 1 / self.posterior_precision
 
         elif self.hessian_structure == "full":
-            post_scale = _precision_to_scale_tril(self.posterior_precision)
-            return post_scale @ post_scale.T
+            q , r = torch.linalg.qr(self.posterior_precision)
+            q_inv , r_inv = q.T, torch.linalg.inv(r)
+            cov = r_inv @ q_inv
+            return (cov + cov.T)/2
+            #post_scale = _precision_to_scale_tril(self.posterior_precision)
+            #return post_scale @ post_scale.T
+            #return torch.linalg.pinv(self.posterior_precision)
 
     @property
     def _H_factor(self):
@@ -343,7 +348,7 @@ class llaplace:
         elif self.hessian_structure == "full":
             self.full_Hessian(pde)
             
-        self.H = (1/2) * self.H
+        self.H = (1/2) * self.H 
         
     def _init_H(self):
         if self.hessian_structure == "diag":
@@ -452,7 +457,8 @@ class llaplace:
                 if cond != "de":
                     self.H += torch.sum(torch.einsum("bcd,ba->bcd",torch.einsum('bc,bd->bcd', self.jacobians_gn[cond], self.jacobians_gn[cond]), self.loss_laplacian[cond]),axis=0)
         
-        self.H += (self.H_pde + torch.diag(torch.ones(self.H.shape[0])*1e-3))
+        #self.H += (self.H_pde + torch.ones_like(self.H)*1e-3)
+        self.H += self.H_pde 
 
     def __call__(self, x):
         """Compute the posterior predictive on input data `X`.
