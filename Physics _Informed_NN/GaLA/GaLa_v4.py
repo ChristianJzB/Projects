@@ -162,6 +162,7 @@ class llaplace:
         self.hessian_structure = None
         self.loss = 0
         self.temperature = 1
+
         if self.model.last_layer is None:
             self.mean = None
             self.n_params = None
@@ -169,13 +170,13 @@ class llaplace:
             # ignore checks of prior mean setter temporarily, check on .fit()
             self._prior_precision = torch.tensor([prior_precision], device=self._device)
             self._prior_mean = torch.tensor([prior_mean], device=self._device)
-            self.sigma_noise = torch.tensor(sigma_noise).float()
+            self.sigma_noise = torch.tensor(sigma_noise,device=self._device).float()
         else:
             self.n_params = len(parameters_to_vector(self.model.last_layer.parameters()))
             self.prior_precision = torch.tensor([prior_precision], device=self._device)
             self.prior_mean = torch.tensor([prior_mean], device=self._device)
             self.mean = self.prior_mean
-            self.sigma_noise = torch.tensor(sigma_noise).float()
+            self.sigma_noise = torch.tensor(sigma_noise,device=self._device).float()
             #self._init_H()
     
     @property
@@ -352,11 +353,11 @@ class llaplace:
         
     def _init_H(self):
         if self.hessian_structure == "diag":
-            self.H = torch.zeros(self.n_params)
+            self.H = torch.zeros(self.n_params,device=self._device)
 
         elif self.hessian_structure == "full":
-            self.H = torch.zeros(self.n_params,self.n_params)
-            self.H_pde = torch.zeros(self.n_params,self.n_params)
+            self.H = torch.zeros(self.n_params,self.n_params,device=self._device)
+            self.H_pde = torch.zeros(self.n_params,self.n_params,device=self._device)
         
     def jacobians_GN (self,pde):
         for cond in pde["PDE"]:
@@ -371,7 +372,7 @@ class llaplace:
                 self.loss += loss_f
 
                 #if fout.shape[1] > 1:
-                self.jacobians_gn[cond] = torch.cat((features,torch.ones((fout.shape[0],1))),1) 
+                self.jacobians_gn[cond] = torch.cat((features,torch.ones((fout.shape[0],1),device=self._device)),1) 
                 loss_laplacian = torch.zeros_like(fout)
 
                 for out_indx in range(fout.shape[1]):
@@ -405,7 +406,7 @@ class llaplace:
         df = torch.autograd.grad(loss_f, self.model.last_layer.parameters(), create_graph=True, retain_graph=True)
         df = torch.cat([df[0], df[1].reshape(fout.shape[-1],1)],axis = 1).reshape(1,-1)
 
-        H_pde = torch.zeros((self.n_params,self.n_params))
+        H_pde = torch.zeros((self.n_params,self.n_params),device=self._device)
         ones = torch.ones_like(df[:,-1])
         for param in range(self.n_params):
             ddf= torch.autograd.grad(df[:,param], self.model.last_layer.parameters(), ones, create_graph=True)
@@ -443,7 +444,7 @@ class llaplace:
 
         if out_dim > 1:
             dim =  (out_dim,self.jacobians_gn[cond_].shape[1],self.jacobians_gn[cond_].shape[1])
-            H_indv = torch.zeros(dim)
+            H_indv = torch.zeros(dim,device=self._device)
 
             for output in range(dim[0]):
                 for cond in pde["PDE"]:
