@@ -225,10 +225,10 @@ class llaplace:
         
     def _init_H(self):
         if self.hessian_structure == "diag":
-            self.H = torch.zeros(self.n_params)
+            self.H = torch.zeros(self.n_params, device=self._device)
 
         elif self.hessian_structure == "full":
-            self.H = torch.zeros(self.n_params,self.n_params)
+            self.H = torch.zeros(self.n_params,self.n_params, device=self._device)
 
         
     def jacobians_GN (self,pde):
@@ -261,7 +261,7 @@ class llaplace:
         self.jacobians_GN(pde)
         for cond in pde["PDE"]:
             self.H += torch.sum(torch.einsum("bcd,ba->bcd",torch.einsum('bc,bd->bcd', self.jacobians_gn[cond], self.jacobians_gn[cond]), self.loss_laplacian[cond]),axis=0)
-        self.H += torch.diag(torch.ones(self.H.shape[0])*1e-3) 
+        self.H += torch.diag(torch.ones(self.H.shape[0])*1e-3).to(self._device)
 
     def __call__(self, x):
         """Compute the posterior predictive on input data `X`.
@@ -343,7 +343,7 @@ class llaplace:
             return self._H_factor* self.H + self.prior_precision_diag
 
         elif self.hessian_structure == "full":
-            return self._H_factor * self.H + torch.diag(self.prior_precision_diag)
+            return self._H_factor * self.H + torch.diag(self.prior_precision_diag).to(self._device)
 
 
     @property
