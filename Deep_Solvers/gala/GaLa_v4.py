@@ -191,17 +191,19 @@ class llaplace:
         if self.hessian_structure == "diag":
             return self._H_factor* self.H + self.prior_precision_diag
 
-        elif self.hessian_structure == "full":
-            post_pres = self._H_factor * self.H + torch.diag(self.prior_precision_diag)
-            L, V = torch.linalg.eig(post_pres)
-            min_eigv = L.clone().real.min()
+        # elif self.hessian_structure == "full":
+        #     post_pres = self._H_factor * self.H + torch.diag(self.prior_precision_diag)
+        #     L, V = torch.linalg.eig(post_pres)
+        #     min_eigv = L.clone().real.min()
             
-            if min_eigv < 0:
-                neg_eig = L[L.real<0]
-                L_ = torch.where(L.real < 0,neg_eig + torch.abs(min_eigv)+1e-2 ,L )
-                #L[L.real < 0] =  1e-2
-                post_pres = V @ torch.diag(L_) @ V.T
-            return post_pres.real
+        #     if min_eigv < 0:
+        #         neg_eig = L[L.real<0]
+        #         L_ = torch.where(L.real < 0,neg_eig + torch.abs(min_eigv)+1e-2 ,L )
+        #         #L[L.real < 0] =  1e-2
+        #         post_pres = V @ torch.diag(L_) @ V.T
+        #     return post_pres.real
+        elif self.hessian_structure == "full":
+            return self._H_factor * self.H + torch.diag(self.prior_precision_diag)
 
     @property
     def posterior_covariance(self):
@@ -412,19 +414,25 @@ class llaplace:
         self.model.zero_grad()
 
         fout = getattr(self.model.model, "de")(pde["data_set"]["de"])
-        loss_f = self.lossfunc(fout,torch.zeros_like(fout)) 
-        self.loss += loss_f
-        
-        df = torch.autograd.grad(loss_f, self.model.last_layer.parameters(), create_graph=True, retain_graph=True)
-        df = torch.cat([df[0], df[1].reshape(fout.shape[-1],1)],axis = 1).reshape(1,-1)
+        #loss_f = self.lossfunc(fout,torch.zeros_like(fout)) 
+        loss_f = torch.sum(fout**2,axis = 1).reshape(-1,1) 
+        self.loss += torch.sum(loss_f)
 
-        H_pde = torch.zeros((self.n_params,self.n_params),device=self._device)
-        ones = torch.ones_like(df[:,-1])
-        for param in range(self.n_params):
-            ddf= torch.autograd.grad(df[:,param], self.model.last_layer.parameters(), ones, create_graph=True)
-            ddf = torch.cat([ddf[0], ddf[1].reshape(fout.shape[-1],1)],axis = 1)
-            H_pde[:,param] = ddf.reshape(1,-1)
-        self.H_pde = H_pde
+        for lf in loss_f:
+            ddf = torch.autograd.grad(lf,self.model.last_layer.parameters(),create_graph=True)
+            ddf = torch.cat([ddf[0], ddf[1].reshape(fout.shape[-1],1)],axis = 1).reshape(-1,1)
+            h = ddf @ ddf.T
+            self.H_pde += h
+        # df = torch.autograd.grad(loss_f, self.model.last_layer.parameters(), create_graph=True, retain_graph=True)
+        # df = torch.cat([df[0], df[1].reshape(fout.shape[-1],1)],axis = 1).reshape(1,-1)
+
+        #H_pde = torch.zeros((self.n_params,self.n_params),device=self._device)
+        # ones = torch.ones_like(df[:,-1])
+        # for param in range(self.n_params):
+        #     ddf= torch.autograd.grad(df[:,param], self.model.last_layer.parameters(), ones, create_graph=True)
+        #     ddf = torch.cat([ddf[0], ddf[1].reshape(fout.shape[-1],1)],axis = 1)
+        #     H_pde[:,param] = ddf.reshape(1,-1)
+        # self.H_pde = H_pde
                     
 
     def diagonal_Hessian(self,pde):
@@ -471,7 +479,7 @@ class llaplace:
                     self.H += torch.sum(torch.einsum("bcd,ba->bcd",torch.einsum('bc,bd->bcd', self.jacobians_gn[cond], self.jacobians_gn[cond]), self.loss_laplacian[cond]),axis=0)
         
         #self.H += (self.H_pde + torch.ones_like(self.H)*1e-3)
-        self.H += self.H_pde 
+        self.H += (self.H_pde + torch.eye(self.H.shape[0],device=self._device)*1e-4)
 
     def __call__(self, x):
         """Compute the posterior predictive on input data `X`.
