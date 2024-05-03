@@ -106,7 +106,7 @@ class Dropout_DNN(torch.nn.Module):
         for i in range(self.depth - 1): 
             layer_list.append(('layer_%d' % i, torch.nn.Linear(layers[i], layers[i+1])))
             layer_list.append(('activation_%d' % i, self.activation()))
-            layer_list.append(('dropout_%d' % i, torch.nn.Dropout(p = 0.5)))
+            layer_list.append(('dropout_%d' % i, torch.nn.Dropout(p = 0.1)))
 
         layer_list.append(
             ('layer_%d' % (self.depth - 1), torch.nn.Linear(layers[-2], layers[-1]))
