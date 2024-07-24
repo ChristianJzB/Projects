@@ -15,7 +15,7 @@ torch.manual_seed(0)
 np.random.seed(0)
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-M_  = [312*(2**i) for i in range(6)]
+M_  = [312, 624, 1250, 2500,5000]
 for M in M_:
     N = 100
 
@@ -39,24 +39,18 @@ for M in M_:
     x_train = torch.from_numpy(np.reshape(inputs[:M//2, :, :], -1).astype(np.float32))
     y_train = torch.from_numpy(np.reshape(outputs[:M//2, :, :], -1).astype(np.float32))
 
-    x_test = torch.from_numpy(np.reshape(inputs[M//2:M, :, :], -1).astype(np.float32))
-    y_test = torch.from_numpy(np.reshape(outputs[M//2:M, :, :], -1).astype(np.float32))
-
+   
     x_normalizer = UnitGaussianNormalizer(x_train)
     x_train = x_normalizer.encode(x_train)
-    x_test = x_normalizer.encode(x_test)
 
     y_normalizer = UnitGaussianNormalizer(y_train)
     y_train = y_normalizer.encode(y_train)
 
 
     x_train = x_train.reshape(ntrain,s,s,1)
-    x_test = x_test.reshape(ntest,s,s,1)
 
     # todo do we need this
     y_train = y_train.reshape(ntrain,s,s,1)
-    y_test = y_test.reshape(ntest,s,s,1)
-
 
 
     batch_size = 1024
@@ -71,12 +65,11 @@ for M in M_:
     step_size = 100
     gamma = 0.5
 
-    modes = [2,4,8,16,32]
-    N_neurons = [16,64,128,256]
+    modes = 12
+    N_neurons = [2]
 
-    for nneurons, mode in zip(N_neurons,modes):
-
-        model = FNO2d(mode, mode, nneurons)
+    for nneurons in N_neurons:
+        model = FNO2d(modes, modes, nneurons)
         print(count_params(model))
         model.to(device)
 

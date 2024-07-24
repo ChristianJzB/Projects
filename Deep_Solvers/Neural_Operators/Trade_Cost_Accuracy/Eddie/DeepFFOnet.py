@@ -2,17 +2,20 @@ import sys
 import numpy as np
 from mynn import *
 from mydata import *
-from Adam import Adam
-from timeit import default_timer
 
+from Adam import Adam
+import operator
+from functools import reduce
+from functools import partial
+import matplotlib.pyplot as plt
+from timeit import default_timer
+import numpy as np
 
 torch.manual_seed(0)
 np.random.seed(0)
-
-
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
-M_  = [312*(2**i) for i in range(6)]
+M_  = [312, 624, 1250, 2500,5000]
 for M in M_:
     N = 100
 
@@ -29,10 +32,10 @@ for M in M_:
 
     train_inputs = np.reshape(inputs[:,:,:M//2], (-1, M//2))
     Ui,Si,Vi = np.linalg.svd(train_inputs)
-    en_f= 1 - np.cumsum(Si)/np.sum(Si)
-    r_f = np.argwhere(en_f<(1-acc))[0,0]
-    min(r_f, 512)
-    print("Energy is ", en_f[r_f - 1])
+    #en_f= 1 - np.cumsum(Si)/np.sum(Si)
+    #r_f = np.argwhere(en_f<(1-acc))[0,0]
+    r_f = 101#r_f = min(r_f, 512)
+    #print("Energy is ", en_f[r_f - 1])
     Uf = Ui[:,:r_f]
     f_hat = np.matmul(Uf.T,train_inputs)
     x_train_part = f_hat.T.astype(np.float32)
@@ -46,33 +49,28 @@ for M in M_:
     i = 20
     j = 40
     assert(X[i, j] == i*dx and Y[i, j] == j*dx)
+
     X_upper = np.reshape(X, -1)
     Y_upper = np.reshape(Y, -1)
     N_upper = len(X_upper)
-    x_train = np.zeros((M//2 * N_upper, r_f + 2), dtype = np.float32)
-    y_train = np.zeros(M//2 * N_upper, dtype = np.float32)
+    x_train = x_train_part
+    y_train = np.zeros((M//2, N_upper), dtype = np.float32)
 
     for i in range(M//2):
-        d_range = range(i*N_upper, (i + 1)*N_upper)
-        x_train[d_range , 0:r_f]   = x_train_part[i, :]
-        x_train[d_range , r_f]     = X_upper
-        x_train[d_range , r_f + 1] = Y_upper 
-        y_train[d_range] = np.reshape(outputs[:, :, i], -1)
-        
-    print("Input dim : ", r_f+2, " output dim : ", 1)
+        y_train[i] = np.reshape(outputs[:, :, i], -1)
 
+    XY_upper = np.vstack((X_upper, Y_upper)).T
+
+    print("Input dim : ", r_f+2, " output dim : ", N_upper)
+
+    XY_upper = torch.from_numpy(XY_upper.astype(np.float32)).to(device)
     x_train = torch.from_numpy(x_train)
-    y_train = torch.from_numpy(y_train).unsqueeze(-1)
+    y_train = torch.from_numpy(y_train)
 
     x_normalizer = UnitGaussianNormalizer(x_train)
     x_normalizer.encode_(x_train)
     y_normalizer = UnitGaussianNormalizer(y_train)
-    y_normalizer.encode_(y_train)
-
-    print("Start training ")
-    ################################################################
-    # training and evaluation
-    ################################################################
+    y_normalizer.encode_(y_train)   
 
     batch_size = 1024
 
@@ -81,17 +79,17 @@ for M in M_:
 
     learning_rate = 0.001
 
-    epochs = 100 if M == 20000 else 200
+    epochs = 1000
+
     step_size = 100
-
     gamma = 0.5
-
     layers = 4
-    N_neurons = [16,64,128,256]
+
+    N_neurons = [16]
 
     for nneurons in N_neurons:
 
-        model = FNN(r_f + 2, 1, layers, nneurons) 
+        model = DeepFFONet(r_f, 2,  layers,  layers, nneurons) 
         print(count_params(model))
         model.to(device)
 
@@ -121,6 +119,7 @@ for M in M_:
                 optimizer.step()
                 train_l2 += loss.item()
 
+            #torch.save(model, "DeepONetNet_"+str(N_neurons)+"Nd_"+str(ntrain)+".model")
             scheduler.step()
 
             train_l2/= ntrain
@@ -128,4 +127,4 @@ for M in M_:
             t2 = default_timer()
             print("Epoch : ", ep, " Epoch time : ", t2-t1, " Train L2 Loss : ", train_l2)
 
-        torch.save(model, "./models/FFNet_"+str(nneurons)+"Nd_"+str(ntrain)+".model")
+        torch.save(model, "./models/DeepFFONet_"+str(nneurons)+"Nd_"+str(ntrain)+".model")
