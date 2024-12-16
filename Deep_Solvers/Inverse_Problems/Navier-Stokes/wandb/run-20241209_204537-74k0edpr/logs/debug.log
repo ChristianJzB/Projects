@@ -1,0 +1,54 @@
+2024-12-09 20:45:37,112 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Current SDK version is 0.18.7
+2024-12-09 20:45:37,112 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Configure stats pid to 44207
+2024-12-09 20:45:37,112 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Loading settings from /home/s2113174/.config/wandb/settings
+2024-12-09 20:45:37,112 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Loading settings from /home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/settings
+2024-12-09 20:45:37,112 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Loading settings from environment variables: {}
+2024-12-09 20:45:37,112 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Applying setup settings: {'mode': None, '_disable_service': None}
+2024-12-09 20:45:37,112 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Inferring run settings from compute environment: {'program': '<python with no main file>'}
+2024-12-09 20:45:37,112 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Applying login settings: {}
+2024-12-09 20:45:37,112 INFO    MainThread:44207 [wandb_init.py:_log_setup():533] Logging user logs to /home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/run-20241209_204537-74k0edpr/logs/debug.log
+2024-12-09 20:45:37,112 INFO    MainThread:44207 [wandb_init.py:_log_setup():534] Logging internal logs to /home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/run-20241209_204537-74k0edpr/logs/debug-internal.log
+2024-12-09 20:45:37,112 INFO    MainThread:44207 [wandb_init.py:_jupyter_setup():479] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x7ed12dbb4830>
+2024-12-09 20:45:37,113 INFO    MainThread:44207 [wandb_init.py:init():619] calling init triggers
+2024-12-09 20:45:37,113 INFO    MainThread:44207 [wandb_init.py:init():626] wandb.init called with sweep_config: {}
+config: {'model': 'MDNN', 'seed': 108, 'iterations': 2000, 'chunks': 16, 'points_per_chunk': 250, 'samples_size_initial': 10, 'dim_initial_condition': 128, 'learning_rate': 0.001, 'decay_rate': 0.9, 'scheduler_step_epochs': 250, 'weights_update': 500, 'NKL': 50, 'time_domain': 2}
+2024-12-09 20:45:37,113 INFO    MainThread:44207 [wandb_init.py:init():669] starting backend
+2024-12-09 20:45:37,113 INFO    MainThread:44207 [wandb_init.py:init():673] sending inform_init request
+2024-12-09 20:45:37,115 INFO    MainThread:44207 [backend.py:_multiprocessing_setup():104] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2024-12-09 20:45:37,115 INFO    MainThread:44207 [wandb_init.py:init():686] backend started and connected
+2024-12-09 20:45:37,118 INFO    MainThread:44207 [wandb_run.py:_label_probe_notebook():1339] probe notebook
+2024-12-09 20:45:37,125 INFO    MainThread:44207 [wandb_init.py:init():781] updated telemetry
+2024-12-09 20:45:37,130 INFO    MainThread:44207 [wandb_init.py:init():814] communicating run to backend with 90.0 second timeout
+2024-12-09 20:45:37,702 INFO    MainThread:44207 [wandb_init.py:init():867] starting run threads in backend
+2024-12-09 20:45:37,839 INFO    MainThread:44207 [wandb_run.py:_console_start():2456] atexit reg
+2024-12-09 20:45:37,839 INFO    MainThread:44207 [wandb_run.py:_redirect():2305] redirect: wrap_raw
+2024-12-09 20:45:37,839 INFO    MainThread:44207 [wandb_run.py:_redirect():2370] Wrapping output streams.
+2024-12-09 20:45:37,839 INFO    MainThread:44207 [wandb_run.py:_redirect():2395] Redirects installed.
+2024-12-09 20:45:37,840 INFO    MainThread:44207 [wandb_init.py:init():911] run started, returning control to user process
+2024-12-09 20:45:37,849 INFO    MainThread:44207 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2024-12-09 20:45:37,849 INFO    MainThread:44207 [wandb_init.py:_pause_backend():444] pausing backend
+2024-12-09 20:45:44,521 INFO    MainThread:44207 [wandb_init.py:_resume_backend():449] resuming backend
+2024-12-09 20:45:44,527 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Current SDK version is 0.18.7
+2024-12-09 20:45:44,527 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Configure stats pid to 44207
+2024-12-09 20:45:44,527 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Loading settings from /home/s2113174/.config/wandb/settings
+2024-12-09 20:45:44,527 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Loading settings from /home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/settings
+2024-12-09 20:45:44,527 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Loading settings from environment variables: {}
+2024-12-09 20:45:44,527 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Applying setup settings: {'mode': None, '_disable_service': None}
+2024-12-09 20:45:44,527 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Inferring run settings from compute environment: {'program': '<python with no main file>'}
+2024-12-09 20:45:44,527 INFO    MainThread:44207 [wandb_setup.py:_flush():79] Applying login settings: {}
+2024-12-09 20:45:44,527 INFO    MainThread:44207 [wandb_init.py:_log_setup():533] Logging user logs to /home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/run-20241209_204544-rrwb105c/logs/debug.log
+2024-12-09 20:45:44,527 INFO    MainThread:44207 [wandb_init.py:_log_setup():534] Logging internal logs to /home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/run-20241209_204544-rrwb105c/logs/debug-internal.log
+2024-12-09 20:45:44,527 INFO    MainThread:44207 [wandb_init.py:init():619] calling init triggers
+2024-12-09 20:45:44,527 INFO    MainThread:44207 [wandb_init.py:init():626] wandb.init called with sweep_config: {}
+config: {'model': 'MDNN', 'seed': 108, 'iterations': 2000, 'chunks': 16, 'points_per_chunk': 250, 'samples_size_initial': 10, 'dim_initial_condition': 128, 'learning_rate': 0.001, 'decay_rate': 0.9, 'scheduler_step_epochs': 250, 'weights_update': 500, 'NKL': 50, 'time_domain': 2}
+2024-12-09 20:45:44,527 INFO    MainThread:44207 [wandb_init.py:init():644] re-initializing run, found existing run on stack: 74k0edpr
+2024-12-09 20:45:44,529 INFO    MainThread:44207 [wandb_run.py:_finish():2155] finishing run christian-jb07-univeristy-of-edinburgh/NV_dG_Training/74k0edpr
+2024-12-09 20:45:44,529 ERROR   MainThread:44207 [jupyter.py:save_history():451] Run pip install nbformat to save notebook history
+2024-12-09 20:45:44,529 INFO    MainThread:44207 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2024-12-09 20:45:44,529 INFO    MainThread:44207 [wandb_init.py:_jupyter_teardown():461] cleaning up jupyter logic
+2024-12-09 20:45:44,530 INFO    MainThread:44207 [wandb_run.py:_atexit_cleanup():2420] got exitcode: 0
+2024-12-09 20:45:44,530 INFO    MainThread:44207 [wandb_run.py:_restore():2402] restore
+2024-12-09 20:45:44,530 INFO    MainThread:44207 [wandb_run.py:_restore():2408] restore done
+2024-12-09 20:45:46,551 INFO    MainThread:44207 [wandb_run.py:_footer_history_summary_info():3960] rendering history
+2024-12-09 20:45:46,551 INFO    MainThread:44207 [wandb_run.py:_footer_history_summary_info():3992] rendering summary
+2024-12-09 20:45:46,560 INFO    MainThread:44207 [wandb_run.py:_footer_sync_info():3921] logging synced files

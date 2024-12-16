@@ -1,0 +1,9 @@
+{"time":"2024-12-12T23:16:48.081079606Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-12T23:16:48.081100581Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/run-20241212_231648-v6j11ihv/logs/debug-core.log"}
+{"time":"2024-12-12T23:16:48.186210768Z","level":"INFO","msg":"created new stream","id":"v6j11ihv"}
+{"time":"2024-12-12T23:16:48.186291531Z","level":"INFO","msg":"stream: started","id":"v6j11ihv"}
+{"time":"2024-12-12T23:16:48.186546888Z","level":"INFO","msg":"sender: started","stream_id":"v6j11ihv"}
+{"time":"2024-12-12T23:16:48.18655495Z","level":"INFO","msg":"writer: Do: started","stream_id":"v6j11ihv"}
+{"time":"2024-12-12T23:16:48.186618387Z","level":"INFO","msg":"handler: started","stream_id":"v6j11ihv"}
+{"time":"2024-12-12T23:16:48.655587756Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-12T23:16:48.829770225Z","level":"INFO","msg":"Pausing system monitor"}

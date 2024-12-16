@@ -1,0 +1,8 @@
+{"time":"2024-12-09T20:45:46.604514642Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-09T20:45:46.604539958Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/run-20241209_204544-rrwb105c/logs/debug-core.log"}
+{"time":"2024-12-09T20:45:46.709611839Z","level":"INFO","msg":"created new stream","id":"rrwb105c"}
+{"time":"2024-12-09T20:45:46.709692592Z","level":"INFO","msg":"stream: started","id":"rrwb105c"}
+{"time":"2024-12-09T20:45:46.709761989Z","level":"INFO","msg":"sender: started","stream_id":"rrwb105c"}
+{"time":"2024-12-09T20:45:46.709797327Z","level":"INFO","msg":"handler: started","stream_id":"rrwb105c"}
+{"time":"2024-12-09T20:45:46.709774762Z","level":"INFO","msg":"writer: Do: started","stream_id":"rrwb105c"}
+{"time":"2024-12-09T20:45:47.044704978Z","level":"INFO","msg":"Starting system monitor"}

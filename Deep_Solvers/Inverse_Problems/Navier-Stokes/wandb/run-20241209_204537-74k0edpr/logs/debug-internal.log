@@ -1,0 +1,19 @@
+{"time":"2024-12-09T20:45:37.11822788Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-09T20:45:37.118269525Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/run-20241209_204537-74k0edpr/logs/debug-core.log"}
+{"time":"2024-12-09T20:45:37.223269564Z","level":"INFO","msg":"created new stream","id":"74k0edpr"}
+{"time":"2024-12-09T20:45:37.223349045Z","level":"INFO","msg":"stream: started","id":"74k0edpr"}
+{"time":"2024-12-09T20:45:37.223391354Z","level":"INFO","msg":"writer: Do: started","stream_id":"74k0edpr"}
+{"time":"2024-12-09T20:45:37.223453961Z","level":"INFO","msg":"sender: started","stream_id":"74k0edpr"}
+{"time":"2024-12-09T20:45:37.223541352Z","level":"INFO","msg":"handler: started","stream_id":"74k0edpr"}
+{"time":"2024-12-09T20:45:37.707164729Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-09T20:45:37.879243299Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-09T20:45:44.522255411Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-09T20:45:44.530933534Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-09T20:45:44.531556306Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-09T20:45:45.303418929Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-09T20:45:45.531960736Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading summary","runtime_seconds":0.228145818}],"total_operations":1}}
+{"time":"2024-12-09T20:45:46.563909765Z","level":"INFO","msg":"stream: closing","id":"74k0edpr"}
+{"time":"2024-12-09T20:45:46.563933471Z","level":"INFO","msg":"handler: closed","stream_id":"74k0edpr"}
+{"time":"2024-12-09T20:45:46.563943087Z","level":"INFO","msg":"writer: Close: closed","stream_id":"74k0edpr"}
+{"time":"2024-12-09T20:45:46.564009085Z","level":"INFO","msg":"sender: closed","stream_id":"74k0edpr"}
+{"time":"2024-12-09T20:45:46.564033998Z","level":"INFO","msg":"stream: closed","id":"74k0edpr"}

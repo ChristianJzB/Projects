@@ -1,0 +1,31 @@
+{
+  "os": "Linux-6.8.0-49-generic-x86_64-with-glibc2.35",
+  "python": "3.12.5",
+  "startedAt": "2024-12-14T21:01:09.400251Z",
+  "program": "/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/Navier-Stokes.ipynb",
+  "git": {
+    "remote": "https://github.com/ChristianJzB/Projects.git",
+    "commit": "9dffdf9786b24eb8ba7f39d503ab61a94956487d"
+  },
+  "email": "s2113174@ed.ac.uk",
+  "root": "/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes",
+  "host": "MATHS-SELF-2016",
+  "username": "s2113174",
+  "executable": "/home/s2113174/anaconda3/envs/fenicsx-env/bin/python",
+  "codePathLocal": "Navier-Stokes.ipynb",
+  "cpu_count": 10,
+  "cpu_count_logical": 12,
+  "disk": {
+    "/": {
+      "total": "981132795904",
+      "used": "89861414912"
+    }
+  },
+  "memory": {
+    "total": "32809209856"
+  },
+  "cpu": {
+    "count": 10,
+    "countLogical": 12
+  }
+}

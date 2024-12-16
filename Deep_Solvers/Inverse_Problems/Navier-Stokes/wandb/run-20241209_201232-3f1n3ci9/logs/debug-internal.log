@@ -1,0 +1,23 @@
+{"time":"2024-12-09T20:12:32.363745354Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-09T20:12:32.363800798Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/run-20241209_201232-3f1n3ci9/logs/debug-core.log"}
+{"time":"2024-12-09T20:12:32.47145219Z","level":"INFO","msg":"created new stream","id":"3f1n3ci9"}
+{"time":"2024-12-09T20:12:32.471513119Z","level":"INFO","msg":"stream: started","id":"3f1n3ci9"}
+{"time":"2024-12-09T20:12:32.471746103Z","level":"INFO","msg":"handler: started","stream_id":"3f1n3ci9"}
+{"time":"2024-12-09T20:12:32.472498716Z","level":"INFO","msg":"sender: started","stream_id":"3f1n3ci9"}
+{"time":"2024-12-09T20:12:32.472549893Z","level":"INFO","msg":"writer: Do: started","stream_id":"3f1n3ci9"}
+{"time":"2024-12-09T20:12:32.882743306Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-09T20:12:33.101227992Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-09T20:12:44.591544504Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-09T20:12:44.632042562Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-09T20:12:46.706135088Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-09T20:12:46.710829752Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-09T20:12:48.013839816Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-09T20:12:48.019896234Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-09T20:12:48.020495033Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-09T20:12:49.020664964Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.722652188,"subtasks":[{"desc":"requirements.frozen.txt","runtime_seconds":0.031684973,"progress":"2.5KB/2.5KB"},{"desc":"wandb-job.json","runtime_seconds":0.031658051,"progress":"885B/885B"}]}],"total_operations":1}}
+{"time":"2024-12-09T20:12:50.665784476Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-09T20:12:51.955562346Z","level":"INFO","msg":"stream: closing","id":"3f1n3ci9"}
+{"time":"2024-12-09T20:12:51.955589943Z","level":"INFO","msg":"handler: closed","stream_id":"3f1n3ci9"}
+{"time":"2024-12-09T20:12:51.955601837Z","level":"INFO","msg":"writer: Close: closed","stream_id":"3f1n3ci9"}
+{"time":"2024-12-09T20:12:51.95561663Z","level":"INFO","msg":"sender: closed","stream_id":"3f1n3ci9"}
+{"time":"2024-12-09T20:12:51.955685587Z","level":"INFO","msg":"stream: closed","id":"3f1n3ci9"}

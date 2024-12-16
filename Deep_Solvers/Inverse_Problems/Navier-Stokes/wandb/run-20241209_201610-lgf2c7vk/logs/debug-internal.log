@@ -1,0 +1,19 @@
+{"time":"2024-12-09T20:16:10.256883131Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-09T20:16:10.256913361Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/run-20241209_201610-lgf2c7vk/logs/debug-core.log"}
+{"time":"2024-12-09T20:16:10.361974183Z","level":"INFO","msg":"created new stream","id":"lgf2c7vk"}
+{"time":"2024-12-09T20:16:10.362037032Z","level":"INFO","msg":"stream: started","id":"lgf2c7vk"}
+{"time":"2024-12-09T20:16:10.362255117Z","level":"INFO","msg":"sender: started","stream_id":"lgf2c7vk"}
+{"time":"2024-12-09T20:16:10.362200602Z","level":"INFO","msg":"writer: Do: started","stream_id":"lgf2c7vk"}
+{"time":"2024-12-09T20:16:10.362404652Z","level":"INFO","msg":"handler: started","stream_id":"lgf2c7vk"}
+{"time":"2024-12-09T20:16:10.866994254Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-09T20:16:11.691372187Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-09T20:17:59.157275649Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-09T20:17:59.163963485Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-09T20:17:59.164600314Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-09T20:18:00.165069952Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.607720995}],"total_operations":1}}
+{"time":"2024-12-09T20:18:01.806055028Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-09T20:18:03.085675809Z","level":"INFO","msg":"stream: closing","id":"lgf2c7vk"}
+{"time":"2024-12-09T20:18:03.085716422Z","level":"INFO","msg":"handler: closed","stream_id":"lgf2c7vk"}
+{"time":"2024-12-09T20:18:03.085748819Z","level":"INFO","msg":"writer: Close: closed","stream_id":"lgf2c7vk"}
+{"time":"2024-12-09T20:18:03.085771013Z","level":"INFO","msg":"sender: closed","stream_id":"lgf2c7vk"}
+{"time":"2024-12-09T20:18:03.085870949Z","level":"INFO","msg":"stream: closed","id":"lgf2c7vk"}
