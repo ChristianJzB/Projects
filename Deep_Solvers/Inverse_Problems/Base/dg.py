@@ -33,12 +33,18 @@ class deepGalerkin(torch.nn.Module):
         self.config = config
         self.device = device
         self.lambdas = dict(config.lambdas)
-        
-        if self.config.use_softadapt:
-            self.loss_history = {}
-            
+                    
         # Initialize model
         self.model = _uplad_model(config).to(device)
+
+    def laplace_approx():
+        def decorator(func):
+            def wrapper(*args, **kwargs):
+                # Pass through the original function's behavior
+                return func(*args, **kwargs)
+            wrapper.use_laplace = True  # Add the attribute to the wrapped function
+            return wrapper  # Return the wrapped function
+        return decorator
 
     def losses(self,*args):
         raise NotImplementedError("Subclasses should implement this!")
@@ -47,10 +53,7 @@ class deepGalerkin(torch.nn.Module):
         losses = self.losses(*args,**kwargs)
 
         if update_weights:
-            if self.config.use_softadapt:
-                self.softadapt_weights(losses)
-            else:
-                self.grad_weights(losses)
+            self.grad_weights(losses)
 
         total_loss = 0
         for key, loss in losses.items():
@@ -83,23 +86,6 @@ class deepGalerkin(torch.nn.Module):
 
         # Update global weights using a moving average
         self.lambdas = { key : (alpha * self.lambdas[key] + (1 - alpha) * lambda_hat[key]) for key in losses.keys()}
-        
-    def softadapt_weights(self,losses):
-        """Compute SoftAdapt task weights based on recent loss history."""
-        delta_losses = {}
-        if self.loss_history:
-            # Calculate |L(t) - L(t-k)| for each task
-            for key, history in self.loss_history.items():
-                delta_losses[key] = abs(losses[key] - history)  # |L(t) - L(t-k)|
-            
-            # Compute softmax weights (use negative deltas for weighting)
-            deltas = torch.tensor([0.1*delta_losses[key] for key in self.loss_history.keys()],device=self.device)
-            weights = torch.softmax(deltas, dim=0)
-
-            # Update the lambdas (task weights)
-            for i, key in enumerate(self.loss_history.keys()):
-                self.lambdas[key] = weights[i].item()
-        self.loss_history = {key: loss for key,loss in losses.items()}
         
         
 

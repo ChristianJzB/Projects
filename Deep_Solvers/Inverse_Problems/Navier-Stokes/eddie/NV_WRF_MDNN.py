@@ -47,6 +47,8 @@ def get_deepgalerkin_config():
     config.iterations = 20000
     config.chunks = 16
     config.points_per_chunk = 250 
+    config.samples_size_initial = 15
+
     config.scheduler_step = 2000
     config.start_scheduler = 0.1
     config.weights_update = 1000

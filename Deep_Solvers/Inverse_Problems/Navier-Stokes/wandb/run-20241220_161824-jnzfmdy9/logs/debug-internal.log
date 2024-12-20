@@ -1,0 +1,35 @@
+{"time":"2024-12-20T16:18:24.392338311Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-20T16:18:24.392457811Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/run-20241220_161824-jnzfmdy9/logs/debug-core.log"}
+{"time":"2024-12-20T16:18:24.509436702Z","level":"INFO","msg":"created new stream","id":"jnzfmdy9"}
+{"time":"2024-12-20T16:18:24.509528678Z","level":"INFO","msg":"stream: started","id":"jnzfmdy9"}
+{"time":"2024-12-20T16:18:24.509695825Z","level":"INFO","msg":"handler: started","stream_id":"jnzfmdy9"}
+{"time":"2024-12-20T16:18:24.510415008Z","level":"INFO","msg":"writer: Do: started","stream_id":"jnzfmdy9"}
+{"time":"2024-12-20T16:18:24.510420977Z","level":"INFO","msg":"sender: started","stream_id":"jnzfmdy9"}
+{"time":"2024-12-20T16:18:24.883908548Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-20T16:40:37.780212426Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-20T16:44:10.717891387Z","level":"ERROR","msg":"HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/files/christian-jb07-univeristy-of-edinburgh/NVs-Training-dg/jnzfmdy9/file_stream"}
+{"time":"2024-12-20T16:44:10.717941947Z","level":"ERROR+4","msg":"filestream: fatal error: filestream: failed to upload: 404 Not Found path=files/christian-jb07-univeristy-of-edinburgh/NVs-Training-dg/jnzfmdy9/file_stream: {\"error\":\"run NVs-Training-dg/jnzfmdy9 not found while streaming file\"}"}
+{"time":"2024-12-20T16:50:24.330653787Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-20T16:50:24.338608405Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-20T16:50:26.254284424Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-20T16:50:26.294690081Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-20T16:51:49.345959374Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-20T16:51:49.519328156Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-20T16:51:55.745645768Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-20T16:51:55.786815918Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-20T16:52:19.174861218Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-20T16:52:19.2156934Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-20T16:52:44.754596497Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-20T16:52:44.766820907Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-20T16:52:47.647014002Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-20T16:52:47.687677416Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-20T16:52:47.687703018Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-20T16:52:47.687706559Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-20T16:52:49.082494294Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-20T16:52:49.094497224Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-20T16:53:00.443138869Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-20T16:53:00.48352287Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-20T16:53:03.413743473Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-20T16:53:03.418217987Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-20T16:53:04.745636555Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-20T16:53:04.747765569Z","level":"INFO","msg":"Pausing system monitor"}

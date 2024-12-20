@@ -27,7 +27,7 @@ class VorticitySolver2D:
         if self.force is not None:
             # Create the grid (X, Y)
             X, Y = np.meshgrid(np.linspace(0, self.L, self.N), np.linspace(0, self.L, self.N))
-            self.f_hat = np.fft.rfft2(self.force(X, Y))  # Apply the force
+            self.f_hat = np.fft.rfft2(self.force(X, Y)) # Apply the force
         
         # Grid setup
         self.kx = np.fft.fftfreq(N, d=L / N)
@@ -155,7 +155,7 @@ class VorticitySolver2D:
         nonlinear_term = np.fft.rfft2(nonlinear_term) * self.dealias_filter
         # Add the forcing term (if provided)
         if self.force is not None:
-            nonlinear_term -= self.f_hat         # Add forcing term in Fourier space
+            nonlinear_term -= self.f_hat       # Add forcing term in Fourier space
         return nonlinear_term
 
     def crank_nicholson_step(self, w_hat):

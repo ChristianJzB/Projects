@@ -16,7 +16,6 @@ def get_deepgalerkin_config():
     # General settings
     config.nn_model = "MDNN"  # Options: "NN", "WRF", "MDNN"
     config.lambdas = {"nvs":1, "cond":1, "u0":1, "v0":1, "w0":1}
-    config.use_softadapt = False
 
     # Model-specific settings
     config.model = ConfigDict()
@@ -44,18 +43,18 @@ def get_deepgalerkin_config():
     config.learning_rate = 0.001
     config.decay_rate = 0.9
     config.alpha = 0.9  # For updating loss weights
-    config.iterations = 10000
+    config.iterations = 15000
     config.start_scheduler = 0.1
-    config.weights_update = 500
+    config.weights_update = 250
     config.scheduler_step = 2000
 
     config.chunks = 16
-    config.points_per_chunk = 180 
+    config.points_per_chunk = 250 
 
     # For deep Galerkin
     config.dim_initial_condition = 128
     config.NKL =  50
-    config.samples_size_initial = 15
+    config.samples_size_initial = 100
     
     return config
 

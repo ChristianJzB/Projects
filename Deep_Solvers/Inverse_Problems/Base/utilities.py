@@ -3,6 +3,76 @@ import torch.nn as nn
 from typing import Tuple, Callable, Optional
 from Base.deep_models import Dense
 
+
+import inspect
+
+def get_decorated_methods(cls,decorator):
+    methods = inspect.getmembers(cls, predicate=inspect.ismethod)
+    decorated_methods = [name for name, method in methods if getattr(method, decorator, False)]
+    return decorated_methods
+# Modified label_outputs decorator
+def label_outputs(*labels):
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            results = func(*args, **kwargs)
+            if not isinstance(results, tuple):
+                results = (results,)  # Ensure results are a tuple
+            # Create a LabeledTuple with values, but return tensor-compatible results
+            results_with_labels = LabeledTuple(results, labels)
+            return results_with_labels
+        return wrapper
+    return decorator
+
+# LabeledTuple class with label-based access and unpacking support
+class LabeledTuple:
+    """A class that stores results with labels, with label-based access and unpacking support."""
+    def __init__(self, values, labels):
+        if len(values) != len(labels):
+            raise ValueError("Number of values must match number of labels")
+        self.values = values
+        self.labels = labels
+
+    def __getitem__(self, key):
+        # Access by label or index
+        if isinstance(key, str):
+            if key in self.labels:
+                index = self.labels.index(key)  # Find the index of the label
+                return self.values[index]  # Return the corresponding value
+            raise KeyError(f"Label '{key}' not found")
+        elif isinstance(key, int):
+            # Return value by index if it's an integer
+            return self.values[key]
+        else:
+            raise TypeError("Key must be either a string (label) or integer (index)")
+
+    def __iter__(self):
+        # Allow for unpacking by providing an iterator over the values
+        return iter(self.values)
+
+    def __repr__(self):
+        # String representation of the labeled results
+        return f"LabeledTuple({self.values}, {self.labels})"
+
+# Combined decorator for both label_outputs and laplace_approx
+def laplace_approximator(*labels):
+    def decorator(func):
+        # First apply label_outputs
+        func = label_outputs(*labels)(func)
+
+        # Then apply laplace_approx
+        def wrapper(*args, **kwargs):
+            result = func(*args, **kwargs)
+            # You can add specific laplace_approx behavior if needed
+            if hasattr(func, 'use_laplace'):
+                # Custom logic for laplace approximation can be added here
+                pass
+            return result
+        
+        wrapper.use_laplace = True  # Mark function as using Laplace approximation
+        return wrapper
+    return decorator
+
+
 class FeatureExtractor(nn.Module):
     """Feature extractor for a PyTorch neural network.
     A wrapper which can return the output of the penultimate layer in addition to

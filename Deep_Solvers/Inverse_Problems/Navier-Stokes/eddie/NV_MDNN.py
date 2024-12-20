@@ -9,8 +9,8 @@ def get_deepgalerkin_config():
 
     # Weights & Biases
     config.wandb = wandb = ConfigDict()
-    wandb.project = "NVs-Training"
-    wandb.name = "MDNN"
+    wandb.project = "NVs-training-rnd"
+    wandb.name = "MDNN_rnd"
     wandb.tag = None
 
     # General settings
@@ -34,16 +34,17 @@ def get_deepgalerkin_config():
 
     # Navier Stokes Config
     config.nu = 1e-2
-    config.time_domain = 2
+    config.time_domain = 5
 
     # Training settings
     config.seed = 108
     config.learning_rate = 0.001
     config.decay_rate = 0.9
     config.alpha = 0.9  # For updating loss weights
-    config.iterations = 20000
+    config.iterations = 15000
     config.chunks = 16
-    config.points_per_chunk = 250 
+    config.points_per_chunk = 250
+ 
     config.scheduler_step = 2000
     config.start_scheduler = 0.1
     config.weights_update = 100

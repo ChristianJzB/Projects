@@ -28,6 +28,12 @@ def setup_initial_conditions():
 
     return initial_points, initial_condition
 
+# Function to select indices
+def sample_indices_ic(size, N, seed):
+    with torch.random.fork_rng():  # Isolate RNG
+        torch.manual_seed(seed)  # Set the seed
+        indices = torch.randperm(size)[:N]  # Generate N random indices
+    return indices
 
 def train_pinn_nvs(config,device):
     # Weights & Biases
@@ -48,7 +54,7 @@ def train_pinn_nvs(config,device):
 
     # Domain and sampler setup
     dom = torch.tensor([[0, 2 * torch.pi], [0, 2 * torch.pi],[0,config.time_domain]]).to(device)
-    samples_interior = iter(UniformSampler(dom, batch_size_interior))
+    samples_interior = iter(UniformSampler(dom, batch_size_interior,rng_seed= config.seed))
 
     # Training loop
     for epoch in range(config.iterations):
@@ -61,11 +67,15 @@ def train_pinn_nvs(config,device):
 
         sorted_batch[:,2] /= config.time_domain
 
+        indices = sample_indices_ic(initial_points.shape[0],batch_size_interior, config.seed + epoch)
+        sampled_points = initial_points[indices]
+        sampled_condition = initial_condition[indices]
+
         optimizer.zero_grad()
 
         # Timer for loss computation
         start_time = time.time()
-        total_loss,losses = dg_NVs.total_loss(sorted_batch,initial_condition,initial_points,
+        total_loss,losses = dg_NVs.total_loss(sorted_batch,sampled_condition,sampled_points,
                                               loss_fn = loss_fn,update_weights=update_weights)
         loss_computation_time = time.time() - start_time  # Time taken for loss computation
 
@@ -89,7 +99,7 @@ def train_pinn_nvs(config,device):
         })
         # Save the model checkpoint
         if (epoch % 1000 == 0) and (epoch != 0):
-            torch.save(dg_NVs, f"./models/{wandb_config.name}_epoch{epoch}.pth")
+            torch.save(dg_NVs, f"./models/{wandb_config.name}.pth")
 
     # Save final model
     torch.save(dg_NVs, f"./models/{wandb_config.name}.pth")
@@ -124,15 +134,50 @@ def initial_conditions_samples(config):
 
     return initial_points,w0,u0,v0,theta
 
-def parameters_data(theta, data):
-    # Repeat the flattened `theta` for the number of rows in `data`
-    theta_ = theta.view(-1).repeat(data.size(0), 1)  # Flatten and repeat
+# def parameters_data(theta, data):
+#     # Repeat the flattened `theta` for the number of rows in `data`
+#     theta_ = theta.view(-1).repeat(data.size(0), 1)  # Flatten and repeat
 
-    # Concatenate `data` and `theta_` along the last dimension
-    return torch.cat((data, theta_), dim=1)
+#     # Concatenate `data` and `theta_` along the last dimension
+#     return torch.cat((data, theta_), dim=1)
+
+def data_set_cat(data_set, theta):
+    theta = theta.view(-1,theta.shape[-1])  # Flatten and repeat
+
+    # Repeat `ini` for the number of columns in `theta`
+    num_cols = theta.shape[1]
+    data_set_r = data_set.repeat(num_cols, 1)  # Shape (16000, 3)
+
+    # Repeat each column of `theta` to match rows in `ini`
+    theta_ = theta.T.repeat_interleave(data_set.shape[0], dim=0)  # Shape (16000, 100)
+
+    # Concatenate along the last dimension
+    result = torch.cat((data_set_r, theta_), dim=1)  # Shape (16000, 103)
+    return result
+
+def data_set_preparing(config,batch, initial_points,w0,u0,v0,theta,batch_size_interior,epoch):
+    initial_points_ = data_set_cat(initial_points,theta)
+
+    indices = sample_indices_ic(initial_points_.shape[0],batch_size_interior, config.seed + epoch)
+
+    initial_points_ = initial_points_[indices]
+
+    w0_,u0_,v0_ = w0.T.reshape(-1,1)[indices],u0.T.reshape(-1,1)[indices],v0.T.reshape(-1,1)[indices]
+
+    initial_condition = torch.hstack([w0_,u0_,v0_])
+
+    batch = data_set_cat(batch,theta)
+
+    _, indices = batch[:, -1].sort()  # Sort based on the time column
+
+    sorted_batch = batch[indices]    # Rearrange rows based on sorted indices
+
+    indices = sample_indices_ic(sorted_batch.shape[0],batch_size_interior, config.seed + epoch)
+    sorted_batch = sorted_batch[indices]
+
+    return sorted_batch,initial_points_,initial_condition
 
 
-from nv_files.train_nvs import initial_conditions_samples,parameters_data
 
 def train_dg(config,device):
     """Train the PINN model with a timer for loss computation."""
@@ -142,7 +187,6 @@ def train_dg(config,device):
 
 
     batch_size_interior = config.chunks*config.points_per_chunk
-    batch_size_initial = config.samples_size_initial
     start_scheduler = int(config.iterations * config.start_scheduler )
 
     # Load data and prepare initial conditions
@@ -161,56 +205,43 @@ def train_dg(config,device):
 
     # Training loop
     for epoch in range(config.iterations):
-        epoch_train_loss = 0.0
-        epoch_train_indvls = {"nvs":0, "cond":0, "u0":0, "v0":0, "w0":0}
+        update_weights = (epoch % config.weights_update == 0)
 
-        for indx in range(w0.shape[1]):
-            update_weights = ((epoch % config.weights_update == 0) and (indx == 0))
+        batch = next(samples_interior).to(device)
 
-            initial_condition = torch.hstack([w0[:,indx].reshape(-1,1),u0[:,indx].reshape(-1,1),v0[:,indx].reshape(-1,1)])
-            initial_points_ = parameters_data(theta=theta[:,:,indx], data=initial_points).to(device)
+        sorted_batch,initial_points_,initial_condition = data_set_preparing(config,batch, 
+                                                    initial_points,w0,u0,v0,theta,batch_size_interior,epoch)
+        
+        sorted_batch,initial_points_,initial_condition  = sorted_batch.to(device),initial_points_.to(device),initial_condition.to(device) 
 
-            batch = next(samples_interior).to(device)
-            _, indices = batch[:, -1].sort()  # Sort based on the time column
-            sorted_batch = batch[indices]    # Rearrange rows based on sorted indices
+        optimizer.zero_grad()
 
-            sorted_batch = parameters_data(theta=theta[:,:,indx], data=sorted_batch).to(device)
+        # Timer for loss computation
+        start_time = time.time()
+        total_loss,losses = dg_NVs.total_loss(sorted_batch,initial_condition,initial_points_,
+                                                loss_fn = loss_fn,update_weights=update_weights)
+        loss_computation_time = time.time() - start_time  # Time taken for loss computation
 
-            optimizer.zero_grad()
-
-            # Timer for loss computation
-            start_time = time.time()
-            total_loss,losses = dg_NVs.total_loss(sorted_batch,initial_condition,initial_points_,
-                                                  loss_fn = loss_fn,update_weights=update_weights)
-            loss_computation_time = time.time() - start_time  # Time taken for loss computation
-
-            total_loss.backward()
-            optimizer.step()
-
-            epoch_train_loss += total_loss.item()
-            epoch_train_indvls = {key: epoch_train_indvls[key] + losses[key].item() for key in epoch_train_indvls.keys()}
+        total_loss.backward()
+        optimizer.step()
 
         # Scheduler step
         if epoch >= start_scheduler and (epoch - start_scheduler) % config.scheduler_step == 0:
             scheduler.step()
 
-        # Average loss
-        epoch_train_loss /= batch_size_initial
-        epoch_train_indvls = {key: epoch_train_indvls[key]/batch_size_initial for key in epoch_train_indvls.keys()}
-
         # Log metrics to W&B
         wandb.log({
             "epoch": epoch,
-            "train_loss": epoch_train_loss,
+            "train_loss": total_loss.item(),
             "loss_computation_time": loss_computation_time,
             "learning_rate": scheduler.get_last_lr()[0],
-            **epoch_train_indvls,
+            **{key: loss.item() for key,loss in losses.items()},
             **{f"weight_{key}": value for key, value in dg_NVs.lambdas.items()}
         })
 
         # Save the model checkpoint
         if (epoch % 100 == 0) and (epoch != 0):
-            torch.save(dg_NVs, f"./models/{wandb_config.name}_epoch{epoch}.pth")
+            torch.save(dg_NVs, f"./models/{wandb_config.name}.pth")
 
     # Save final model
     torch.save(dg_NVs, f"./models/{wandb_config.name}.pth")
