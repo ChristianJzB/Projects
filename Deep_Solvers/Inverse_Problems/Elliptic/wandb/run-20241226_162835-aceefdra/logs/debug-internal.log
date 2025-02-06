@@ -1,0 +1,17 @@
+{"time":"2024-12-26T16:28:37.283720395Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-26T16:28:37.283740532Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Elliptic/wandb/run-20241226_162835-aceefdra/logs/debug-core.log"}
+{"time":"2024-12-26T16:28:37.388801533Z","level":"INFO","msg":"created new stream","id":"aceefdra"}
+{"time":"2024-12-26T16:28:37.388865647Z","level":"INFO","msg":"stream: started","id":"aceefdra"}
+{"time":"2024-12-26T16:28:37.388943774Z","level":"INFO","msg":"sender: started","stream_id":"aceefdra"}
+{"time":"2024-12-26T16:28:37.388944375Z","level":"INFO","msg":"writer: Do: started","stream_id":"aceefdra"}
+{"time":"2024-12-26T16:28:37.388967027Z","level":"INFO","msg":"handler: started","stream_id":"aceefdra"}
+{"time":"2024-12-26T16:28:37.693033229Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-26T16:30:37.261345825Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-26T16:30:37.261723278Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-26T16:30:38.262112091Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading history, summary","runtime_seconds":0.130192727}],"total_operations":1}}
+{"time":"2024-12-26T16:30:39.584544357Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-26T16:30:40.814129946Z","level":"INFO","msg":"stream: closing","id":"aceefdra"}
+{"time":"2024-12-26T16:30:40.814149548Z","level":"INFO","msg":"handler: closed","stream_id":"aceefdra"}
+{"time":"2024-12-26T16:30:40.81416757Z","level":"INFO","msg":"writer: Close: closed","stream_id":"aceefdra"}
+{"time":"2024-12-26T16:30:40.814181066Z","level":"INFO","msg":"sender: closed","stream_id":"aceefdra"}
+{"time":"2024-12-26T16:30:40.814235165Z","level":"INFO","msg":"stream: closed","id":"aceefdra"}

@@ -1,0 +1,17 @@
+{"time":"2024-12-26T16:58:03.741589195Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-26T16:58:03.741604192Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Elliptic/wandb/run-20241226_165803-hdb364z0/logs/debug-core.log"}
+{"time":"2024-12-26T16:58:03.846444786Z","level":"INFO","msg":"created new stream","id":"hdb364z0"}
+{"time":"2024-12-26T16:58:03.846513836Z","level":"INFO","msg":"stream: started","id":"hdb364z0"}
+{"time":"2024-12-26T16:58:03.84662442Z","level":"INFO","msg":"writer: Do: started","stream_id":"hdb364z0"}
+{"time":"2024-12-26T16:58:03.84668718Z","level":"INFO","msg":"handler: started","stream_id":"hdb364z0"}
+{"time":"2024-12-26T16:58:03.846720764Z","level":"INFO","msg":"sender: started","stream_id":"hdb364z0"}
+{"time":"2024-12-26T16:58:04.145167059Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-26T17:07:02.580894931Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-26T17:07:02.581271878Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-26T17:07:03.582144746Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading models/MDNN_s750.pth","runtime_seconds":0.623285469,"progress":"9.8KB/9.8KB"},{"desc":"uploading config.yaml","runtime_seconds":0.475081256,"progress":"500B/500B"},{"desc":"uploading output.log","runtime_seconds":0.475057756}],"total_operations":3}}
+{"time":"2024-12-26T17:07:04.412162016Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-26T17:07:05.731836866Z","level":"INFO","msg":"stream: closing","id":"hdb364z0"}
+{"time":"2024-12-26T17:07:05.731861213Z","level":"INFO","msg":"handler: closed","stream_id":"hdb364z0"}
+{"time":"2024-12-26T17:07:05.731873737Z","level":"INFO","msg":"writer: Close: closed","stream_id":"hdb364z0"}
+{"time":"2024-12-26T17:07:05.731887735Z","level":"INFO","msg":"sender: closed","stream_id":"hdb364z0"}
+{"time":"2024-12-26T17:07:05.731950946Z","level":"INFO","msg":"stream: closed","id":"hdb364z0"}

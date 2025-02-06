@@ -1,0 +1,17 @@
+{"time":"2024-12-26T16:48:44.053563526Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-26T16:48:44.053584707Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Elliptic/wandb/run-20241226_164844-dy30dww7/logs/debug-core.log"}
+{"time":"2024-12-26T16:48:44.156234662Z","level":"INFO","msg":"created new stream","id":"dy30dww7"}
+{"time":"2024-12-26T16:48:44.156260508Z","level":"INFO","msg":"stream: started","id":"dy30dww7"}
+{"time":"2024-12-26T16:48:44.156295947Z","level":"INFO","msg":"handler: started","stream_id":"dy30dww7"}
+{"time":"2024-12-26T16:48:44.156316853Z","level":"INFO","msg":"writer: Do: started","stream_id":"dy30dww7"}
+{"time":"2024-12-26T16:48:44.156323205Z","level":"INFO","msg":"sender: started","stream_id":"dy30dww7"}
+{"time":"2024-12-26T16:48:44.44935667Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-26T16:51:52.149627768Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-26T16:51:52.150114519Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-26T16:51:53.1501217Z","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2024-12-26T16:51:53.894669383Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-26T16:51:55.51198827Z","level":"INFO","msg":"stream: closing","id":"dy30dww7"}
+{"time":"2024-12-26T16:51:55.512012372Z","level":"INFO","msg":"handler: closed","stream_id":"dy30dww7"}
+{"time":"2024-12-26T16:51:55.512023861Z","level":"INFO","msg":"writer: Close: closed","stream_id":"dy30dww7"}
+{"time":"2024-12-26T16:51:55.512039129Z","level":"INFO","msg":"sender: closed","stream_id":"dy30dww7"}
+{"time":"2024-12-26T16:51:55.512082226Z","level":"INFO","msg":"stream: closed","id":"dy30dww7"}

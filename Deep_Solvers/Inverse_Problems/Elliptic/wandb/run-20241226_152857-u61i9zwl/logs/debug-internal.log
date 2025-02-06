@@ -1,0 +1,19 @@
+{"time":"2024-12-26T15:28:57.594793918Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-26T15:28:57.594820018Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Elliptic/wandb/run-20241226_152857-u61i9zwl/logs/debug-core.log"}
+{"time":"2024-12-26T15:28:57.704226387Z","level":"INFO","msg":"created new stream","id":"u61i9zwl"}
+{"time":"2024-12-26T15:28:57.704303087Z","level":"INFO","msg":"stream: started","id":"u61i9zwl"}
+{"time":"2024-12-26T15:28:57.70447056Z","level":"INFO","msg":"handler: started","stream_id":"u61i9zwl"}
+{"time":"2024-12-26T15:28:57.705162118Z","level":"INFO","msg":"sender: started","stream_id":"u61i9zwl"}
+{"time":"2024-12-26T15:28:57.705167293Z","level":"INFO","msg":"writer: Do: started","stream_id":"u61i9zwl"}
+{"time":"2024-12-26T15:28:58.115140878Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-26T15:29:25.110704285Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-26T15:29:59.493531839Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-26T15:29:59.535541836Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-26T15:29:59.536007343Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-26T15:30:00.501956744Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.675517183,"subtasks":[{"desc":"requirements.frozen.txt","runtime_seconds":0.029330065,"progress":"2.5KB/2.5KB"},{"desc":"wandb-job.json","runtime_seconds":0.029304975,"progress":"439B/439B"}]}],"total_operations":1}}
+{"time":"2024-12-26T15:30:02.236905431Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-26T15:30:03.459372884Z","level":"INFO","msg":"stream: closing","id":"u61i9zwl"}
+{"time":"2024-12-26T15:30:03.45939976Z","level":"INFO","msg":"handler: closed","stream_id":"u61i9zwl"}
+{"time":"2024-12-26T15:30:03.459414127Z","level":"INFO","msg":"writer: Close: closed","stream_id":"u61i9zwl"}
+{"time":"2024-12-26T15:30:03.459488173Z","level":"INFO","msg":"sender: closed","stream_id":"u61i9zwl"}
+{"time":"2024-12-26T15:30:03.459539345Z","level":"INFO","msg":"stream: closed","id":"u61i9zwl"}

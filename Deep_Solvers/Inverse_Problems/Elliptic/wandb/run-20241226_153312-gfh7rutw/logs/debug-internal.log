@@ -1,0 +1,8 @@
+{"time":"2024-12-26T15:33:14.195667719Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-26T15:33:14.195678989Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Elliptic/wandb/run-20241226_153312-gfh7rutw/logs/debug-core.log"}
+{"time":"2024-12-26T15:33:14.298806243Z","level":"INFO","msg":"created new stream","id":"gfh7rutw"}
+{"time":"2024-12-26T15:33:14.298854677Z","level":"INFO","msg":"stream: started","id":"gfh7rutw"}
+{"time":"2024-12-26T15:33:14.29893149Z","level":"INFO","msg":"sender: started","stream_id":"gfh7rutw"}
+{"time":"2024-12-26T15:33:14.298931618Z","level":"INFO","msg":"writer: Do: started","stream_id":"gfh7rutw"}
+{"time":"2024-12-26T15:33:14.2989706Z","level":"INFO","msg":"handler: started","stream_id":"gfh7rutw"}
+{"time":"2024-12-26T15:33:14.610526576Z","level":"INFO","msg":"Starting system monitor"}

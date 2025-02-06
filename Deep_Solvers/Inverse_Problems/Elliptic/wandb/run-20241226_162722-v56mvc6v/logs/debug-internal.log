@@ -1,0 +1,29 @@
+{"time":"2024-12-26T16:27:22.465987138Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-26T16:27:22.466011231Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Elliptic/wandb/run-20241226_162722-v56mvc6v/logs/debug-core.log"}
+{"time":"2024-12-26T16:27:22.572350933Z","level":"INFO","msg":"created new stream","id":"v56mvc6v"}
+{"time":"2024-12-26T16:27:22.572466264Z","level":"INFO","msg":"stream: started","id":"v56mvc6v"}
+{"time":"2024-12-26T16:27:22.572548143Z","level":"INFO","msg":"handler: started","stream_id":"v56mvc6v"}
+{"time":"2024-12-26T16:27:22.572573795Z","level":"INFO","msg":"writer: Do: started","stream_id":"v56mvc6v"}
+{"time":"2024-12-26T16:27:22.572667711Z","level":"INFO","msg":"sender: started","stream_id":"v56mvc6v"}
+{"time":"2024-12-26T16:27:22.85208319Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-26T16:27:47.739998723Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-26T16:28:02.921042415Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-26T16:28:02.961364148Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-26T16:28:05.229365684Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-26T16:28:05.230843125Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-26T16:28:16.960873035Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-26T16:28:17.001337588Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-26T16:28:24.672761912Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-26T16:28:24.713530378Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-26T16:28:32.521352676Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-26T16:28:32.522277992Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2024-12-26T16:28:35.130853657Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2024-12-26T16:28:35.171418159Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-26T16:28:35.171957567Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-26T16:28:35.999867439Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-26T16:28:36.141784114Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading summary","runtime_seconds":0.14171869}],"total_operations":1}}
+{"time":"2024-12-26T16:28:37.242847725Z","level":"INFO","msg":"stream: closing","id":"v56mvc6v"}
+{"time":"2024-12-26T16:28:37.242874069Z","level":"INFO","msg":"handler: closed","stream_id":"v56mvc6v"}
+{"time":"2024-12-26T16:28:37.242887207Z","level":"INFO","msg":"writer: Close: closed","stream_id":"v56mvc6v"}
+{"time":"2024-12-26T16:28:37.242960474Z","level":"INFO","msg":"sender: closed","stream_id":"v56mvc6v"}
+{"time":"2024-12-26T16:28:37.242974578Z","level":"INFO","msg":"stream: closed","id":"v56mvc6v"}

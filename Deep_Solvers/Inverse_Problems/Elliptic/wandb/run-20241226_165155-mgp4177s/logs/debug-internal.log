@@ -1,0 +1,17 @@
+{"time":"2024-12-26T16:51:55.55281856Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-26T16:51:55.552837438Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Elliptic/wandb/run-20241226_165155-mgp4177s/logs/debug-core.log"}
+{"time":"2024-12-26T16:51:55.658593267Z","level":"INFO","msg":"created new stream","id":"mgp4177s"}
+{"time":"2024-12-26T16:51:55.658673193Z","level":"INFO","msg":"stream: started","id":"mgp4177s"}
+{"time":"2024-12-26T16:51:55.658882269Z","level":"INFO","msg":"writer: Do: started","stream_id":"mgp4177s"}
+{"time":"2024-12-26T16:51:55.658958938Z","level":"INFO","msg":"handler: started","stream_id":"mgp4177s"}
+{"time":"2024-12-26T16:51:55.65903504Z","level":"INFO","msg":"sender: started","stream_id":"mgp4177s"}
+{"time":"2024-12-26T16:51:55.924750401Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-26T16:58:00.713173541Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-26T16:58:00.713639644Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-26T16:58:01.71369203Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading config.yaml","runtime_seconds":0.510827135,"progress":"500B/500B"},{"desc":"uploading models/MDNN_s500.pth","runtime_seconds":0.15616336,"progress":"9.8KB/9.8KB"}],"total_operations":2}}
+{"time":"2024-12-26T16:58:02.404813166Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-26T16:58:03.700726184Z","level":"INFO","msg":"stream: closing","id":"mgp4177s"}
+{"time":"2024-12-26T16:58:03.700756594Z","level":"INFO","msg":"handler: closed","stream_id":"mgp4177s"}
+{"time":"2024-12-26T16:58:03.700771726Z","level":"INFO","msg":"writer: Close: closed","stream_id":"mgp4177s"}
+{"time":"2024-12-26T16:58:03.700823135Z","level":"INFO","msg":"sender: closed","stream_id":"mgp4177s"}
+{"time":"2024-12-26T16:58:03.700853025Z","level":"INFO","msg":"stream: closed","id":"mgp4177s"}

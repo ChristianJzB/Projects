@@ -1,0 +1,9 @@
+{"time":"2024-12-26T16:44:51.956462866Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-26T16:44:51.956479341Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Elliptic/wandb/run-20241226_164451-5w4vl9hn/logs/debug-core.log"}
+{"time":"2024-12-26T16:44:52.059888252Z","level":"INFO","msg":"created new stream","id":"5w4vl9hn"}
+{"time":"2024-12-26T16:44:52.059930314Z","level":"INFO","msg":"stream: started","id":"5w4vl9hn"}
+{"time":"2024-12-26T16:44:52.059984899Z","level":"INFO","msg":"handler: started","stream_id":"5w4vl9hn"}
+{"time":"2024-12-26T16:44:52.059999467Z","level":"INFO","msg":"sender: started","stream_id":"5w4vl9hn"}
+{"time":"2024-12-26T16:44:52.06001849Z","level":"INFO","msg":"writer: Do: started","stream_id":"5w4vl9hn"}
+{"time":"2024-12-26T16:44:52.346963809Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-26T16:46:20.571510818Z","level":"INFO","msg":"Pausing system monitor"}

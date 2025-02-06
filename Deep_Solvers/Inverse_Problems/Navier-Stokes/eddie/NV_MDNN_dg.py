@@ -10,7 +10,7 @@ def get_deepgalerkin_config():
     # Weights & Biases
     config.wandb = wandb = ConfigDict()
     wandb.project = "NVs-Training-dg"
-    wandb.name = "MDNN"
+    wandb.name = "MDNN_dg"
     wandb.tag = None
 
     # General settings
@@ -49,12 +49,13 @@ def get_deepgalerkin_config():
     config.scheduler_step = 2000
 
     config.chunks = 16
-    config.points_per_chunk = 250 
+    config.points_per_chunk = 250
+    config.batch_ic = 6000 
 
     # For deep Galerkin
     config.dim_initial_condition = 128
     config.NKL =  50
-    config.samples_size_initial = 100
+    config.samples_size_initial = 500
     
     return config
 

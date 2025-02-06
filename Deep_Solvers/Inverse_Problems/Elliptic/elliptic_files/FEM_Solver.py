@@ -8,8 +8,6 @@ from dolfinx import geometry
 import numpy as np
 from scipy.optimize import fsolve, brentq
 
-
-
 class RootFinder:
     def __init__(self, lam , M, equation=None):
         """
