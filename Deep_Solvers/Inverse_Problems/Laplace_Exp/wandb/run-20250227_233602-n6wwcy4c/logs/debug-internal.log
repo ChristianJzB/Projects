@@ -1,0 +1,17 @@
+{"time":"2025-02-27T23:36:02.237681963Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-02-27T23:36:02.237700726Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Laplace_Exp/wandb/run-20250227_233602-n6wwcy4c/logs/debug-core.log"}
+{"time":"2025-02-27T23:36:02.341368468Z","level":"INFO","msg":"created new stream","id":"n6wwcy4c"}
+{"time":"2025-02-27T23:36:02.341397733Z","level":"INFO","msg":"stream: started","id":"n6wwcy4c"}
+{"time":"2025-02-27T23:36:02.341410047Z","level":"INFO","msg":"handler: started","stream_id":"n6wwcy4c"}
+{"time":"2025-02-27T23:36:02.341438709Z","level":"INFO","msg":"sender: started","stream_id":"n6wwcy4c"}
+{"time":"2025-02-27T23:36:02.341410034Z","level":"INFO","msg":"writer: Do: started","stream_id":"n6wwcy4c"}
+{"time":"2025-02-27T23:36:02.955766248Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-27T23:36:08.008901823Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-02-27T23:36:08.009285706Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-02-27T23:36:09.010076645Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.76720926},{"desc":"uploading models/Burgers_MDNN_s100.pth","runtime_seconds":0.27199187,"progress":"9.4KB/9.4KB"}],"total_operations":2}}
+{"time":"2025-02-27T23:36:10.186390446Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-02-27T23:36:11.826364331Z","level":"INFO","msg":"stream: closing","id":"n6wwcy4c"}
+{"time":"2025-02-27T23:36:11.826384097Z","level":"INFO","msg":"handler: closed","stream_id":"n6wwcy4c"}
+{"time":"2025-02-27T23:36:11.82639922Z","level":"INFO","msg":"writer: Close: closed","stream_id":"n6wwcy4c"}
+{"time":"2025-02-27T23:36:11.826430053Z","level":"INFO","msg":"sender: closed","stream_id":"n6wwcy4c"}
+{"time":"2025-02-27T23:36:11.826475464Z","level":"INFO","msg":"stream: closed","id":"n6wwcy4c"}

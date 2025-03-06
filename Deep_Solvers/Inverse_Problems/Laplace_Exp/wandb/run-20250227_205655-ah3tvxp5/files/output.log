@@ -1,0 +1,2 @@
+/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/site-packages/ml_collections/config_dict/config_dict.py:163: SyntaxWarning: invalid escape sequence '\['
+  index_match = re.match("(.*)\[([0-9]+)\]", key)

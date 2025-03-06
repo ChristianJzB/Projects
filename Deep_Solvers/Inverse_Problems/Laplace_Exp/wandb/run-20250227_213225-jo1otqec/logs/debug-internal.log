@@ -1,0 +1,17 @@
+{"time":"2025-02-27T21:32:25.844634163Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-02-27T21:32:25.844656204Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Laplace_Exp/wandb/run-20250227_213225-jo1otqec/logs/debug-core.log"}
+{"time":"2025-02-27T21:32:25.9525156Z","level":"INFO","msg":"created new stream","id":"jo1otqec"}
+{"time":"2025-02-27T21:32:25.952591933Z","level":"INFO","msg":"stream: started","id":"jo1otqec"}
+{"time":"2025-02-27T21:32:25.952809145Z","level":"INFO","msg":"writer: Do: started","stream_id":"jo1otqec"}
+{"time":"2025-02-27T21:32:25.952895746Z","level":"INFO","msg":"handler: started","stream_id":"jo1otqec"}
+{"time":"2025-02-27T21:32:25.953001153Z","level":"INFO","msg":"sender: started","stream_id":"jo1otqec"}
+{"time":"2025-02-27T21:32:26.355557041Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-27T21:33:07.647190148Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-02-27T21:33:07.647599375Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-02-27T21:33:08.648602625Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading models/Heat_MDNN_s1000.pth","runtime_seconds":0.530022277,"progress":"9.4KB/9.4KB"},{"desc":"saving job artifact","runtime_seconds":0.324374092},{"desc":"uploading config.yaml","runtime_seconds":0.142042542,"progress":"500B/500B"},{"desc":"uploading output.log","runtime_seconds":0.142017975}],"total_operations":4}}
+{"time":"2025-02-27T21:33:11.600493943Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-02-27T21:33:13.037608584Z","level":"INFO","msg":"stream: closing","id":"jo1otqec"}
+{"time":"2025-02-27T21:33:13.03762295Z","level":"INFO","msg":"handler: closed","stream_id":"jo1otqec"}
+{"time":"2025-02-27T21:33:13.037629868Z","level":"INFO","msg":"writer: Close: closed","stream_id":"jo1otqec"}
+{"time":"2025-02-27T21:33:13.03763846Z","level":"INFO","msg":"sender: closed","stream_id":"jo1otqec"}
+{"time":"2025-02-27T21:33:13.037674453Z","level":"INFO","msg":"stream: closed","id":"jo1otqec"}

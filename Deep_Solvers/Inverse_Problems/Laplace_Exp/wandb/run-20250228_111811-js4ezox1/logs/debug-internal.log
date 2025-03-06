@@ -1,0 +1,17 @@
+{"time":"2025-02-28T11:18:11.351445715Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-02-28T11:18:11.351475215Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Laplace_Exp/wandb/run-20250228_111811-js4ezox1/logs/debug-core.log"}
+{"time":"2025-02-28T11:18:11.455389146Z","level":"INFO","msg":"created new stream","id":"js4ezox1"}
+{"time":"2025-02-28T11:18:11.455422913Z","level":"INFO","msg":"stream: started","id":"js4ezox1"}
+{"time":"2025-02-28T11:18:11.455446065Z","level":"INFO","msg":"writer: Do: started","stream_id":"js4ezox1"}
+{"time":"2025-02-28T11:18:11.455453619Z","level":"INFO","msg":"sender: started","stream_id":"js4ezox1"}
+{"time":"2025-02-28T11:18:11.45544698Z","level":"INFO","msg":"handler: started","stream_id":"js4ezox1"}
+{"time":"2025-02-28T11:18:11.839238324Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-28T11:20:25.312729446Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-02-28T11:20:25.3132837Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-02-28T11:20:26.313958356Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.555938012},{"desc":"uploading models/MDNN_s150.pth","runtime_seconds":0.078807331,"progress":"9.8KB/9.8KB"}],"total_operations":2}}
+{"time":"2025-02-28T11:20:28.727278795Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-02-28T11:20:29.951992858Z","level":"INFO","msg":"stream: closing","id":"js4ezox1"}
+{"time":"2025-02-28T11:20:29.952011559Z","level":"INFO","msg":"handler: closed","stream_id":"js4ezox1"}
+{"time":"2025-02-28T11:20:29.952019731Z","level":"INFO","msg":"writer: Close: closed","stream_id":"js4ezox1"}
+{"time":"2025-02-28T11:20:29.952040205Z","level":"INFO","msg":"sender: closed","stream_id":"js4ezox1"}
+{"time":"2025-02-28T11:20:29.952064833Z","level":"INFO","msg":"stream: closed","id":"js4ezox1"}

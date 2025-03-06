@@ -1,0 +1,17 @@
+{"time":"2025-02-27T21:19:25.386723815Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-02-27T21:19:25.386737218Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Laplace_Exp/wandb/run-20250227_211925-fq39cu7h/logs/debug-core.log"}
+{"time":"2025-02-27T21:19:25.49174242Z","level":"INFO","msg":"created new stream","id":"fq39cu7h"}
+{"time":"2025-02-27T21:19:25.491811996Z","level":"INFO","msg":"stream: started","id":"fq39cu7h"}
+{"time":"2025-02-27T21:19:25.491902515Z","level":"INFO","msg":"sender: started","stream_id":"fq39cu7h"}
+{"time":"2025-02-27T21:19:25.491903976Z","level":"INFO","msg":"writer: Do: started","stream_id":"fq39cu7h"}
+{"time":"2025-02-27T21:19:25.49195645Z","level":"INFO","msg":"handler: started","stream_id":"fq39cu7h"}
+{"time":"2025-02-27T21:19:26.120619273Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-27T21:20:36.589899902Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-02-27T21:20:36.59052685Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-02-27T21:20:37.590383819Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading models/Burgers_MDNN_s1500.pth","runtime_seconds":0.441029175,"progress":"9.5KB/9.5KB"},{"desc":"uploading wandb-summary.json","runtime_seconds":0.441000364,"progress":"366B/366B"},{"desc":"saving job artifact","runtime_seconds":0.431209253},{"desc":"uploading config.yaml","runtime_seconds":0.201666868,"progress":"500B/500B"},{"desc":"uploading output.log","runtime_seconds":0.201638184}],"total_operations":5}}
+{"time":"2025-02-27T21:20:38.88579548Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-02-27T21:20:40.893183822Z","level":"INFO","msg":"stream: closing","id":"fq39cu7h"}
+{"time":"2025-02-27T21:20:40.893202696Z","level":"INFO","msg":"handler: closed","stream_id":"fq39cu7h"}
+{"time":"2025-02-27T21:20:40.89321947Z","level":"INFO","msg":"writer: Close: closed","stream_id":"fq39cu7h"}
+{"time":"2025-02-27T21:20:40.89322592Z","level":"INFO","msg":"sender: closed","stream_id":"fq39cu7h"}
+{"time":"2025-02-27T21:20:40.893335298Z","level":"INFO","msg":"stream: closed","id":"fq39cu7h"}

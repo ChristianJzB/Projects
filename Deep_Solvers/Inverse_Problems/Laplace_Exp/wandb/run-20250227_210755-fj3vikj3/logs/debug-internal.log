@@ -1,0 +1,9 @@
+{"time":"2025-02-27T21:07:55.20480256Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-02-27T21:07:55.204825114Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Laplace_Exp/wandb/run-20250227_210755-fj3vikj3/logs/debug-core.log"}
+{"time":"2025-02-27T21:07:55.30847551Z","level":"INFO","msg":"created new stream","id":"fj3vikj3"}
+{"time":"2025-02-27T21:07:55.308505049Z","level":"INFO","msg":"stream: started","id":"fj3vikj3"}
+{"time":"2025-02-27T21:07:55.308577994Z","level":"INFO","msg":"sender: started","stream_id":"fj3vikj3"}
+{"time":"2025-02-27T21:07:55.308580139Z","level":"INFO","msg":"writer: Do: started","stream_id":"fj3vikj3"}
+{"time":"2025-02-27T21:07:55.308645596Z","level":"INFO","msg":"handler: started","stream_id":"fj3vikj3"}
+{"time":"2025-02-27T21:07:55.599231035Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-27T21:07:56.20206255Z","level":"INFO","msg":"Pausing system monitor"}

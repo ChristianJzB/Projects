@@ -1,0 +1,8 @@
+{"time":"2025-02-27T21:55:18.720477793Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-02-27T21:55:18.720510975Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Laplace_Exp/wandb/run-20250227_215518-juhpalvh/logs/debug-core.log"}
+{"time":"2025-02-27T21:55:18.825474856Z","level":"INFO","msg":"created new stream","id":"juhpalvh"}
+{"time":"2025-02-27T21:55:18.825519785Z","level":"INFO","msg":"stream: started","id":"juhpalvh"}
+{"time":"2025-02-27T21:55:18.825621172Z","level":"INFO","msg":"writer: Do: started","stream_id":"juhpalvh"}
+{"time":"2025-02-27T21:55:18.825719327Z","level":"INFO","msg":"sender: started","stream_id":"juhpalvh"}
+{"time":"2025-02-27T21:55:18.825648144Z","level":"INFO","msg":"handler: started","stream_id":"juhpalvh"}
+{"time":"2025-02-27T21:55:19.139344012Z","level":"INFO","msg":"Starting system monitor"}

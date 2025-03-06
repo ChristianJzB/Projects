@@ -1,0 +1,9 @@
+{"time":"2025-02-27T21:30:46.000982001Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-02-27T21:30:46.001000951Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Laplace_Exp/wandb/run-20250227_213043-hrakfs63/logs/debug-core.log"}
+{"time":"2025-02-27T21:30:46.105286129Z","level":"INFO","msg":"created new stream","id":"hrakfs63"}
+{"time":"2025-02-27T21:30:46.105333613Z","level":"INFO","msg":"stream: started","id":"hrakfs63"}
+{"time":"2025-02-27T21:30:46.105402425Z","level":"INFO","msg":"handler: started","stream_id":"hrakfs63"}
+{"time":"2025-02-27T21:30:46.105450654Z","level":"INFO","msg":"sender: started","stream_id":"hrakfs63"}
+{"time":"2025-02-27T21:30:46.105490663Z","level":"INFO","msg":"writer: Do: started","stream_id":"hrakfs63"}
+{"time":"2025-02-27T21:30:46.515213641Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-27T21:30:46.612614974Z","level":"INFO","msg":"Pausing system monitor"}

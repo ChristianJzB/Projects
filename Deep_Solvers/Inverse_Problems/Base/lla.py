@@ -26,11 +26,33 @@ class dgala(torch.nn.Module):
 
         self._prior_precision = torch.tensor([prior_precision], device=self._device)
         self._prior_mean = torch.tensor([prior_mean], device=self._device)
-        self.sigma_noise = torch.tensor(sigma_noise,device=self._device).float()
+        self._sigma_noise = torch.tensor(sigma_noise,device=self._device).float()
 
         if hasattr(self.dgala, "chunks"):
             self.chunks = self.dgala.chunks
+
+    @property
+    def prior_precision(self):
+        return self._prior_precision
     
+    @prior_precision.setter
+    def prior_precision(self, new_prior_precision):
+        if isinstance(new_prior_precision, torch.Tensor):
+            self._prior_precision = new_prior_precision.to(self._device)
+        else:
+            self._prior_precision = torch.tensor([new_prior_precision], device=self._device).float()
+
+    @property
+    def sigma_noise(self):
+        return self._sigma_noise
+
+    @sigma_noise.setter
+    def sigma_noise(self, new_sigma_noise):
+        if isinstance(new_sigma_noise, torch.Tensor):
+            self._sigma_noise = new_sigma_noise.to(self._device)
+        else:
+            self._sigma_noise = torch.tensor(new_sigma_noise, device=self._device,requires_grad=True).float()
+
     @property
     def posterior_precision(self):
         """Diagonal posterior precision \\(p\\)."""
@@ -128,12 +150,11 @@ class dgala(torch.nn.Module):
         
         self.class_methods = get_decorated_methods(self.dgala, decorator = "use_laplace")
 
-        assert set(self.class_methods) == set([element for sublist in fit_data["class_method"].values() for element in sublist])
+       # assert set(self.class_methods) == set([element for sublist in fit_data["class_method"].values() for element in sublist])
 
         self.dgala.model.eval()
         params = parameters_to_vector(self.dgala.model.output_layer.parameters()).detach()
         self.n_params = len(params)
-        self.prior_precision = self._prior_precision
         self.prior_mean = self._prior_mean
         self._init_H()
 
@@ -253,12 +274,9 @@ class dgala(torch.nn.Module):
     
     def optimize_marginal_likelihood(self, error_tolerance=1e-3, max_iter=300, lr=1e-2):
         """Optimize the log prior and log sigma by maximizing the marginal likelihood."""
+        log_prior_prec = self.prior_precision.log().requires_grad_(True)
 
-        log_prior_prec = self.prior_precision.log()
-        log_prior_prec.requires_grad = True
-
-        log_sigma_noise = self.sigma_noise.log()
-        log_sigma_noise.requires_grad = True
+        log_sigma_noise = self.sigma_noise.log().requires_grad_(True)
 
         hyper_optimizer = torch.optim.Adam([log_prior_prec, log_sigma_noise], lr=lr)
 
@@ -278,7 +296,6 @@ class dgala(torch.nn.Module):
 
             # Calculate the error based on the change in hyperparameters
             error = 0.5 * (torch.abs(log_prior_prec - prev_log_prior) + torch.abs(log_sigma_noise - prev_log_sigma)).item()
-
             n_iter += 1
 
             # Optional: log progress for monitoring
@@ -286,7 +303,7 @@ class dgala(torch.nn.Module):
                 print(f"Iteration {n_iter}, Error: {error:.5f}, neg_marglik: {neg_marglik.item():.5f}")
 
         self.prior_precision = log_prior_prec.detach().exp()
-        self.log_sigma_noise = log_sigma_noise.detach().exp()
+        self.sigma_noise = log_sigma_noise.detach().exp()
 
         if n_iter == max_iter:
             print(f"Maximum iterations ({max_iter})reached, sigma : {self.sigma_noise.item()}, prior: {self.prior_precision.item()}.")

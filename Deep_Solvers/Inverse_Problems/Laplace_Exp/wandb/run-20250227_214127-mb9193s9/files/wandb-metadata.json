@@ -1,0 +1,31 @@
+{
+  "os": "Linux-6.8.0-52-generic-x86_64-with-glibc2.35",
+  "python": "3.12.5",
+  "startedAt": "2025-02-27T21:41:27.122780Z",
+  "program": "/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Laplace_Exp/training_models.ipynb",
+  "git": {
+    "remote": "https://github.com/ChristianJzB/Projects.git",
+    "commit": "41332019303bc2ea0ed07978ca8e6cb26c62b17b"
+  },
+  "email": "s2113174@ed.ac.uk",
+  "root": "/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Laplace_Exp",
+  "host": "MATHS-SELF-2016",
+  "username": "s2113174",
+  "executable": "/home/s2113174/anaconda3/envs/fenicsx-env/bin/python",
+  "codePathLocal": "training_models.ipynb",
+  "cpu_count": 10,
+  "cpu_count_logical": 12,
+  "disk": {
+    "/": {
+      "total": "981132795904",
+      "used": "95173181440"
+    }
+  },
+  "memory": {
+    "total": "32809205760"
+  },
+  "cpu": {
+    "count": 10,
+    "countLogical": 12
+  }
+}

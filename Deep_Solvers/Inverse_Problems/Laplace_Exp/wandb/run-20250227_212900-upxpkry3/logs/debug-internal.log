@@ -1,0 +1,21 @@
+{"time":"2025-02-27T21:29:00.550535077Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-02-27T21:29:00.55056115Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Laplace_Exp/wandb/run-20250227_212900-upxpkry3/logs/debug-core.log"}
+{"time":"2025-02-27T21:29:00.654927722Z","level":"INFO","msg":"created new stream","id":"upxpkry3"}
+{"time":"2025-02-27T21:29:00.654967202Z","level":"INFO","msg":"stream: started","id":"upxpkry3"}
+{"time":"2025-02-27T21:29:00.654983047Z","level":"INFO","msg":"writer: Do: started","stream_id":"upxpkry3"}
+{"time":"2025-02-27T21:29:00.655005303Z","level":"INFO","msg":"handler: started","stream_id":"upxpkry3"}
+{"time":"2025-02-27T21:29:00.654987815Z","level":"INFO","msg":"sender: started","stream_id":"upxpkry3"}
+{"time":"2025-02-27T21:29:01.08553131Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-02-27T21:29:01.359054831Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-02-27T21:29:41.678672887Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-02-27T21:29:41.719576738Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-02-27T21:29:42.943253328Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-02-27T21:29:42.954820027Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-02-27T21:29:42.955402087Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-02-27T21:29:43.956522868Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.651832673}],"total_operations":1}}
+{"time":"2025-02-27T21:29:45.736180555Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-02-27T21:29:47.104456416Z","level":"INFO","msg":"stream: closing","id":"upxpkry3"}
+{"time":"2025-02-27T21:29:47.104498912Z","level":"INFO","msg":"handler: closed","stream_id":"upxpkry3"}
+{"time":"2025-02-27T21:29:47.104518945Z","level":"INFO","msg":"writer: Close: closed","stream_id":"upxpkry3"}
+{"time":"2025-02-27T21:29:47.104527787Z","level":"INFO","msg":"sender: closed","stream_id":"upxpkry3"}
+{"time":"2025-02-27T21:29:47.104623747Z","level":"INFO","msg":"stream: closed","id":"upxpkry3"}

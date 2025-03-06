@@ -9,6 +9,11 @@ def get_decorated_methods(cls,decorator):
     decorated_methods = [name for name, method in methods if getattr(method, decorator, False)]
     return decorated_methods
 
+def clear_hooks(model):
+    for module in model.modules():
+        module._forward_hooks.clear()
+        module._backward_hooks.clear()
+
 
 class FeatureExtractor(nn.Module):
     """Feature extractor for a PyTorch neural network.
