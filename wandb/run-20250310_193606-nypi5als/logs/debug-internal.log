@@ -1,0 +1,15 @@
+{"time":"2025-03-10T19:36:06.8044972Z","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"D:\\Projects\\Projects-1\\wandb\\run-20250310_193606-nypi5als\\logs\\debug-core.log"}
+{"time":"2025-03-10T19:36:06.9563427Z","level":"INFO","msg":"created new stream","id":"nypi5als"}
+{"time":"2025-03-10T19:36:06.9563427Z","level":"INFO","msg":"stream: started","id":"nypi5als"}
+{"time":"2025-03-10T19:36:06.9563427Z","level":"INFO","msg":"writer: Do: started","stream_id":"nypi5als"}
+{"time":"2025-03-10T19:36:06.9563427Z","level":"INFO","msg":"handler: started","stream_id":"nypi5als"}
+{"time":"2025-03-10T19:36:06.9563427Z","level":"INFO","msg":"sender: started","stream_id":"nypi5als"}
+{"time":"2025-03-10T19:36:07.278721Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-10T19:36:13.166421Z","level":"INFO","msg":"stream: closing","id":"nypi5als"}
+{"time":"2025-03-10T19:36:13.166421Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-10T19:36:13.1670025Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-10T19:36:13.7233152Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-10T19:36:13.9525878Z","level":"INFO","msg":"handler: closed","stream_id":"nypi5als"}
+{"time":"2025-03-10T19:36:13.9525878Z","level":"INFO","msg":"writer: Close: closed","stream_id":"nypi5als"}
+{"time":"2025-03-10T19:36:13.9525878Z","level":"INFO","msg":"sender: closed","stream_id":"nypi5als"}
+{"time":"2025-03-10T19:36:13.9525878Z","level":"INFO","msg":"stream: closed","id":"nypi5als"}

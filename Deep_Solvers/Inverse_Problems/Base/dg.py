@@ -21,9 +21,13 @@ class deepGalerkin(torch.nn.Module):
         self.config = config
         self.device = device
         self.lambdas = dict(config.lambdas)
-                    
+        
+        self.M = None
+        self.gamma = None
+
         # Initialize model
         self.model = _uplad_model(config).to(device)
+        self.to(device)
 
     def laplace_approx():
         def decorator(func):
@@ -33,6 +37,10 @@ class deepGalerkin(torch.nn.Module):
             wrapper.use_laplace = True  # Add the attribute to the wrapped function
             return wrapper  # Return the wrapped function
         return decorator
+    
+    def init_M(self):  # Separate method for initializing M
+        if hasattr(self, 'chunks'):
+            self.M = torch.triu(torch.ones((self.chunks, self.chunks), device=self.device), diagonal=1).T
 
     def losses(self,*args):
         raise NotImplementedError("Subclasses should implement this!")

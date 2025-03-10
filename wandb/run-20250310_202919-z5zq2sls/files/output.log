@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "d:\Projects\temp\vorticity_MDNN_dg.py", line 72, in <module>
+    pinn_nvs = train_vorticity_dg(config,device=device)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Projects\temp\nv_files\train_nvs.py", line 521, in train_vorticity_dg
+    torch.save(dg_NVs, f"./models/{wandb_config.name}.pth")
+  File "D:\Users\chris\anaconda3\Lib\site-packages\torch\serialization.py", line 628, in save
+    with _open_zipfile_writer(f) as opened_zipfile:
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\chris\anaconda3\Lib\site-packages\torch\serialization.py", line 502, in _open_zipfile_writer
+    return container(name_or_buffer)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Users\chris\anaconda3\Lib\site-packages\torch\serialization.py", line 473, in __init__
+    super().__init__(torch._C.PyTorchFileWriter(self.name))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Parent directory ./models does not exist.

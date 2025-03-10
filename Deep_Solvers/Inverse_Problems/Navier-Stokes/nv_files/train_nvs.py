@@ -473,13 +473,13 @@ def train_vorticity_dg(config,device):
 
     # Domain and sampler setup
     dom = torch.tensor([[0, 2 * torch.pi], [0, 2 * torch.pi],[0,config.time_domain]]).to(device)
-    samples_interior = iter(UniformSampler(dom, batch_size_interior))
+    samples_interior = iter(UniformSampler(dom, batch_size_interior,device = device))
 
     # Training loop
     for epoch in range(config.iterations):
         update_weights = (epoch % config.weights_update == 0)
 
-        batch = next(samples_interior).to(device)
+        batch = next(samples_interior)
 
         sorted_batch,initial_points_,initial_condition = data_vor_set_preparing(config,batch, 
                                                     initial_points,w0,theta,batch_size_interior,epoch)
@@ -492,6 +492,7 @@ def train_vorticity_dg(config,device):
         start_time = time.time()
         total_loss,losses = dg_NVs.total_loss(sorted_batch,initial_condition,initial_points_,
                                                 loss_fn = loss_fn,update_weights=update_weights)
+
         loss_computation_time = time.time() - start_time  # Time taken for loss computation
 
         total_loss.backward()

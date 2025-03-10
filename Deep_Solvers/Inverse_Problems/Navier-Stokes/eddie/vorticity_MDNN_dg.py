@@ -1,3 +1,10 @@
+import sys
+import os
+
+# Add the parent directory to the sys.path
+parent_dir = os.path.abspath(os.path.join(os.getcwd(), '..'))
+sys.path.append(parent_dir)
+
 import wandb
 from ml_collections import ConfigDict
 
@@ -52,7 +59,7 @@ def get_deepgalerkin_config():
 
     config.chunks = 16
     config.points_per_chunk = 250
-    config.batch_ic = 8500 
+    config.batch_ic = 8500
 
     # For deep Galerkin- initial conditions
     config.d = 5

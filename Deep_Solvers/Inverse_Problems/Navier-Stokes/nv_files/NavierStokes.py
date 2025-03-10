@@ -4,11 +4,11 @@ import torch
 class NavierStokes(deepGalerkin):
     def __init__(self, config,device):
         super().__init__(config,device)
-
         self.nu = config.nu
         self.chunks = config.chunks
-        self.M = torch.triu(torch.ones((self.chunks, self.chunks)), diagonal=1).T
-    
+        #self.M = torch.triu(torch.ones((self.chunks, self.chunks)), diagonal=1).T
+        self.init_M() 
+
     @deepGalerkin.laplace_approx()
     def u(self,x):
         pred = self.model(x)
@@ -64,8 +64,8 @@ class NavierStokes(deepGalerkin):
 
         nvs_pred, cont = nv_pred.view(self.chunks, -1), cont.view(self.chunks, -1)
 
-        loss_nvs = torch.mean(nvs_pred**2, dim =1)
-        loss_cont = torch.mean(cont**2, dim = 1)
+        loss_nvs = torch.mean(nvs_pred**2, dim =1).to(self.device)
+        loss_cont = torch.mean(cont**2, dim = 1).to(self.device)
 
         # Update weights_nvs_cont using exponential decay
         nvs_gamma = torch.exp(-tol * (self.M @ loss_nvs)).detach()
@@ -108,7 +108,9 @@ class Vorticity(deepGalerkin):
 
         self.nu = config.nu
         self.chunks = config.chunks
-        self.M = torch.triu(torch.ones((self.chunks, self.chunks)), diagonal=1).T
+        self.init_M() 
+
+        #self.M = torch.triu(torch.ones((self.chunks, self.chunks)), diagonal=1).T
     
     @deepGalerkin.laplace_approx()
     def w(self,x):
@@ -172,14 +174,10 @@ class Vorticity(deepGalerkin):
     
     def initial_condition(self,output_initial_condition,initial_points,loss_fn):
         w0 = output_initial_condition.reshape(-1, 1)
-        #psi = output_initial_condition[:, 1].reshape(-1, 1)
 
         wo_pred = self.w(initial_points)
-        #psi_pred = self.phi(initial_points)
 
         loss_w0 = loss_fn(wo_pred.view(-1, 1), w0)
-        #loss_phi = loss_fn(psi_pred.view(-1, 1), psi)
-
         return loss_w0
     
     def losses(self,data_interior,output_initial_condition,initial_points,loss_fn):

@@ -1,0 +1,15 @@
+{"time":"2025-03-10T19:33:22.4436645Z","level":"INFO","msg":"stream: starting","core version":"0.19.8","symlink path":"D:\\Projects\\Projects-1\\wandb\\run-20250310_193322-hb75kedw\\logs\\debug-core.log"}
+{"time":"2025-03-10T19:33:22.5935226Z","level":"INFO","msg":"created new stream","id":"hb75kedw"}
+{"time":"2025-03-10T19:33:22.5935226Z","level":"INFO","msg":"stream: started","id":"hb75kedw"}
+{"time":"2025-03-10T19:33:22.5940471Z","level":"INFO","msg":"writer: Do: started","stream_id":"hb75kedw"}
+{"time":"2025-03-10T19:33:22.5940471Z","level":"INFO","msg":"handler: started","stream_id":"hb75kedw"}
+{"time":"2025-03-10T19:33:22.5940471Z","level":"INFO","msg":"sender: started","stream_id":"hb75kedw"}
+{"time":"2025-03-10T19:33:22.9312283Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-10T19:33:25.7279438Z","level":"INFO","msg":"stream: closing","id":"hb75kedw"}
+{"time":"2025-03-10T19:33:25.7279438Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-10T19:33:25.7285696Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-10T19:33:26.290661Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-10T19:33:26.4827317Z","level":"INFO","msg":"handler: closed","stream_id":"hb75kedw"}
+{"time":"2025-03-10T19:33:26.4827317Z","level":"INFO","msg":"sender: closed","stream_id":"hb75kedw"}
+{"time":"2025-03-10T19:33:26.4827317Z","level":"INFO","msg":"writer: Close: closed","stream_id":"hb75kedw"}
+{"time":"2025-03-10T19:33:26.4827317Z","level":"INFO","msg":"stream: closed","id":"hb75kedw"}

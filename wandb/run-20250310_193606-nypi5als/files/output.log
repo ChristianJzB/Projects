@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "d:\Projects\temp\vorticity_MDNN_dg.py", line 72, in <module>
+    pinn_nvs = train_vorticity_dg(config,device=device)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Projects\temp\nv_files\train_nvs.py", line 493, in train_vorticity_dg
+    total_loss,losses = dg_NVs.total_loss(sorted_batch,initial_condition,initial_points_,
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Projects\temp\Base\dg.py", line 41, in total_loss
+    losses = self.losses(*args,**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Projects\temp\nv_files\NavierStokes.py", line 186, in losses
+    loss_nvs,loss_cont = self.pde_loss(data_interior)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "d:\Projects\temp\nv_files\NavierStokes.py", line 162, in pde_loss
+    nvs_gamma = torch.exp(-tol * (self.M @ loss_nvs)).detach()
+                                  ~~~~~~~^~~~~~~~~~
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu! (when checking argument for argument mat in method wrapper_CUDA_addmv_)

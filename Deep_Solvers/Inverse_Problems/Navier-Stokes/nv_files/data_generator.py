@@ -88,9 +88,10 @@ class BaseSampler(Dataset):
 
 
 class UniformSampler(BaseSampler):
-    def __init__(self, dom, batch_size, rng_seed=1234):
+    def __init__(self, dom, batch_size, device,rng_seed=1234):
         super().__init__(batch_size, rng_seed)
-        self.dom = dom  # (dim, 2), where each row is [min, max] for a dimension
+        self.device = device
+        self.dom = dom.to(self.device)  # (dim, 2), where each row is [min, max] for a dimension
         self.dim = dom.shape[0]
 
     def data_generation(self):
@@ -108,7 +109,7 @@ class UniformSampler(BaseSampler):
         
         # Generate random samples in the range [min_vals, max_vals] for each dimension
         # Using rand to create uniform samples in the [0, 1) range
-        rand_vals = torch.rand(self.batch_size, self.dim)
+        rand_vals = torch.rand(self.batch_size, self.dim).to(self.device)
         
         # Scale the values to be in the [min, max] range for each dimension
         batch = min_vals + rand_vals * (max_vals - min_vals)
