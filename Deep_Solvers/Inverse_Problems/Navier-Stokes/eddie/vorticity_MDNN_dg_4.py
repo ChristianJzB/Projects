@@ -28,7 +28,7 @@ def get_deepgalerkin_config():
 
     # Model-specific settings
     config.model = ConfigDict()
-    config.model.input_dim = 3 + 4
+    config.model.input_dim = 3 + 2
     config.model.hidden_dim = 300
     config.model.num_layers = 4
     config.model.out_dim = 2
@@ -41,7 +41,7 @@ def get_deepgalerkin_config():
     config.model.period_emb = ConfigDict({"period":(1.0, 1.0), "axis":(0, 1) })
 
     # Fourier embeddings
-    config.model.fourier_emb = ConfigDict({"embed_scale":1,"embed_dim":300,"exclude_last_n":4})
+    config.model.fourier_emb = ConfigDict({"embed_scale":1,"embed_dim":300,"exclude_last_n":2})
 
     # Navier Stokes Config
     config.nu = 1e-2
@@ -64,7 +64,7 @@ def get_deepgalerkin_config():
     # For deep Galerkin- initial conditions
     config.d = 5
     config.tau = np.sqrt(2)
-    config.NKL =  2
+    config.NKL =  1
     config.dim_initial_condition = 128
     config.samples_size_initial = 1000
     
