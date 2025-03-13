@@ -1,6 +1,7 @@
 import numpy as np
 import cupy as cp
-from cupyx.scipy.fft import rfft2, irfft2, fftfreq, rfftfreq
+from cupy.fft import rfft2, irfft2, fftfreq, rfftfreq
+
 
 class VorticitySolver2D:
     def __init__(self, N, T, nu, dt, num_sol = 10,L = 1, method = 'CN', force=None):
@@ -15,7 +16,7 @@ class VorticitySolver2D:
             dt (float): Time step.
         """
         self.N = N
-        self.L = L*2*np.pi
+        self.L = L
         self.T = T
         self.nu = nu
         self.dt = dt
@@ -30,8 +31,8 @@ class VorticitySolver2D:
             self.f_hat = np.fft.rfft2(self.force(X, Y)) # Apply the force
         
         # Grid setup
-        self.kx = np.fft.fftfreq(N, d=L / N)
-        self.ky = np.fft.rfftfreq(N, d=L / N)
+        self.kx = 2 * torch.pi*np.fft.fftfreq(N, d=self.L / N)
+        self.ky = 2 * torch.pi*np.fft.rfftfreq(N, d=self.L / N)
         self.kx, self.ky = np.meshgrid(self.kx, self.ky, indexing="ij")
         self.k_squared = self.kx**2 + self.ky**2
 
@@ -307,7 +308,7 @@ class NVSolver2D:
         Implements the 2/3 rule dealiasing filter for a 2D real-to-complex Fourier transform grid.
         """
         n, m = grid_shape
-        filter_ = cp.zeros((n, m // 2 + 1))
+        filter_ = cp.zeros((n, m // 2 + 1), dtype=cp.float32)
         kx_max = int(2 / 3 * n // 2)  # Cutoff for rows (kx)
         ky_max = int(2 / 3 * (m // 2 + 1))  # Cutoff for columns (ky)
 
@@ -334,9 +335,12 @@ class NVSolver2D:
         """
         Initialize the vorticity field.
         """
+        w0 = cp.asarray(w0)
+        #plan = cp.fft.get_fft_plan(w0)  # Precompute FFT plan
+
         w_hat = rfft2(w0)  # Fourier transform of initial vorticity
         w_hat *= self.dealias_filter  # Apply dealiasing filter
-        self.w_list.append(cp.asnumpy(w0))  # Keep result in CPU memory for later visualization
+        self.w_list.append(w0)  # Keep result in CPU memory for later visualization
         return w_hat
 
     def solve_poisson(self, w_hat):
@@ -424,6 +428,118 @@ class NVSolver2D:
 
             if time in self.time_array[self.points]:
                 w = irfft2(w_hat, s=(self.N, self.N))
-                self.w_list.append(cp.asnumpy(w))  # Store on CPU memory for post-processing
+                self.w_list.append(w)  # Store on CPU memory for post-processing
 
-        return self.w_list
+        return [cp.asnumpy(w) for w in self.w_list]
+
+
+import torch
+import torch.fft
+
+class torch_NVSolver2D:
+    def __init__(self, N, T, nu, dt, num_sol=10, L=1, method='CN', force=None, device='cpu'):
+        self.device = torch.device(device)
+        self.N = N
+        self.L = L 
+        self.T = T
+        self.nu = nu
+        self.dt = dt
+        self.num_sol = num_sol
+        self.method = method
+        self.force = force
+
+        if self.force is not None:
+            X, Y = torch.meshgrid(torch.linspace(0, self.L, self.N, device=self.device), 
+                                  torch.linspace(0, self.L, self.N, device=self.device), indexing='ij')
+            self.f_hat = torch.fft.rfft2(self.force(X, Y)).to(self.device)
+
+        self.kx = 2 * torch.pi *torch.fft.fftfreq(N, d=self.L / N, device=self.device)
+        self.ky = 2 * torch.pi *torch.fft.rfftfreq(N, d=self.L / N, device=self.device)
+        self.kx, self.ky = torch.meshgrid(self.kx, self.ky, indexing="ij")
+        self.k_squared = self.kx**2 + self.ky**2
+        self.laplace_operator = self.k_squared.clone()
+        self.laplace_operator[0, 0] = 1  # Avoid division by zero
+
+        self.dealias_filter = self.brick_wall_filter_2d((N, N)).to(self.device)
+
+        # Initialize other variables
+        self.time_array = np.linspace(dt, T, int(T / dt))
+        self.points = np.linspace(0, len(self.time_array) - 1, self.num_sol, dtype=int)
+
+    def brick_wall_filter_2d(self, grid_shape):
+        n, m = grid_shape
+        filter_ = torch.zeros((n, m // 2 + 1), dtype=torch.float32, device=self.device)
+        kx_max = int(2 / 3 * n // 2)
+        ky_max = int(2 / 3 * (m // 2 + 1))
+
+        filter_[:kx_max, :ky_max] = 1
+        filter_[-kx_max:, :ky_max] = 1
+        return filter_
+
+    def compute_cfl_time_step(self, u, v):
+        dx = self.L / self.N
+        dy = dx
+        delta = min(dx,dy)
+        eps = 1e-10  # Small number to prevent division by zero
+
+        u_max = torch.max(torch.abs(u)).item() + eps   # Small number to prevent division by zero
+        v_max = torch.max(torch.abs(v)).item()+ eps
+
+        dt_cfl = min(dx / u_max, dy / v_max, delta**2 / (2 * self.nu))
+        return dt_cfl
+
+    def initialize_vorticity(self, w0):
+        w0 = torch.as_tensor(w0, device=self.device)
+        w_hat = torch.fft.rfft2(w0)
+        w_hat *= self.dealias_filter
+        return w_hat
+
+    def solve_poisson(self, w_hat):
+        return w_hat / self.laplace_operator
+
+    def compute_velocity(self, psi_hat):
+        u_hat = 1j * self.ky * psi_hat
+        v_hat = -1j * self.kx * psi_hat
+
+        u = torch.fft.irfft2(u_hat, s=(self.N, self.N))
+        v = torch.fft.irfft2(v_hat, s=(self.N, self.N))
+        return u_hat, v_hat, u, v
+
+    def apply_nonlinear_term(self, u, v, w_hat):
+        dw_dx_hat = 1j * self.kx * w_hat
+        dw_dy_hat = 1j * self.ky * w_hat
+
+        nonlinear_term = u * torch.fft.irfft2(dw_dx_hat, s=(self.N, self.N)) + v * torch.fft.irfft2(dw_dy_hat, s=(self.N, self.N))
+        nonlinear_term = torch.fft.rfft2(nonlinear_term) * self.dealias_filter
+
+        if self.force is not None:
+            nonlinear_term -= self.f_hat
+        return nonlinear_term
+
+    def crank_nicholson_step(self, w_hat):
+        psi_hat = self.solve_poisson(w_hat)
+        _, _, u, v = self.compute_velocity(psi_hat)
+        nonlinear_term_hat = self.apply_nonlinear_term(u, v, w_hat)
+
+        dt_max = self.compute_cfl_time_step(u, v)
+        if self.dt > dt_max:
+            print(f"Warning: Time step {self.dt} exceeds CFL limit {dt_max}. Reducing time step.")
+            self.dt = dt_max
+
+        w_hat = ((1 - 0.5 * self.dt * self.nu * self.laplace_operator) * w_hat - self.dt * nonlinear_term_hat) / (
+            1 + 0.5 * self.dt * self.nu * self.laplace_operator)
+        return w_hat
+
+    def run_simulation(self, w_ref):
+        w_list = []
+        w_list.append(torch.as_tensor(w_ref, device=self.device))
+
+        w_hat = self.initialize_vorticity(w_ref)
+
+        for time in self.time_array:
+            w_hat = self.crank_nicholson_step(w_hat)
+            if time in self.time_array[self.points]:
+                w = torch.fft.irfft2(w_hat, s=(self.N, self.N))
+                w_list.append(w)
+
+        return w_list
