@@ -52,7 +52,7 @@ def get_deepgalerkin_config():
     config.learning_rate = 0.001
     config.decay_rate = 0.9
     config.alpha = 0.9  # For updating loss weights
-    config.iterations = 15000
+    config.iterations = 10000
     config.start_scheduler = 0.1
     config.weights_update = 250
     config.scheduler_step = 2000

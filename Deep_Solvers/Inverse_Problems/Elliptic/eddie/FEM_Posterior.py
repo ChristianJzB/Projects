@@ -7,8 +7,8 @@ import pyro.distributions as dist
 
 from elliptic_files.utilities import *
 from elliptic_files.FEM_Solver import  RootFinder,FEMSolver
-from Base.MetropolisHastings import MetropolisHastingsSampler, MoreauYosidaPrior
-from Base.MetropolisHastings import DAHM
+from Deep_Solvers.Inverse_Problems.Base.MCMC import MetropolisHastingsSampler, MoreauYosidaPrior
+from Deep_Solvers.Inverse_Problems.Base.MCMC import DAHM
 from elliptic_files.utilities import *
 
 

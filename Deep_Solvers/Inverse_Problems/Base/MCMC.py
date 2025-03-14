@@ -6,29 +6,15 @@ import numpy as np
 from elliptic_files.FEM_Solver import FEMSolver
 
 
-class MetropolisHastingsSampler:
+class MetropolisHastings:
     """
     A class to perform Metropolis-Hastings sampling for parameter inference.
     It can use a neural network surrogate model or a numerical solver for likelihood evaluation.
     """
-
     def __init__(self, x, y, surrogate=None, nparam=2, sig=1.0, dt_init=0.5, 
                  mean=True, numerical=False,vert=30,lam = 1 /4, M = 2, reg=1e-3, device='cpu'):
         """
         Initialize the Metropolis-Hastings sampler.
-        
-        Args:
-            surrogate: Surrogate neural network model.
-            x: Input data (independent variables).
-            y: Observed data (dependent variables).
-            sig: Standard deviation of the noise in the observations (default 1.0).
-            dt_init: Initial step size for the proposal distribution (default 0.5).
-            mean: Whether to use mean predictions for the likelihood (default True).
-            numerical: Whether to use a numerical solver instead of the surrogate model (default False).
-            roots: Roots for FEM solver, used if numerical=True (optional).
-            vert: Vertices for FEM solver, used if numerical=True (optional).
-            lam: Regularization parameter for the Moreau-Yosida regularization.
-            device: Device to run the model (default 'cpu').
         """
         self.device = device
 
@@ -179,6 +165,9 @@ class MetropolisHastingsSampler:
             print(f"Final Acceptance Rate: {acceptance_rate / n_chains:.3f}")
 
         return alpha_samp.detach().cpu().numpy(), dt_tracker.detach().cpu().numpy()
+
+
+
 
 
 class MoreauYosidaPrior(Distribution):

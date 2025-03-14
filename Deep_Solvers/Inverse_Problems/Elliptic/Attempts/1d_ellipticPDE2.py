@@ -3,7 +3,7 @@ from torch.autograd import Variable
 from torch.utils.data import DataLoader
 
 from FEM_Solver import  RootFinder,FEMSolver
-from Inverse_Problems.Base.MetropolisHastings import MetropolisHastingsSampler, MoreauYosidaPrior
+from Deep_Solvers.Inverse_Problems.Base.MCMC import MetropolisHastingsSampler, MoreauYosidaPrior
 from GaLa import llaplace
 from GaLa2 import llaplace as llaplace2
 
