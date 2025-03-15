@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./Deep_Solvers/Inverse_Problems/Elliptic/elliptic_files",
+        "./Deep_Solvers/Inverse_Problems/Base"
+    ]
+}

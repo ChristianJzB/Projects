@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "d:\Projects\temp\vorticity_MDNN_dg.py", line 72, in <module>
-    pinn_nvs = train_vorticity_dg(config,device=device)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "d:\Projects\temp\nv_files\train_nvs.py", line 476, in train_vorticity_dg
-    samples_interior = iter(UniformSampler(dom, batch_size_interior))
-                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-TypeError: UniformSampler.__init__() missing 1 required positional argument: 'device'
