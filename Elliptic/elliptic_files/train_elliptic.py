@@ -177,11 +177,11 @@ def train_elliptic(config, device):
         })
         # Save the model checkpoint
         if (epoch % 1000 == 0) and (epoch != 0):
-            torch.save(dg_elliptic, f"./models/{wandb_config.name}.pth")
+            torch.save(dg_elliptic, f"./Elliptic/models/{wandb_config.name}.pth")
 
     # Save final model
-    torch.save(dg_elliptic, f"./models/{wandb_config.name}.pth")
-    wandb.save(f"./models/{wandb_config.name}.pth")
+    torch.save(dg_elliptic, f"./Elliptic/models/{wandb_config.name}.pth")
+    wandb.save(f"./Elliptic/models/{wandb_config.name}.pth")
 
     # Finish W&B run
     wandb.finish()

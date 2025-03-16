@@ -4,16 +4,16 @@ import torch
 from Base.mcmc import MetropolisHastings,MCMCDA
 from Base.lla import dgala
 
-from .FEM_Solver import FEMSolver
-from .elliptic import Elliptic
+from elliptic_files.FEM_Solver import FEMSolver
+from elliptic_files.elliptic import Elliptic
 
 
-class EllpiticMCMC(MetropolisHastings):
+class EllipticMCMC(MetropolisHastings):
     def __init__(self, surrogate, observation_locations, observations_values, nparameters=2, 
                  observation_noise=0.5, nsamples=1000000, burnin=None, proposal_type="random_walk", 
                  step_size=0.1, device="cpu"):
         
-        super(EllpiticMCMC, self).__init__(observation_locations, observations_values, nparameters, 
+        super(EllipticMCMC, self).__init__(observation_locations, observations_values, nparameters, 
                  observation_noise, nsamples, burnin, proposal_type, step_size, device)
         
         self.surrogate = surrogate
@@ -76,12 +76,12 @@ class EllpiticMCMC(MetropolisHastings):
         return self.log_likelihood_func(theta)
         
 
-class EllpiticMCMCDA(MCMCDA):
+class EllipticMCMCDA(MCMCDA):
     def __init__(self,coarse_surrogate,finer_surrogate, observation_locations, observations_values, nparameters=2, 
                  observation_noise=0.5, iter_mcmc=1000000, iter_da = 20000,                 
                  proposal_type="random_walk", step_size=0.1, device="cpu" ):
         
-        super(EllpiticMCMCDA, self).__init__(observation_locations, observations_values, nparameters, 
+        super(EllipticMCMCDA, self).__init__(observation_locations, observations_values, nparameters, 
                  observation_noise, iter_mcmc, iter_da,proposal_type, step_size, device)
         
         self.coarse_surrogate = coarse_surrogate

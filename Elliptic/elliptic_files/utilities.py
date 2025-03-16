@@ -12,6 +12,19 @@ from statsmodels.graphics.tsaplots import plot_acf
 
 from .FEM_Solver import FEMSolver
 
+from .train_elliptic import train_elliptic,generate_data,samples_param
+
+
+def deepgala_data_fit(samples,nparameters,device):
+    data_parameters = samples_param(samples*2, nparam=nparameters)
+    param_train, param_test = data_parameters[:samples,:],  data_parameters[samples:,:]
+    data_int,left_bc,right_bc = generate_data(samples, param = param_train)
+    data_int,left_bc,right_bc  = data_int.to(device),left_bc.to(device),right_bc.to(device)
+    
+    dgala_data = {"data_fit": {"pde":data_int, "left_bc":left_bc,"right_bc":right_bc}, 
+                "class_method": {"pde": ["elliptic_pde"], "left_bc":["u"],"right_bc":["u"]},
+                "outputs": {"pde": ["elliptic"], "left_bc": ["ubcl"],"right_bc":["ubcr"]}}
+    return dgala_data
 
 def generate_noisy_obs(obs, theta_t=np.array([0.098, 0.430]),vert=1000, mean=0, std=np.sqrt(1e-4)):
     """
