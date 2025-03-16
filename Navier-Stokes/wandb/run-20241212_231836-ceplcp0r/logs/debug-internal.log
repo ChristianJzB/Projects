@@ -1,8 +1,0 @@
-{"time":"2024-12-12T23:18:36.271756232Z","level":"INFO","msg":"using version","core version":"0.18.7"}
-{"time":"2024-12-12T23:18:36.271788216Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/run-20241212_231836-ceplcp0r/logs/debug-core.log"}
-{"time":"2024-12-12T23:18:36.377644025Z","level":"INFO","msg":"created new stream","id":"ceplcp0r"}
-{"time":"2024-12-12T23:18:36.377748203Z","level":"INFO","msg":"stream: started","id":"ceplcp0r"}
-{"time":"2024-12-12T23:18:36.377756033Z","level":"INFO","msg":"writer: Do: started","stream_id":"ceplcp0r"}
-{"time":"2024-12-12T23:18:36.377807622Z","level":"INFO","msg":"handler: started","stream_id":"ceplcp0r"}
-{"time":"2024-12-12T23:18:36.37791344Z","level":"INFO","msg":"sender: started","stream_id":"ceplcp0r"}
-{"time":"2024-12-12T23:18:36.687413952Z","level":"INFO","msg":"Starting system monitor"}

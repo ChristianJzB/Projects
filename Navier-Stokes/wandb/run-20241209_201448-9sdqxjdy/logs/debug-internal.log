@@ -1,9 +1,0 @@
-{"time":"2024-12-09T20:14:48.818960737Z","level":"INFO","msg":"using version","core version":"0.18.7"}
-{"time":"2024-12-09T20:14:48.81898813Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Deep_Solvers/Inverse_Problems/Navier-Stokes/wandb/run-20241209_201448-9sdqxjdy/logs/debug-core.log"}
-{"time":"2024-12-09T20:14:48.924846725Z","level":"INFO","msg":"created new stream","id":"9sdqxjdy"}
-{"time":"2024-12-09T20:14:48.924966252Z","level":"INFO","msg":"stream: started","id":"9sdqxjdy"}
-{"time":"2024-12-09T20:14:48.925028845Z","level":"INFO","msg":"writer: Do: started","stream_id":"9sdqxjdy"}
-{"time":"2024-12-09T20:14:48.925127564Z","level":"INFO","msg":"sender: started","stream_id":"9sdqxjdy"}
-{"time":"2024-12-09T20:14:48.925204808Z","level":"INFO","msg":"handler: started","stream_id":"9sdqxjdy"}
-{"time":"2024-12-09T20:14:49.366341091Z","level":"INFO","msg":"Starting system monitor"}
-{"time":"2024-12-09T20:14:50.25248959Z","level":"INFO","msg":"Pausing system monitor"}

@@ -137,6 +137,7 @@ class MCMCDA(torch.nn.Module):
         self.iter_mcmc = iter_mcmc
         self.proposal_type = proposal_type
         self.dt = step_size  # Step size for proposals
+        self.to(device)
 
     def log_prior(self, theta):
         """Define the prior distribution (e.g., Gaussian, Uniform, etc.). Must be overridden."""

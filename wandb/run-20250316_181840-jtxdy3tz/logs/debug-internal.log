@@ -1,0 +1,17 @@
+{"time":"2025-03-16T18:18:40.550957569Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-16T18:18:40.550985536Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250316_181840-jtxdy3tz/logs/debug-core.log"}
+{"time":"2025-03-16T18:18:40.656817734Z","level":"INFO","msg":"created new stream","id":"jtxdy3tz"}
+{"time":"2025-03-16T18:18:40.656872914Z","level":"INFO","msg":"stream: started","id":"jtxdy3tz"}
+{"time":"2025-03-16T18:18:40.656965109Z","level":"INFO","msg":"writer: Do: started","stream_id":"jtxdy3tz"}
+{"time":"2025-03-16T18:18:40.657476691Z","level":"INFO","msg":"sender: started","stream_id":"jtxdy3tz"}
+{"time":"2025-03-16T18:18:40.657508442Z","level":"INFO","msg":"handler: started","stream_id":"jtxdy3tz"}
+{"time":"2025-03-16T18:18:41.141498126Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-16T18:20:28.61374686Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-16T18:20:28.614115933Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-16T18:20:29.61536933Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading Elliptic/models/MDNN_s150.pth","runtime_seconds":0.067667191,"progress":"9.8KB/9.8KB"}],"total_operations":1}}
+{"time":"2025-03-16T18:20:30.483980492Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-16T18:20:31.811237098Z","level":"INFO","msg":"stream: closing","id":"jtxdy3tz"}
+{"time":"2025-03-16T18:20:31.811255818Z","level":"INFO","msg":"handler: closed","stream_id":"jtxdy3tz"}
+{"time":"2025-03-16T18:20:31.811264654Z","level":"INFO","msg":"writer: Close: closed","stream_id":"jtxdy3tz"}
+{"time":"2025-03-16T18:20:31.811306151Z","level":"INFO","msg":"sender: closed","stream_id":"jtxdy3tz"}
+{"time":"2025-03-16T18:20:31.811312093Z","level":"INFO","msg":"stream: closed","id":"jtxdy3tz"}
