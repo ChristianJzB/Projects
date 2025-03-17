@@ -32,7 +32,7 @@ def nv_experiment():
     config.num_observations = 6
 
     # MCMC configuration
-    config.NN_MCMC = True
+    config.NN_MCMC = False
     config.dgala_MCMC = False
 
     config.proposal = "random_walk"
@@ -45,8 +45,8 @@ def nv_experiment():
     config.fs_steps = 5e-4
 
     # Delayed Acceptance
-    config.DA_MCMC_nn = True
-    config.DA_MCMC_dgala = True
+    config.DA_MCMC_nn = False
+    config.DA_MCMC_dgala = False
     config.iter_mcmc = 1_000_000
     config.iter_da = 5_000
 
