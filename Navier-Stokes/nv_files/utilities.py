@@ -34,7 +34,7 @@ def generate_noisy_obs(obs,noise_level = 1e-3,NKL = 2 ,dim_obs = 128, seed = 42)
     obs_input_ = torch.cat((X.reshape(-1,1), Y.reshape(-1,1), 2*torch.ones_like(X.reshape(-1,1))), dim=1)
     
     noisy_obs_ = noisy_obs.reshape(-1,1)
-
+    
     # Randomly select 10 unique row indices
     indices = torch.randperm(noisy_obs_.shape[0])[:obs]
 
@@ -44,7 +44,7 @@ def generate_noisy_obs(obs,noise_level = 1e-3,NKL = 2 ,dim_obs = 128, seed = 42)
     obs_input = obs_input_[sorted_indices]
     noisy_obs = noisy_obs_[sorted_indices]
 
-    return obs_input,noisy_obs
+    return obs_input,noisy_obs,sorted_indices
 
 
 def deepgala_data_fit(config,device):

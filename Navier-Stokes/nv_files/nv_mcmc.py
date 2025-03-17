@@ -68,7 +68,7 @@ class NVMCMC(MetropolisHastings):
         
 
 class NVMCMCDA(MCMCDA):
-    def __init__(self,coarse_surrogate,observation_locations, observations_values, nparameters=2, 
+    def __init__(self,coarse_surrogate,observation_locations, observations_values, nparameters=2, fs_indices_sol = None,
                  fs_n = 128, fs_T=2,fs_steps =5e-4,observation_noise=1e-3, iter_mcmc=1000000, iter_da = 20000,                 
                  proposal_type="random_walk", step_size=1e-3, device="cpu" ):
         
@@ -76,6 +76,7 @@ class NVMCMCDA(MCMCDA):
                  observation_noise, iter_mcmc, iter_da,proposal_type, step_size, device)
         
         self.coarse_surrogate = coarse_surrogate
+        self.fs_indices_sol = fs_indices_sol
         self.finer_surrogate = VorticitySolver2D(N=fs_n, L=2*np.pi, T=fs_T, nu=1e-2, 
                                        dt=fs_steps,num_sol=2, method='CN', force= self.force_function)
         
@@ -111,30 +112,30 @@ class NVMCMCDA(MCMCDA):
         """
         Evaluates the log-likelihood given a FEM.
         """
-        theta = theta.reshape(1,-1).unsqueeze(-1) if self.nparam==2 else theta.reshape(-1,2).unsqueeze(-1)
+        theta = theta.reshape(1,-1).unsqueeze(-1) if self.nparameters==2 else theta.reshape(-1,2).unsqueeze(-1)
 
         w0 = omega0_samples_torch(self.X, self.Y, theta, d=5, tau=np.sqrt(2))
 
-        surg = self.solver.run_simulation(np.array(w0[:,:,0]))
+        surg = self.finer_surrogate.run_simulation(np.array(w0[:,:,0]))
 
         surg = torch.tensor(surg[-1], device=self.device).reshape(-1,1)
-        surg = surg[self.indices_sol]
+        surg = surg[self.fs_indices_sol]
         return -0.5 * torch.sum(((self.observations_values - surg) ** 2) / (self.observation_noise ** 2))
 
-    def nn_log_likelihood(self, theta):
+    def nn_log_likelihood(self,surrogate,theta):
         """
         Evaluates the log-likelihood given a NN.
         """
         data = torch.cat([self.observation_locations, theta.repeat(self.observation_locations.size(0), 1)], dim=1).float()
-        surg = self.surrogate.w(data.float()).clone().detach()
+        surg = surrogate.w(data.float()).clone().detach()
         return -0.5 * torch.sum(((self.observations_values - surg) ** 2) / (self.observation_noise ** 2))
 
-    def dgala_log_likelihood(self, theta):
+    def dgala_log_likelihood(self,surrogate, theta):
         """
         Evaluates the log-likelihood given a dgala.
         """
         data = torch.cat([self.observation_locations, theta.repeat(self.observation_locations.size(0), 1)], dim=1).float()
-        surg_mu, surg_sigma = self.surrogate(data)
+        surg_mu, surg_sigma = surrogate(data)
 
         surg_mu = surg_mu[:,0].detach().view(-1, 1)
         surg_sigma = surg_sigma[:, 0].detach().view(-1, 1)
