@@ -44,7 +44,7 @@ def generate_noisy_obs(obs,noise_level = 1e-3,NKL = 2 ,dim_obs = 128, seed = 42)
     obs_input = obs_input_[sorted_indices]
     noisy_obs = noisy_obs_[sorted_indices]
 
-    return obs_input,noisy_obs,sorted_indices
+    return obs_input,noisy_obs,sorted_indices,theta
 
 
 def deepgala_data_fit(config,device):

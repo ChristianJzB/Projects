@@ -152,7 +152,7 @@ def run_experiment(config_experiment,device):
         torch.save(llp, f"./Navier-Stokes/models/nv_dgala_kl{config_experiment.KL_expansion}_s{config_experiment.nn_model}.pth")
 
     # Step 3: Generate noisy observations for Inverse Problem
-    obs_points, sol_test, obs_indices = generate_noisy_obs(obs=config_experiment.num_observations,
+    obs_points, sol_test, obs_indices,_ = generate_noisy_obs(obs=config_experiment.num_observations,
                                               noise_level=config_experiment.noise_level,
                                               NKL = config_experiment.KL_expansion)
     
@@ -229,7 +229,7 @@ if __name__ == "__main__":
     parser.add_argument("--N", type=int, required=True, help="Number of training samples")
     parser.add_argument("--train", action="store_true", help="Train NN")
     parser.add_argument("--deepgala", action="store_true", help="Fit DeepGala")
-    parser.add_argument("--noise_level", type=float,default=1e-4,help="Noise level for IP")
+    parser.add_argument("--noise_level", type=float,default=1e-3,help="Noise level for IP")
     parser.add_argument("--fem_mcmc", action="store_true", help="Run MCMC for FEM")
     parser.add_argument("--nn_mcmc", action="store_true", help="Run MCMC for NN")
     parser.add_argument("--dgala_mcmc", action="store_true", help="Run MCMC for dgala")
