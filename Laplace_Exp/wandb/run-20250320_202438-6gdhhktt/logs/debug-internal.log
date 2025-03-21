@@ -1,0 +1,9 @@
+{"time":"2025-03-20T20:24:38.065744033Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-20T20:24:38.065762823Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250320_202438-6gdhhktt/logs/debug-core.log"}
+{"time":"2025-03-20T20:24:38.168904235Z","level":"INFO","msg":"created new stream","id":"6gdhhktt"}
+{"time":"2025-03-20T20:24:38.168921428Z","level":"INFO","msg":"stream: started","id":"6gdhhktt"}
+{"time":"2025-03-20T20:24:38.168937059Z","level":"INFO","msg":"handler: started","stream_id":"6gdhhktt"}
+{"time":"2025-03-20T20:24:38.168942055Z","level":"INFO","msg":"writer: Do: started","stream_id":"6gdhhktt"}
+{"time":"2025-03-20T20:24:38.168971145Z","level":"INFO","msg":"sender: started","stream_id":"6gdhhktt"}
+{"time":"2025-03-20T20:24:38.516307932Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-20T20:24:38.77655935Z","level":"INFO","msg":"Pausing system monitor"}

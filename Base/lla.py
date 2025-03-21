@@ -9,13 +9,13 @@ from copy import deepcopy
 from math import sqrt, pi
 
 class dgala(torch.nn.Module):
-    def __init__(self, dga, sigma_noise=1., prior_precision=1.,prior_mean=0.):
+    def __init__(self, dga, sigma_noise=1., prior_precision=1.,prior_mean=0., last_layer_name = "output_layer"):
         super(dgala, self).__init__()
 
         self.dgala = deepcopy(dga)
-        self.model = FeatureExtractor(deepcopy(dga.model), last_layer_name = "output_layer")
+        self.model = FeatureExtractor(deepcopy(dga.model), last_layer_name = last_layer_name)
         self._device = next(dga.model.parameters()).device
-        self.lossfunc = torch.nn.MSELoss(reduction ='sum')
+        self.lossfunc = torch.nn.MSELoss(reduction ='mean')
         
         self.loss = 0
         self.temperature = 1
@@ -30,6 +30,9 @@ class dgala(torch.nn.Module):
 
         if hasattr(self.dgala, "chunks"):
             self.chunks = self.dgala.chunks
+            self.gamma = self.dgala.gamma.clone()
+        else:
+            self.chunks = None
 
     @property
     def prior_precision(self):
@@ -127,23 +130,13 @@ class dgala(torch.nn.Module):
             normalizer = n_data_key * torch.log(self.sigma_noise*sqrt(2*pi))
 
             # Compute log likelihood contribution for this key
-            log_likelihood_key = factor * loss_value - normalizer
+            log_likelihood_key = factor *n_data_key* loss_value - normalizer
 
             # Accumulate total log likelihood
             total_log_likelihood += log_likelihood_key
 
         return total_log_likelihood
     
-    # def log_likelihood(self):
-    #     """Compute log likelihood on the training data after `.fit()` has been called.
-    #     The log likelihood is computed on-demand based on the loss and, for example,
-    #     the observation noise which makes it differentiable in the latter for
-    #     iterative updates."""
-
-    #     factor = - self._H_factor
-    #     # loss used is just MSE, need to add normalizer for gaussian likelihood
-    #     c = self.n_data  * torch.log(self.sigma_noise * sqrt(2 * pi))
-    #     return factor * self.loss - c
 
     def fit(self,fit_data):
         """Fit the local Laplace approximation at the parameters of the model."""
@@ -153,12 +146,11 @@ class dgala(torch.nn.Module):
        # assert set(self.class_methods) == set([element for sublist in fit_data["class_method"].values() for element in sublist])
 
         self.dgala.model.eval()
-        params = parameters_to_vector(self.dgala.model.output_layer.parameters()).detach()
-        self.n_params = len(params)
+        #self.mean = parameters_to_vector(self.dgala.model.output_layer.parameters()).detach()
+        self.mean = parameters_to_vector(self.model.last_layer.parameters()).detach()
+        self.n_params = len(self.mean)
         self.prior_mean = self._prior_mean
         self._init_H()
-
-        self.mean = parameters_to_vector(self.dgala.model.output_layer.parameters()).detach()
 
         # Dynamically pass the `data_fit` contents as *args
         data_fit_args = fit_data.get("data_fit", {})
@@ -185,8 +177,9 @@ class dgala(torch.nn.Module):
                                  inputs=x, create_graph=True, allow_unused=True, materialize_grads=True)
         return [grp.detach() for grp in grad_p]
     
-    def full_Hessian(self,fit_data, damping_factor=1e-5):
+    def full_Hessian(self,fit_data, damping_factor=1e-6):
         parameters_ = list(self.dgala.model.output_layer.parameters())
+        #parameters_ = list(self.model.last_layer.parameters())
         damping = torch.eye(self.n_params,device=self._device)*damping_factor
 
         for key,dt_fit in fit_data["data_fit"].items():
@@ -198,18 +191,22 @@ class dgala(torch.nn.Module):
 
                 if isinstance(fout, tuple):  # Check if fout is a tuple
                     for i, f_out_indv in enumerate(fout):  # Iterate over fout if it's a tuple
-                        indv_h = self.compute_hessian(f_out_indv,parameters_)
+                        indv_h = self.compute_hessian(f_out_indv,parameters_,key)
                         self. H += (indv_h + damping)*self.dgala.lambdas[fit_data["outputs"][key][i]]
                         self.n_data[fit_data["outputs"][key][i]] = f_out_indv.shape[0]
                 else:
-                    indv_h = self.compute_hessian(fout,parameters_)
+                    indv_h = self.compute_hessian(fout,parameters_,key)
                     self. H += (indv_h + damping)*self.dgala.lambdas[fit_data["outputs"][key][z]]
                     self.n_data[fit_data["outputs"][key][z]] = fout.shape[0]
-                    #self.hessian_losses[fit_data["outputs"][key][z]]  = indv_h
                 
-    def compute_hessian (self,output,parameters_):
+    def compute_hessian (self,output,parameters_,key):
         hessian_loss = torch.zeros(self.n_params,self.n_params)
-        for fo in output:
+
+        if self.chunks: 
+            nitems_chunk = output.shape[0] // self.chunks
+            chunk_counter = 0
+
+        for i,fo in enumerate(output):
             grad_p = self.gradient_outograd(fo,parameters_)
             
             ndim = grad_p[0].shape[0]
@@ -219,6 +216,10 @@ class dgala(torch.nn.Module):
             jacobian_matrix = torch.cat(reshaping_grads, dim=1).flatten().unsqueeze(0) 
 
             hessian_loss +=  jacobian_matrix.T @ jacobian_matrix
+
+            if self.chunks and (i + 1) % nitems_chunk == 0 and key == "pde":
+                hessian_loss *= self.gamma[chunk_counter]
+                chunk_counter += 1
         return hessian_loss
         
 
@@ -250,8 +251,6 @@ class dgala(torch.nn.Module):
         identity = torch.eye(output_size, device=x.device).unsqueeze(0).tile(bsize, 1, 1)
         # Jacobians are batch x output x params
         Js = torch.einsum('kp,kij->kijp', phi, identity).reshape(bsize, output_size, -1)
-        # if self.model.last_layer.bias is not None:
-        #     Js = torch.cat([Js, identity], dim=2)
         return Js, f.detach()
     
 

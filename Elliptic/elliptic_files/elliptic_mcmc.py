@@ -136,7 +136,6 @@ class EllipticMCMCDA(MCMCDA):
         dy = surg_mu.shape[0]
 
         cte = 0.5 * (dy * torch.log(torch.tensor(2 * torch.pi)) + torch.sum(torch.log(sigma)))
-
         return -0.5 * torch.sum(((self.observations_values - surg_mu.reshape(-1, 1)) ** 2) / sigma)- cte
     
     def get_likelihood_function(self, surrogate, likelihood_methods):

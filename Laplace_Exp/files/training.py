@@ -104,8 +104,8 @@ def train_dga(config, device):
         #     torch.save(dg_model, f"./models/{wandb_config.name}.pth")
 
     # Save final model
-    torch.save(dg_model, f"./models/{wandb_config.name}.pth")
-    wandb.save(f"./models/{wandb_config.name}.pth")
+    torch.save(dg_model, f"./models/dnn_models/{wandb_config.name}.pth")
+    wandb.save(f"./models/dnn_models/{wandb_config.name}.pth")
 
     # Finish W&B run
     wandb.finish()
@@ -126,7 +126,7 @@ def generate_data_elliptic(size, param = None, nparam = 2, seed = 65647437836358
         x = sampler.random(n=size)
 
         if param is None:
-            param = samples_param(size=size, nparam= nparam)
+            param = samples_param_elliptic(size=size, nparam= nparam)
         else:
             param = param[:size,:]
 

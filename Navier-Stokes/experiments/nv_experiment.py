@@ -32,8 +32,8 @@ def nv_experiment():
     config.num_observations = 6
 
     # MCMC configuration
-    config.NN_MCMC = False
-    config.dgala_MCMC = False
+    config.nn_mcmc = False
+    config.dgala_mcmc = False
 
     config.proposal = "random_walk"
     config.proposal_variance = 1e-3
@@ -45,8 +45,8 @@ def nv_experiment():
     config.fs_steps = 5e-4
 
     # Delayed Acceptance
-    config.DA_MCMC_nn = False
-    config.DA_MCMC_dgala = False
+    config.da_mcmc_nn = False
+    config.da_mcmc_dgala = False
     config.iter_mcmc = 1_000_000
     config.iter_da = 5_000
 
@@ -92,14 +92,14 @@ def get_vorticity_train_config():
     config.learning_rate = 0.001
     config.decay_rate = 0.9
     config.alpha = 0.9  # For updating loss weights
-    config.iterations = 10000
+    config.iterations = 5000
     config.start_scheduler = 0.1
     config.weights_update = 250
-    config.scheduler_step = 2000
+    config.scheduler_step = 1000 #2000
 
     config.chunks = 16
     config.points_per_chunk = 50
-    config.batch_ic = 1500
+    #config.batch_ic = 16*
 
     # For deep Galerkin- initial conditions
     config.d = 5
@@ -155,9 +155,9 @@ def run_experiment(config_experiment,device):
     obs_points, sol_test, obs_indices,_ = generate_noisy_obs(obs=config_experiment.num_observations,
                                               noise_level=config_experiment.noise_level,
                                               NKL = config_experiment.KL_expansion)
-    
+    print(config_experiment.noise_level)
     # Step 4: Neural Network Surrogate for MCMC
-    if config_experiment.NN_MCMC:
+    if config_experiment.nn_mcmc:
         print(f"Starting MCMC with NN_s{config_experiment.nn_model}")
         nn_surrogate_model = torch.load(f"./Navier-Stokes/models/vorticity_kl{config_experiment.KL_expansion}_s{config_experiment.nn_model}.pth")
         nn_surrogate_model.eval()
@@ -165,7 +165,7 @@ def run_experiment(config_experiment,device):
         np.save(f'./Navier-Stokes/results/nn_kl{config_experiment.KL_expansion}_ss{config_experiment.nn_model}_var{config_experiment.noise_level}.npy', nn_samples[0])
     
     # Step 5: DeepGaLA Surrogate for MCMC
-    if config_experiment.dgala_MCMC:
+    if config_experiment.dgala_mcmc:
         print(f"Starting MCMC with DeepGaLA_s{config_experiment.nn_model}")
         llp = torch.load(f"./Navier-Stokes/models/nv_dgala_{config_experiment.nn_model}.pth")
         llp.model.set_last_layer("output_layer")  # Re-register hooks
@@ -173,39 +173,35 @@ def run_experiment(config_experiment,device):
         np.save(f'./Navier-Stokes/results/dgala_kl{config_experiment.KL_expansion}_ss{config_experiment.nn_model}_var{config_experiment.noise_level}.npy', nn_samples[0])
 
     # Step 7: Delayed Acceptance for NN
-    if config_experiment.DA_MCMC_dgala:
+    if config_experiment.da_mcmc_nn:
         print(f"Starting MCMC-DA with NN_s{config_experiment.nn_model} and PSM")
         nn_surrogate_model = torch.load(f"./Navier-Stokes/models/vorticity_kl{config_experiment.KL_expansion}_s{config_experiment.nn_model}.pth")
         nn_surrogate_model.eval()
-        mcmc_da_res_nn = np.empty((0, 3))
 
-        elliptic_mcmcda = NVMCMCDA(nn_surrogate_model,observation_locations= obs_points, observations_values = sol_test, 
+        nv_mcmcda = NVMCMCDA(nn_surrogate_model,observation_locations= obs_points, observations_values = sol_test, 
                         nparameters=2*config_experiment.KL_expansion,observation_noise=np.sqrt(config_experiment.noise_level),
                         fs_n = config_experiment.fs_n, fs_T=config_experiment.fs_T,fs_steps =config_experiment.fs_steps,
                         fs_indices_sol=obs_indices,iter_mcmc=config_experiment.iter_mcmc, iter_da = config_experiment.iter_da,
                         step_size=config_experiment.proposal_variance, device=device )
         
-        inner_mh,inner_accepted = elliptic_mcmcda.run_chain(verbose=config_experiment.verbose)
-        mcmc_da_res_nn = np.vstack([mcmc_da_res_nn, [inner_mh, inner_accepted, inner_accepted / inner_mh]])
-        np.save(f'./Navier-Stokes/results/mcmc_da_nn_{config_experiment.nn_model}_kl{config_experiment.KL_expansion}_{config_experiment.noise_level}.npy', mcmc_da_res_nn)
+        acceptance_res = nv_mcmcda.run_chain(verbose=config_experiment.verbose)
+        np.save(f'./Navier-Stokes/results/mcmc_da_nn_{config_experiment.nn_model}_kl{config_experiment.KL_expansion}_{config_experiment.noise_level}.npy', acceptance_res)
 
     # Step 8: Delayed Acceptance for Dgala
-    if config_experiment.DA_MCMC_nn:
+    if config_experiment.da_mcmc_dgala:
         print(f"Starting MCMC-DA with DGALA_s{config_experiment.nn_model} and PSM")
-        mcmc_da_res_dgala = np.empty((0, 3))  # 0 rows, 3 columns (for inner_mh, inner_accepted, acceptance_ratio)
 
         llp = torch.load(f"./Navier-Stokes/models/elliptic_dgala_{config_experiment.nn_model}.pth")
         llp.model.set_last_layer("output_layer")  # Re-register hooks
 
-        elliptic_mcmcda =  NVMCMCDA(llp,observation_locations= obs_points, observations_values = sol_test, 
+        nv_mcmcda =  NVMCMCDA(llp,observation_locations= obs_points, observations_values = sol_test, 
                         nparameters=2*config_experiment.KL_expansion,observation_noise=np.sqrt(config_experiment.noise_level),
                         fs_n = config_experiment.fs_n, fs_T=config_experiment.fs_T,fs_steps =config_experiment.fs_steps,
                         fs_indices_sol=obs_indices,iter_mcmc=config_experiment.iter_mcmc, iter_da = config_experiment.iter_da,
                         step_size=config_experiment.proposal_variance, device=device )
         
-        inner_mh,inner_accepted = elliptic_mcmcda.run_chain(verbose=config_experiment.verbose)
-        mcmc_da_res_dgala = np.vstack([mcmc_da_res_dgala, [inner_mh, inner_accepted, inner_accepted / inner_mh]])
-        np.save(f'./Navier-Stokes/results/mcmc_da_dgala_{config_experiment.nn_model}_kl{config_experiment.KL_expansion}_{config_experiment.noise_level}.npy', mcmc_da_res_dgala)
+        acceptance_res = nv_mcmcda.run_chain(verbose=config_experiment.verbose)
+        np.save(f'./Navier-Stokes/results/mcmc_da_dgala_{config_experiment.nn_model}_kl{config_experiment.KL_expansion}_{config_experiment.noise_level}.npy', acceptance_res)
 
 
 # Main loop for different sample sizes
@@ -230,7 +226,6 @@ if __name__ == "__main__":
     parser.add_argument("--train", action="store_true", help="Train NN")
     parser.add_argument("--deepgala", action="store_true", help="Fit DeepGala")
     parser.add_argument("--noise_level", type=float,default=1e-3,help="Noise level for IP")
-    parser.add_argument("--fem_mcmc", action="store_true", help="Run MCMC for FEM")
     parser.add_argument("--nn_mcmc", action="store_true", help="Run MCMC for NN")
     parser.add_argument("--dgala_mcmc", action="store_true", help="Run MCMC for dgala")
     parser.add_argument("--da_mcmc_nn", action="store_true", help="Run DA-MCMC for NN")

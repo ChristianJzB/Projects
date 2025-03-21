@@ -1,0 +1,17 @@
+{"time":"2025-03-20T20:51:37.983776367Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-20T20:51:37.983812454Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250320_205137-prpssh58/logs/debug-core.log"}
+{"time":"2025-03-20T20:51:38.09065409Z","level":"INFO","msg":"created new stream","id":"prpssh58"}
+{"time":"2025-03-20T20:51:38.09070483Z","level":"INFO","msg":"stream: started","id":"prpssh58"}
+{"time":"2025-03-20T20:51:38.090775228Z","level":"INFO","msg":"handler: started","stream_id":"prpssh58"}
+{"time":"2025-03-20T20:51:38.090814675Z","level":"INFO","msg":"writer: Do: started","stream_id":"prpssh58"}
+{"time":"2025-03-20T20:51:38.090804658Z","level":"INFO","msg":"sender: started","stream_id":"prpssh58"}
+{"time":"2025-03-20T20:51:38.583623695Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-20T20:51:50.256674966Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-20T20:51:50.257104308Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-20T20:51:51.25769164Z","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-03-20T20:51:51.878253161Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-20T20:51:53.684869979Z","level":"INFO","msg":"stream: closing","id":"prpssh58"}
+{"time":"2025-03-20T20:51:53.684899434Z","level":"INFO","msg":"handler: closed","stream_id":"prpssh58"}
+{"time":"2025-03-20T20:51:53.684929766Z","level":"INFO","msg":"writer: Close: closed","stream_id":"prpssh58"}
+{"time":"2025-03-20T20:51:53.684996499Z","level":"INFO","msg":"sender: closed","stream_id":"prpssh58"}
+{"time":"2025-03-20T20:51:53.685032147Z","level":"INFO","msg":"stream: closed","id":"prpssh58"}

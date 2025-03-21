@@ -21,12 +21,12 @@ from elliptic_files.FEM_Solver import FEMSolver
 def elliptic_experiment():
     config = ConfigDict()
     config.verbose = False
-    config.train = True
+    config.train = False
     config.nn_model = 5000
     config.KL_expansion = 2
 
     # DeepGala
-    config.deepgala = True
+    config.deepgala = False
 
     # Inverse problem parameters
     config.noise_level = 1e-4
@@ -35,9 +35,9 @@ def elliptic_experiment():
     config.fem_solver = 50
 
     # MCMC configuration
-    config.FEM_MCMC = False
-    config.NN_MCMC = True
-    config.dgala_MCMC = True
+    config.fem_mcmc = False
+    config.nn_mcmc = False
+    config.dgala_mcmc = False
 
     config.proposal = "random_walk"
     config.proposal_variance = 1e-3
@@ -45,8 +45,8 @@ def elliptic_experiment():
     config.FEM_h = 50
 
     # Delayed Acceptance
-    config.DA_MCMC_nn = True
-    config.DA_MCMC_dgala = True
+    config.da_mcmc_nn = False
+    config.da_mcmc_dgala = False
     config.iter_mcmc = 1000000
     config.iter_da = 20000
 
@@ -142,7 +142,7 @@ def run_experiment(config_experiment,device):
                                               vert=config_experiment.fem_solver)
     
     # Step 4: Neural Network Surrogate for MCMC
-    if config_experiment.NN_MCMC:
+    if config_experiment.nn_mcmc:
         print(f"Starting MCMC with NN_s{config_experiment.nn_model}")
         nn_surrogate_model = torch.load(f"./Elliptic/models/MDNN_s{config_experiment.nn_model}.pth")
         nn_surrogate_model.eval()
@@ -151,7 +151,7 @@ def run_experiment(config_experiment,device):
         np.save(f'./Elliptic/results/NN_ss{config_experiment.nn_model}_var{config_experiment.noise_level}.npy', nn_samples[0])
     
     # Step 5: DeepGaLA Surrogate for MCMC
-    if config_experiment.dgala_MCMC:
+    if config_experiment.dgala_mcmc:
         print(f"Starting MCMC with DeepGaLA_s{config_experiment.nn_model}")
         llp = torch.load(f"./Elliptic/models/elliptic_dgala_{config_experiment.nn_model}.pth")
         llp.model.set_last_layer("output_layer")  # Re-register hooks
@@ -160,14 +160,14 @@ def run_experiment(config_experiment,device):
     
     # Step 6: MCMC FEM Samples (if enabled)
     fem_path = f'./Elliptic/results/FEM_var{config_experiment.noise_level}.npy'
-    if config_experiment.FEM_MCMC:
+    if config_experiment.fem_mcmc:
         print("Starting MCMC with FEM")
         fem_solver = FEMSolver(np.zeros(2), vert=config_experiment.FEM_h)
         fem_samples = run_mcmc_chain(fem_solver, obs_points, sol_test, config_experiment, device)
         np.save(fem_path, fem_samples[0])
 
     # Step 7: Delayed Acceptance for NN
-    if config_experiment.DA_MCMC_dgala:
+    if config_experiment.da_mcmc_nn:
         print(f"Starting MCMC-DA with NN_s{config_experiment.nn_model} and FEM")
         nn_surrogate_model = torch.load(f"./Elliptic/models/MDNN_s{config_experiment.nn_model}.pth")
         nn_surrogate_model.eval()
@@ -181,12 +181,11 @@ def run_experiment(config_experiment,device):
                         iter_mcmc=config_experiment.iter_mcmc, iter_da = config_experiment.iter_da,
                         step_size=config_experiment.proposal_variance, device=device )
         
-        inner_mh,inner_accepted = elliptic_mcmcda.run_chain(verbose=config_experiment.verbose)
-        mcmc_da_res_nn = np.vstack([mcmc_da_res_nn, [inner_mh, inner_accepted, inner_accepted / inner_mh]])
-        np.save(f'./Elliptic/results/mcmc_da_nn_{config_experiment.nn_model}_{config_experiment.noise_level}.npy', mcmc_da_res_nn)
+        acceptance_res = elliptic_mcmcda.run_chain(verbose=config_experiment.verbose)
+        np.save(f'./Elliptic/results/mcmc_da_nn_{config_experiment.nn_model}_{config_experiment.noise_level}.npy', acceptance_res)
 
     # Step 8: Delayed Acceptance for Dgala
-    if config_experiment.DA_MCMC_nn:
+    if config_experiment.da_mcmc_dgala:
         print(f"Starting MCMC-DA with DGALA_s{config_experiment.nn_model} and FEM")
         mcmc_da_res_dgala = np.empty((0, 3))  # 0 rows, 3 columns (for inner_mh, inner_accepted, acceptance_ratio)
 
@@ -201,24 +200,22 @@ def run_experiment(config_experiment,device):
                         iter_mcmc=config_experiment.iter_mcmc, iter_da = config_experiment.iter_da,
                         step_size=config_experiment.proposal_variance, device=device)
         
-        inner_mh,inner_accepted = elliptic_mcmcda.run_chain(verbose=config_experiment.verbose)
-        mcmc_da_res_dgala = np.vstack([mcmc_da_res_dgala, [inner_mh, inner_accepted, inner_accepted / inner_mh]])
-        np.save(f'./Elliptic/results/mcmc_da_dgala_{config_experiment.nn_model}_{config_experiment.noise_level}.npy', mcmc_da_res_dgala)
-
+        acceptance_res = elliptic_mcmcda.run_chain(verbose=config_experiment.verbose)
+        np.save(f'./Elliptic/results/mcmc_da_dgala_{config_experiment.nn_model}_{config_experiment.noise_level}.npy', acceptance_res)
 
 # Main loop for different sample sizes
-def main(verbose,N,train,deepgala, noise_level,FEM_MCMC,NN_MCMC,dgala_MCMC,DA_MCMC_nn,DA_MCMC_dgala, device):
+def main(verbose,N,train,deepgala, noise_level,fem_mcmc,nn_mcmc,dgala_mcmc,da_mcmc_nn,da_mcmc_dgala, device):
     config_experiment = elliptic_experiment()
     config_experiment.verbose = verbose
     config_experiment.nn_model = N 
     config_experiment.train = train
     config_experiment.deepgala = deepgala
     config_experiment.noise_level = noise_level
-    config_experiment.FEM_MCMC = FEM_MCMC
-    config_experiment.NN_MCMC = NN_MCMC
-    config_experiment.dgala_MCMC = dgala_MCMC
-    config_experiment.DA_MCMC_nn = DA_MCMC_nn
-    config_experiment.DA_MCMC_dgala = DA_MCMC_dgala
+    config_experiment.fem_mcmc = fem_mcmc
+    config_experiment.nn_mcmc = nn_mcmc
+    config_experiment.dgala_mcmc = dgala_mcmc
+    config_experiment.da_mcmc_nn = da_mcmc_nn
+    config_experiment.da_mcmc_dgala = da_mcmc_dgala
     run_experiment(config_experiment,device)
 
 if __name__ == "__main__":

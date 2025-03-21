@@ -6,6 +6,15 @@ from typing import Tuple, Callable, Optional
 from .deep_models import Dense
 import inspect
 
+
+def stat_ar(x, every=2000):
+    split = x.shape[0] // every
+    means_every = np.mean(x[:split * every].reshape(split, every), axis=1)  # Reshape and calculate means
+    mean = np.mean(means_every)
+    std = np.std(means_every)
+    return mean, std, means_every
+
+
 def get_decorated_methods(cls,decorator):
     methods = inspect.getmembers(cls, predicate=inspect.ismethod)
     decorated_methods = [name for name, method in methods if getattr(method, decorator, False)]

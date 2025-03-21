@@ -1,0 +1,8 @@
+{"time":"2025-03-20T20:56:37.305850604Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-20T20:56:37.305899518Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250320_205637-kiadnoeq/logs/debug-core.log"}
+{"time":"2025-03-20T20:56:37.414755428Z","level":"INFO","msg":"created new stream","id":"kiadnoeq"}
+{"time":"2025-03-20T20:56:37.414810915Z","level":"INFO","msg":"stream: started","id":"kiadnoeq"}
+{"time":"2025-03-20T20:56:37.414899065Z","level":"INFO","msg":"writer: Do: started","stream_id":"kiadnoeq"}
+{"time":"2025-03-20T20:56:37.414953664Z","level":"INFO","msg":"sender: started","stream_id":"kiadnoeq"}
+{"time":"2025-03-20T20:56:37.415025076Z","level":"INFO","msg":"handler: started","stream_id":"kiadnoeq"}
+{"time":"2025-03-20T20:56:37.797136999Z","level":"INFO","msg":"Starting system monitor"}

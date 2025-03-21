@@ -1,0 +1,21 @@
+{"time":"2025-03-20T18:17:08.104953358Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-20T18:17:08.104977695Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250320_181708-j34517rc/logs/debug-core.log"}
+{"time":"2025-03-20T18:17:08.209370781Z","level":"INFO","msg":"created new stream","id":"j34517rc"}
+{"time":"2025-03-20T18:17:08.209393113Z","level":"INFO","msg":"stream: started","id":"j34517rc"}
+{"time":"2025-03-20T18:17:08.209423835Z","level":"INFO","msg":"handler: started","stream_id":"j34517rc"}
+{"time":"2025-03-20T18:17:08.209432852Z","level":"INFO","msg":"sender: started","stream_id":"j34517rc"}
+{"time":"2025-03-20T18:17:08.209441822Z","level":"INFO","msg":"writer: Do: started","stream_id":"j34517rc"}
+{"time":"2025-03-20T18:17:08.556080218Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-20T18:17:08.7785948Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-03-20T18:17:20.697597475Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-03-20T18:17:20.738332881Z","level":"INFO","msg":"Pausing system monitor"}
+{"time":"2025-03-20T18:17:22.616393917Z","level":"INFO","msg":"Resuming system monitor"}
+{"time":"2025-03-20T18:17:22.62689562Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-20T18:17:22.627343385Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-20T18:17:23.432395302Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-20T18:17:23.628154342Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading summary, console logs","runtime_seconds":0.195465293}],"total_operations":1}}
+{"time":"2025-03-20T18:17:24.724108856Z","level":"INFO","msg":"stream: closing","id":"j34517rc"}
+{"time":"2025-03-20T18:17:24.724127281Z","level":"INFO","msg":"handler: closed","stream_id":"j34517rc"}
+{"time":"2025-03-20T18:17:24.724137848Z","level":"INFO","msg":"writer: Close: closed","stream_id":"j34517rc"}
+{"time":"2025-03-20T18:17:24.72415706Z","level":"INFO","msg":"sender: closed","stream_id":"j34517rc"}
+{"time":"2025-03-20T18:17:24.724205196Z","level":"INFO","msg":"stream: closed","id":"j34517rc"}

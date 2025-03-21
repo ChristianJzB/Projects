@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # Define different values of N for experiments
-N_VALUES=(100 150 200 250)  # Adjust as needed
+N_VALUES=(250 500 750 1000 1500 2500)  # Adjust as needed
 
 # Define default values for parameters (change as needed)
 VERBOSE=""
-TRAIN=""  # Set empty "" if you want default (False)
-DEEPGALA=""      # Empty means default (False)
+TRAIN="--train"  # Set empty "" if you want default (False)
+DEEPGALA="--deepgala"      # Empty means default (False)
 NOISE_LEVEL="--noise_level 1e-4"
 FEM_MCMC="--fem_mcmc"
 NN_MCMC="--nn_mcmc"  # Example: enabled
@@ -34,7 +34,7 @@ for N in "${N_VALUES[@]}"; do
 #$ -q gpu
 #$ -l gpu=1 
 #$ -l h_vmem=40G
-#$ -l h_rt=10:00:00 
+#$ -l h_rt=5:00:00 
 
 # Load necessary modules
 . /etc/profile.d/modules.sh

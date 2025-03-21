@@ -15,10 +15,30 @@ from .FEM_Solver import FEMSolver
 from .train_elliptic import train_elliptic,generate_data,samples_param
 
 
-def deepgala_data_fit(samples,nparameters,device):
-    data_parameters = samples_param(samples*2, nparam=nparameters)
-    param_train, param_test = data_parameters[:samples,:],  data_parameters[samples:,:]
-    data_int,left_bc,right_bc = generate_data(samples, param = param_train)
+def generate_data_elliptic(size, param = None, nparam = 2, seed = 65647437836358831880808032086803839626):
+        #x = lhs(1, size).reshape(-1, 1)  # Latin Hypercube Sampling for x
+        sampler = qmc.LatinHypercube(d=1, seed=seed)
+        x = sampler.random(n=size)
+
+        if param is None:
+            param = samples_param(size=size, nparam= nparam,seed=seed)
+        else:
+            param = param[:size,:]
+
+        x_tensor = torch.Tensor(x)
+        param_tensor = torch.Tensor(param)
+
+        data_int = torch.cat([x_tensor, param_tensor], axis=1).float()
+        left_bc = torch.cat([torch.zeros_like(x_tensor).float(), param_tensor], axis=1).float()
+        right_bc = torch.cat([torch.ones_like(x_tensor).float(), param_tensor], axis=1).float()
+
+        return data_int, left_bc, right_bc  
+
+
+def deepgala_data_fit(samples,nparameters,device,seed):
+    # data_parameters = samples_param(samples*2, nparam=nparameters)
+    # param_train, param_test = data_parameters[:samples,:],  data_parameters[samples:,:]
+    data_int,left_bc,right_bc = generate_data_elliptic(samples, nparam=nparameters,seed=seed)
     data_int,left_bc,right_bc  = data_int.to(device),left_bc.to(device),right_bc.to(device)
     
     dgala_data = {"data_fit": {"pde":data_int, "left_bc":left_bc,"right_bc":right_bc}, 

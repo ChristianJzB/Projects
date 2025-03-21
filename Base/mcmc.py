@@ -165,6 +165,7 @@ class MCMCDA(torch.nn.Module):
     def run_chain(self, samples = False, verbose=True):
         """Run Metropolis-Hastings """
         theta = torch.empty((self.nparameters), device=self.device).uniform_(-1, 1)
+        acceptance_list = torch.zeros((self.iter_da), device=self.device)
         samples_outer = torch.zeros((self.iter_mcmc, self.nparameters), device=self.device)
         samples_inner = []
         # Initialize separate dt for each chai
@@ -233,6 +234,7 @@ class MCMCDA(torch.nn.Module):
                 if torch.rand(1, device=self.device) < a:
                     theta = theta_proposal.clone()
                     inner_accepted += 1
+                    acceptance_list[inner_mh-1] +=1
 
             if samples:
                 # Store the current sample and step size
@@ -250,9 +252,9 @@ class MCMCDA(torch.nn.Module):
         if verbose:
             print(f"Times inner step {inner_mh:.4f}, Acceptance Rate: {inner_accepted / inner_mh:.4f}")
         if samples:
-            return inner_mh,inner_accepted,torch.tensor(samples_inner),samples_outer
+            return torch.tensor(samples_inner),samples_outer
         else:
-            return inner_mh,inner_accepted
+            return acceptance_list
     
 
             

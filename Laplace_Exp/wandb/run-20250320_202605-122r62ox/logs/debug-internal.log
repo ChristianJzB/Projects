@@ -1,0 +1,17 @@
+{"time":"2025-03-20T20:26:05.317729687Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-20T20:26:05.317757925Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250320_202605-122r62ox/logs/debug-core.log"}
+{"time":"2025-03-20T20:26:05.420835554Z","level":"INFO","msg":"created new stream","id":"122r62ox"}
+{"time":"2025-03-20T20:26:05.42085771Z","level":"INFO","msg":"stream: started","id":"122r62ox"}
+{"time":"2025-03-20T20:26:05.420870086Z","level":"INFO","msg":"writer: Do: started","stream_id":"122r62ox"}
+{"time":"2025-03-20T20:26:05.420889727Z","level":"INFO","msg":"handler: started","stream_id":"122r62ox"}
+{"time":"2025-03-20T20:26:05.420872803Z","level":"INFO","msg":"sender: started","stream_id":"122r62ox"}
+{"time":"2025-03-20T20:26:05.945979167Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-20T20:30:24.632320676Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-20T20:30:24.632760329Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-20T20:30:25.633467487Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.417668525},{"desc":"uploading config.yaml","runtime_seconds":0.203992795,"progress":"500B/500B"},{"desc":"uploading output.log","runtime_seconds":0.203959709},{"desc":"uploading models/dnn_models/Heat_MDNN_s1000.pth","runtime_seconds":0.014578681,"progress":"9.6KB/9.6KB"}],"total_operations":4}}
+{"time":"2025-03-20T20:30:26.954895456Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-20T20:30:28.582072675Z","level":"INFO","msg":"stream: closing","id":"122r62ox"}
+{"time":"2025-03-20T20:30:28.582102335Z","level":"INFO","msg":"handler: closed","stream_id":"122r62ox"}
+{"time":"2025-03-20T20:30:28.582120344Z","level":"INFO","msg":"writer: Close: closed","stream_id":"122r62ox"}
+{"time":"2025-03-20T20:30:28.582170949Z","level":"INFO","msg":"sender: closed","stream_id":"122r62ox"}
+{"time":"2025-03-20T20:30:28.582191091Z","level":"INFO","msg":"stream: closed","id":"122r62ox"}

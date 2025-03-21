@@ -167,7 +167,7 @@ class DNN(torch.nn.Module):
                 ('layer_%d' % i, torch.nn.Linear(layers[i], layers[i+1])))
             layer_list.append(('activation_%d' % i, self.activation_fn))
         layer_list.append(
-            ('layer_%d' % (self.depth - 1), torch.nn.Linear(layers[-2], layers[-1]))
+            ('output_layer', torch.nn.Linear(layers[-2], layers[-1]))
         )
         layerDict = OrderedDict(layer_list)
         

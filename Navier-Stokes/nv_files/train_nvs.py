@@ -384,8 +384,9 @@ def data_set_cat(data_set, theta):
 
 def data_vor_set_preparing(config,batch, initial_points,w0,theta,batch_size_interior,epoch):
     initial_points_ = data_set_cat(initial_points,theta)
+    batch_ic = config.chunks*config.points_per_chunk 
 
-    indices = sample_indices_ic(initial_points_.shape[0],config.batch_ic, config.seed + epoch)
+    indices = sample_indices_ic(initial_points_.shape[0],batch_ic, config.seed + epoch)
 
     initial_points_ = initial_points_[indices]
 
@@ -518,11 +519,11 @@ def train_vorticity_dg(config,device):
 
         # Save the model checkpoint
         if (epoch % 100 == 0) and (epoch != 0):
-            torch.save(dg_NVs, f"./models/{wandb_config.name}.pth")
+            torch.save(dg_NVs, f"./Navier-Stokes/models/{wandb_config.name}.pth")
 
     # Save final model
-    torch.save(dg_NVs, f"./models/{wandb_config.name}.pth")
-    wandb.save(f"./models/{wandb_config.name}.pth")
+    torch.save(dg_NVs, f"./Navier-Stokes/models/{wandb_config.name}.pth")
+    wandb.save(f"./Navier-Stokes/models/{wandb_config.name}.pth")
 
     # Finish W&B run
     wandb.finish()
