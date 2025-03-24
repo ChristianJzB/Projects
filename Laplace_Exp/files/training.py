@@ -99,9 +99,26 @@ def train_dga(config, device):
             "learning_rate": scheduler.get_last_lr()[0],
             **{f"loss_{key}": value.item() for key, value in losses.items()},
         })
-        # Save the model checkpoint
-        # if (epoch % 1000 == 0) and (epoch != 0):
-        #     torch.save(dg_model, f"./models/{wandb_config.name}.pth")
+
+    optimizer = torch.optim.LBFGS(
+        dg_model.model.parameters(), lr=config.learning_rate, max_iter=50000, max_eval=None, tolerance_grad=1e-5, tolerance_change=1.0 * np.finfo(float).eps,line_search_fn="strong_wolfe" 
+        )
+    
+    print("Starting Training: LBFGS optimizer")
+
+    data_int,ini_c, left_bc, right_bc = generate_data(size= config.batch_size,seed = seed + epoch, burgers= type_problem)
+    data_int,ini_c, left_bc, right_bc = data_int.to(device),ini_c.to(device),left_bc.to(device), right_bc.to(device)    
+
+    def loss_func_train():
+        optimizer.zero_grad()
+        total_loss,losses = dg_model.total_loss(data_int, ini_c,left_bc, right_bc, loss_fn)
+
+        total_loss.backward() 
+
+        return total_loss
+
+    optimizer.step(loss_func_train) 
+
 
     # Save final model
     torch.save(dg_model, f"./models/dnn_models/{wandb_config.name}.pth")
