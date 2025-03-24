@@ -20,8 +20,13 @@ from nv_files.utilities import generate_noisy_obs,deepgala_data_fit
 def nv_experiment():
     config = ConfigDict()
     config.verbose = False
+
+    # Train config
     config.train = False
+    config.iterations  = 5000
     config.nn_model = 250
+    config.hidden_dim = 200
+    config.num_layers = 2
     config.KL_expansion = 1
 
     # DeepGala
@@ -69,7 +74,7 @@ def get_vorticity_train_config():
     # Model-specific settings
     config.model = ConfigDict()
     config.model.input_dim = 3 + 2
-    config.model.hidden_dim = 300
+    config.model.hidden_dim = 200
     config.model.num_layers = 4
     config.model.out_dim = 2
     config.model.activation = "tanh"
@@ -81,7 +86,7 @@ def get_vorticity_train_config():
     config.model.period_emb = ConfigDict({"period":(1.0, 1.0), "axis":(0, 1) })
 
     # Fourier embeddings
-    config.model.fourier_emb = ConfigDict({"embed_scale":1,"embed_dim":300,"exclude_last_n":2})
+    config.model.fourier_emb = ConfigDict({"embed_scale":1,"embed_dim":200,"exclude_last_n":2})
 
     # Navier Stokes Config
     config.nu = 1e-2
@@ -127,11 +132,18 @@ def run_mcmc_chain(surrogate_model, obs_points, sol_test, config_experiment,devi
 
 # Main experiment runner
 def run_experiment(config_experiment,device):
+    # Model Paths
+    nn_path_model = f"./Navier-Stokes/models/vorticity_hl{config_experiment.num_layers}_s{config_experiment.nn_model}_kl{config_experiment.KL_expansion}.pth"
+    dgala_path_model = f"./Navier-Stokes/models/nv_dgala_hl{config_experiment.num_layers}_s{config_experiment.nn_model}_kl{config_experiment.KL_expansion}.pth"
+
     # Step 1: Training Phase (if needed)
     if config_experiment.train:
         print(f"Running training with {config_experiment.nn_model} samples...")
         config = get_vorticity_train_config()
-        config.wandb.name = f"vorticity_kl{config_experiment.KL_expansion}_s{config_experiment.nn_model}"
+        config.wandb.name = f"vorticity_kl{config_experiment.KL_expansion}_s{config_experiment.nn_model}_hl{config_experiment.num_layers}"
+        config.iterations = config_experiment.iterations
+        config.model.hidden_dim = config_experiment.hidden_dim
+        config.model.num_layers = config_experiment.num_layers
         config.points_per_chunk = config_experiment.nn_model
         config.batch_ic = 16*config_experiment.nn_model
         config.nparameters = config_experiment.KL_expansion
@@ -141,7 +153,7 @@ def run_experiment(config_experiment,device):
     # Step 2: Fit deepGALA
     if config_experiment.deepgala:
         print(f"Starting DeepGaLA fitting for NN_s{config_experiment.nn_model}")
-        nn_surrogate_model = torch.load(f"./Navier-Stokes/models/vorticity_kl{config_experiment.KL_expansion}_s{config_experiment.nn_model}.pth")
+        nn_surrogate_model = torch.load(nn_path_model)
         nn_surrogate_model.eval()
 
         data_fit = deepgala_data_fit(config_experiment.nn_model,config_experiment.KL_expansion,device)
@@ -149,7 +161,7 @@ def run_experiment(config_experiment,device):
         llp.fit(data_fit)
         llp.optimize_marginal_likelihood()
         clear_hooks(llp)
-        torch.save(llp, f"./Navier-Stokes/models/nv_dgala_kl{config_experiment.KL_expansion}_s{config_experiment.nn_model}.pth")
+        torch.save(llp, dgala_path_model)
 
     # Step 3: Generate noisy observations for Inverse Problem
     obs_points, sol_test, obs_indices,_ = generate_noisy_obs(obs=config_experiment.num_observations,
@@ -159,23 +171,23 @@ def run_experiment(config_experiment,device):
     # Step 4: Neural Network Surrogate for MCMC
     if config_experiment.nn_mcmc:
         print(f"Starting MCMC with NN_s{config_experiment.nn_model}")
-        nn_surrogate_model = torch.load(f"./Navier-Stokes/models/vorticity_kl{config_experiment.KL_expansion}_s{config_experiment.nn_model}.pth")
+        nn_surrogate_model = torch.load(nn_path_model)
         nn_surrogate_model.eval()
         nn_samples = run_mcmc_chain(nn_surrogate_model, obs_points, sol_test, config_experiment,device)
-        np.save(f'./Navier-Stokes/results/nn_kl{config_experiment.KL_expansion}_ss{config_experiment.nn_model}_var{config_experiment.noise_level}.npy', nn_samples[0])
+        np.save(f'./Navier-Stokes/results/nn_hl{config_experiment.num_layers}_s{config_experiment.nn_model}_kl{config_experiment.KL_expansion}_var{config_experiment.noise_level}.npy', nn_samples[0])
     
     # Step 5: DeepGaLA Surrogate for MCMC
     if config_experiment.dgala_mcmc:
         print(f"Starting MCMC with DeepGaLA_s{config_experiment.nn_model}")
-        llp = torch.load(f"./Navier-Stokes/models/nv_dgala_{config_experiment.nn_model}.pth")
+        llp = torch.load(dgala_path_model)
         llp.model.set_last_layer("output_layer")  # Re-register hooks
         nn_samples = run_mcmc_chain(llp, obs_points, sol_test, config_experiment, device)
-        np.save(f'./Navier-Stokes/results/dgala_kl{config_experiment.KL_expansion}_ss{config_experiment.nn_model}_var{config_experiment.noise_level}.npy', nn_samples[0])
+        np.save(f'./Navier-Stokes/results/dgala_hl{config_experiment.num_layers}_s{config_experiment.nn_model}_kl{config_experiment.KL_expansion}_var{config_experiment.noise_level}.npy', nn_samples[0])
 
     # Step 7: Delayed Acceptance for NN
     if config_experiment.da_mcmc_nn:
         print(f"Starting MCMC-DA with NN_s{config_experiment.nn_model} and PSM")
-        nn_surrogate_model = torch.load(f"./Navier-Stokes/models/vorticity_kl{config_experiment.KL_expansion}_s{config_experiment.nn_model}.pth")
+        nn_surrogate_model = torch.load(nn_path_model)
         nn_surrogate_model.eval()
 
         nv_mcmcda = NVMCMCDA(nn_surrogate_model,observation_locations= obs_points, observations_values = sol_test, 
@@ -185,13 +197,13 @@ def run_experiment(config_experiment,device):
                         step_size=config_experiment.proposal_variance, device=device )
         
         acceptance_res = nv_mcmcda.run_chain(verbose=config_experiment.verbose)
-        np.save(f'./Navier-Stokes/results/mcmc_da_nn_{config_experiment.nn_model}_kl{config_experiment.KL_expansion}_{config_experiment.noise_level}.npy', acceptance_res)
+        np.save(f'./Navier-Stokes/results/mcmc_da_nn_hl{config_experiment.num_layers}_s{config_experiment.nn_model}_kl{config_experiment.KL_expansion}_var{config_experiment.noise_level}.npy', acceptance_res)
 
     # Step 8: Delayed Acceptance for Dgala
     if config_experiment.da_mcmc_dgala:
         print(f"Starting MCMC-DA with DGALA_s{config_experiment.nn_model} and PSM")
 
-        llp = torch.load(f"./Navier-Stokes/models/elliptic_dgala_{config_experiment.nn_model}.pth")
+        llp = torch.load(dgala_path_model)
         llp.model.set_last_layer("output_layer")  # Re-register hooks
 
         nv_mcmcda =  NVMCMCDA(llp,observation_locations= obs_points, observations_values = sol_test, 
@@ -201,7 +213,7 @@ def run_experiment(config_experiment,device):
                         step_size=config_experiment.proposal_variance, device=device )
         
         acceptance_res = nv_mcmcda.run_chain(verbose=config_experiment.verbose)
-        np.save(f'./Navier-Stokes/results/mcmc_da_dgala_{config_experiment.nn_model}_kl{config_experiment.KL_expansion}_{config_experiment.noise_level}.npy', acceptance_res)
+        np.save(f'./Navier-Stokes/results/mcmc_da_dgala_hl{config_experiment.num_layers}_s{config_experiment.nn_model}_kl{config_experiment.KL_expansion}_var{config_experiment.noise_level}.npy', acceptance_res)
 
 
 # Main loop for different sample sizes
