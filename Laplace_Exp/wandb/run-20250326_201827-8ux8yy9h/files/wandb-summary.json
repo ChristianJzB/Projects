@@ -1,0 +1,1 @@
+{"learning_rate":0.01,"_wandb":{"runtime":78},"loss_ubcr":1.673290171311237e-05,"train_loss":0.012351690791547298,"loss_uic":0.008644082583487034,"_runtime":9.680031543,"_step":1199,"epoch":1199,"loss_ubcl":9.507091453997418e-05,"loss_computation_time":0.001768350601196289,"loss_burgers":0.0035958043299615383,"_timestamp":1.7430203173458862e+09}

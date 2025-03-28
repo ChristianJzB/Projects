@@ -151,32 +151,32 @@ class Dense(nn.Module):
     
 # Deep neural network
 class DNN(torch.nn.Module):
-    def __init__(self, layers, activation = "tanh"):
+    def __init__(self,input_dim =1, out_dim=1,num_layers=2, hidden_dim=20, activation = "tanh"):
         super(DNN, self).__init__()
-
-        # Number of layers
-        self.depth = len(layers) - 1
-        
+        self.hidden_dim = hidden_dim
+        self.num_layers = num_layers
+        self.input_dim = input_dim
+        self.out_dim = out_dim
         self.activation = activation
-        self.activation_fn = _get_activation(self.activation)  # Ensure Swish is defined
-        
-        # The following loop organized the layers of the NN         
-        layer_list = list()
-        for i in range(self.depth - 1): 
-            layer_list.append(
-                ('layer_%d' % i, torch.nn.Linear(layers[i], layers[i+1])))
-            layer_list.append(('activation_%d' % i, self.activation_fn))
-        layer_list.append(
-            ('output_layer', torch.nn.Linear(layers[-2], layers[-1]))
-        )
-        layerDict = OrderedDict(layer_list)
-        
-        # Deploy layers
-        self.layers = torch.nn.Sequential(layerDict)
+
+        self.activation_fn = _get_activation(self.activation)
+
+        # Define hidden layers dynamically
+        self.hidden_layers = nn.ModuleList([
+            nn.Linear(self.hidden_dim if i > 0 else self.input_dim, self.hidden_dim)
+            for i in range(self.num_layers)
+        ])
+
+        self.output_layer = nn.Linear(in_features=self.hidden_dim, out_features=self.out_dim)
+
 
     def forward(self, x):
-        out = self.layers(x)
-        return out
+        for layer in self.hidden_layers:
+            x = layer(x)
+            x = self.activation_fn(x)
+        # Final output layer
+        x = self.output_layer(x)
+        return x
     
 
  # Deep neural network

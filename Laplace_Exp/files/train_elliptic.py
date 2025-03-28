@@ -135,7 +135,7 @@ def train_elliptic(config, device):
     dg_elliptic = Elliptic(config=config, device=device)
 
     loss_fn = torch.nn.MSELoss(reduction ='mean')
-    optimizer = torch.optim.Adam(dg_elliptic.model.parameters(), lr=config.learning_rate)
+    optimizer = torch.optim.AdamW(dg_elliptic.model.parameters(), lr=config.learning_rate, weight_decay=config.weight_decay)
     scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=config.decay_rate)  # Exponential decay scheduler
 
     for epoch in range(config.epochs):

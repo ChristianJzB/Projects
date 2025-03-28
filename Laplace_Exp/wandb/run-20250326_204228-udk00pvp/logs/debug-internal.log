@@ -1,0 +1,17 @@
+{"time":"2025-03-26T20:42:28.241086113Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-26T20:42:28.24109895Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_204228-udk00pvp/logs/debug-core.log"}
+{"time":"2025-03-26T20:42:28.344998314Z","level":"INFO","msg":"created new stream","id":"udk00pvp"}
+{"time":"2025-03-26T20:42:28.345045022Z","level":"INFO","msg":"stream: started","id":"udk00pvp"}
+{"time":"2025-03-26T20:42:28.34510046Z","level":"INFO","msg":"sender: started","stream_id":"udk00pvp"}
+{"time":"2025-03-26T20:42:28.345101451Z","level":"INFO","msg":"writer: Do: started","stream_id":"udk00pvp"}
+{"time":"2025-03-26T20:42:28.345125954Z","level":"INFO","msg":"handler: started","stream_id":"udk00pvp"}
+{"time":"2025-03-26T20:42:28.758942596Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-26T20:43:25.116620819Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-26T20:43:25.117095411Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-26T20:43:26.117682771Z","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-03-26T20:43:26.912998805Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-26T20:43:28.217383988Z","level":"INFO","msg":"stream: closing","id":"udk00pvp"}
+{"time":"2025-03-26T20:43:28.217404729Z","level":"INFO","msg":"handler: closed","stream_id":"udk00pvp"}
+{"time":"2025-03-26T20:43:28.217423505Z","level":"INFO","msg":"writer: Close: closed","stream_id":"udk00pvp"}
+{"time":"2025-03-26T20:43:28.217466637Z","level":"INFO","msg":"sender: closed","stream_id":"udk00pvp"}
+{"time":"2025-03-26T20:43:28.217502875Z","level":"INFO","msg":"stream: closed","id":"udk00pvp"}

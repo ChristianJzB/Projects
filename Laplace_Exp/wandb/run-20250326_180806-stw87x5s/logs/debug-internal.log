@@ -1,0 +1,17 @@
+{"time":"2025-03-26T18:08:06.312315279Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-26T18:08:06.312330688Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_180806-stw87x5s/logs/debug-core.log"}
+{"time":"2025-03-26T18:08:06.414965113Z","level":"INFO","msg":"created new stream","id":"stw87x5s"}
+{"time":"2025-03-26T18:08:06.414991289Z","level":"INFO","msg":"stream: started","id":"stw87x5s"}
+{"time":"2025-03-26T18:08:06.415045554Z","level":"INFO","msg":"writer: Do: started","stream_id":"stw87x5s"}
+{"time":"2025-03-26T18:08:06.415087203Z","level":"INFO","msg":"handler: started","stream_id":"stw87x5s"}
+{"time":"2025-03-26T18:08:06.415121601Z","level":"INFO","msg":"sender: started","stream_id":"stw87x5s"}
+{"time":"2025-03-26T18:08:07.044533251Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-26T18:09:14.934509071Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-26T18:09:14.935035904Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-26T18:09:15.936000419Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.527299344},{"desc":"uploading output.log","runtime_seconds":0.31659542,"progress":"35B/35B"},{"desc":"uploading models/dnn_models/Burgers_MDNN_s500.pth","runtime_seconds":0.011017108,"progress":"19.6KB/19.6KB"}],"total_operations":3}}
+{"time":"2025-03-26T18:09:16.857415029Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-26T18:09:18.280845398Z","level":"INFO","msg":"stream: closing","id":"stw87x5s"}
+{"time":"2025-03-26T18:09:18.28086459Z","level":"INFO","msg":"handler: closed","stream_id":"stw87x5s"}
+{"time":"2025-03-26T18:09:18.280872783Z","level":"INFO","msg":"writer: Close: closed","stream_id":"stw87x5s"}
+{"time":"2025-03-26T18:09:18.28091409Z","level":"INFO","msg":"sender: closed","stream_id":"stw87x5s"}
+{"time":"2025-03-26T18:09:18.280919667Z","level":"INFO","msg":"stream: closed","id":"stw87x5s"}

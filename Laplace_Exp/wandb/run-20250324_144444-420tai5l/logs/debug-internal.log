@@ -1,0 +1,17 @@
+{"time":"2025-03-24T14:44:44.140719837Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-24T14:44:44.140742298Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250324_144444-420tai5l/logs/debug-core.log"}
+{"time":"2025-03-24T14:44:44.245170441Z","level":"INFO","msg":"created new stream","id":"420tai5l"}
+{"time":"2025-03-24T14:44:44.245220044Z","level":"INFO","msg":"stream: started","id":"420tai5l"}
+{"time":"2025-03-24T14:44:44.245298817Z","level":"INFO","msg":"sender: started","stream_id":"420tai5l"}
+{"time":"2025-03-24T14:44:44.245300183Z","level":"INFO","msg":"writer: Do: started","stream_id":"420tai5l"}
+{"time":"2025-03-24T14:44:44.24531576Z","level":"INFO","msg":"handler: started","stream_id":"420tai5l"}
+{"time":"2025-03-24T14:44:44.702366911Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-24T14:46:18.86853698Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-24T14:46:18.86931154Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-24T14:46:19.830099142Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.538051255},{"desc":"uploading models/dnn_models/Burgers_MDNN_s1500.pth","runtime_seconds":0.01430825,"progress":"9.7KB/9.7KB"}],"total_operations":2}}
+{"time":"2025-03-24T14:46:20.744139536Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-24T14:46:22.034686542Z","level":"INFO","msg":"stream: closing","id":"420tai5l"}
+{"time":"2025-03-24T14:46:22.034723012Z","level":"INFO","msg":"handler: closed","stream_id":"420tai5l"}
+{"time":"2025-03-24T14:46:22.034753552Z","level":"INFO","msg":"writer: Close: closed","stream_id":"420tai5l"}
+{"time":"2025-03-24T14:46:22.034811372Z","level":"INFO","msg":"sender: closed","stream_id":"420tai5l"}
+{"time":"2025-03-24T14:46:22.034885142Z","level":"INFO","msg":"stream: closed","id":"420tai5l"}

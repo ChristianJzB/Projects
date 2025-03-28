@@ -1,0 +1,17 @@
+{"time":"2025-03-24T15:07:32.051787076Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-24T15:07:32.051806172Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250324_150732-rioizyaz/logs/debug-core.log"}
+{"time":"2025-03-24T15:07:32.155833904Z","level":"INFO","msg":"created new stream","id":"rioizyaz"}
+{"time":"2025-03-24T15:07:32.15586805Z","level":"INFO","msg":"stream: started","id":"rioizyaz"}
+{"time":"2025-03-24T15:07:32.155916372Z","level":"INFO","msg":"handler: started","stream_id":"rioizyaz"}
+{"time":"2025-03-24T15:07:32.155944751Z","level":"INFO","msg":"writer: Do: started","stream_id":"rioizyaz"}
+{"time":"2025-03-24T15:07:32.155943786Z","level":"INFO","msg":"sender: started","stream_id":"rioizyaz"}
+{"time":"2025-03-24T15:07:32.664635796Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-24T15:12:15.30951207Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-24T15:12:15.310070374Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-24T15:12:16.273028143Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.480550894}],"total_operations":1}}
+{"time":"2025-03-24T15:12:17.22488265Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-24T15:12:18.554598599Z","level":"INFO","msg":"stream: closing","id":"rioizyaz"}
+{"time":"2025-03-24T15:12:18.554628109Z","level":"INFO","msg":"handler: closed","stream_id":"rioizyaz"}
+{"time":"2025-03-24T15:12:18.554643161Z","level":"INFO","msg":"writer: Close: closed","stream_id":"rioizyaz"}
+{"time":"2025-03-24T15:12:18.554686662Z","level":"INFO","msg":"sender: closed","stream_id":"rioizyaz"}
+{"time":"2025-03-24T15:12:18.554715559Z","level":"INFO","msg":"stream: closed","id":"rioizyaz"}

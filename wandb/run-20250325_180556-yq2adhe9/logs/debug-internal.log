@@ -1,0 +1,12 @@
+{"time":"2025-03-25T18:05:56.677509781Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-25T18:05:56.677538987Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250325_180556-yq2adhe9/logs/debug-core.log"}
+{"time":"2025-03-25T18:05:56.783192866Z","level":"INFO","msg":"created new stream","id":"yq2adhe9"}
+{"time":"2025-03-25T18:05:56.783272117Z","level":"INFO","msg":"stream: started","id":"yq2adhe9"}
+{"time":"2025-03-25T18:05:56.783359263Z","level":"INFO","msg":"writer: Do: started","stream_id":"yq2adhe9"}
+{"time":"2025-03-25T18:05:56.783367329Z","level":"INFO","msg":"sender: started","stream_id":"yq2adhe9"}
+{"time":"2025-03-25T18:05:56.783404865Z","level":"INFO","msg":"handler: started","stream_id":"yq2adhe9"}
+{"time":"2025-03-25T18:05:58.115694825Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-25T19:17:25.415641506Z","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/christian-jb07-univeristy-of-edinburgh/Vorticity-Training-dg/yq2adhe9/file_stream"}
+{"time":"2025-03-25T19:30:35.207784906Z","level":"INFO","msg":"api: retrying HTTP error","status":500,"url":"https://api.wandb.ai/files/christian-jb07-univeristy-of-edinburgh/Vorticity-Training-dg/yq2adhe9/file_stream"}
+{"time":"2025-03-25T21:13:18.39456073Z","level":"ERROR","msg":"HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/files/christian-jb07-univeristy-of-edinburgh/Vorticity-Training-dg/yq2adhe9/file_stream"}
+{"time":"2025-03-25T21:13:18.394602122Z","level":"ERROR+4","msg":"filestream: fatal error: filestream: failed to upload: 404 Not Found path=files/christian-jb07-univeristy-of-edinburgh/Vorticity-Training-dg/yq2adhe9/file_stream: {\"error\":\"run Vorticity-Training-dg/yq2adhe9 not found while streaming file\"}"}

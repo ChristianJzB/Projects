@@ -1,0 +1,45 @@
+{
+  "os": "Linux-6.8.0-52-generic-x86_64-with-glibc2.35",
+  "python": "3.12.5",
+  "startedAt": "2025-03-27T13:24:39.312360Z",
+  "args": [
+    "--N",
+    "1000",
+    "--train",
+    "--weight_decay",
+    "1e-3",
+    "--deepgala",
+    "--noise_level",
+    "1e-4",
+    "--nn_mcmc",
+    "--dgala_mcmc",
+    "--verbose"
+  ],
+  "program": "/home/s2113174/Projects-1/Elliptic/experiments/elliptic_experiment.py",
+  "codePath": "Elliptic/experiments/elliptic_experiment.py",
+  "git": {
+    "remote": "https://github.com/ChristianJzB/Projects.git",
+    "commit": "2b952c498696b8943129086bba844aaf8c417505"
+  },
+  "email": "s2113174@ed.ac.uk",
+  "root": "/home/s2113174/Projects-1",
+  "host": "MATHS-SELF-2016",
+  "username": "s2113174",
+  "executable": "/home/s2113174/anaconda3/envs/fenicsx-env/bin/python",
+  "codePathLocal": "Elliptic/experiments/elliptic_experiment.py",
+  "cpu_count": 10,
+  "cpu_count_logical": 12,
+  "disk": {
+    "/": {
+      "total": "981132795904",
+      "used": "99655307264"
+    }
+  },
+  "memory": {
+    "total": "32809201664"
+  },
+  "cpu": {
+    "count": 10,
+    "countLogical": 12
+  }
+}

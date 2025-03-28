@@ -1,0 +1,17 @@
+{"time":"2025-03-27T13:51:26.687795998Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-27T13:51:26.687808596Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250327_135126-td5k6fth/logs/debug-core.log"}
+{"time":"2025-03-27T13:51:26.790263187Z","level":"INFO","msg":"created new stream","id":"td5k6fth"}
+{"time":"2025-03-27T13:51:26.790282485Z","level":"INFO","msg":"stream: started","id":"td5k6fth"}
+{"time":"2025-03-27T13:51:26.790773033Z","level":"INFO","msg":"writer: Do: started","stream_id":"td5k6fth"}
+{"time":"2025-03-27T13:51:26.790951108Z","level":"INFO","msg":"handler: started","stream_id":"td5k6fth"}
+{"time":"2025-03-27T13:51:26.791055495Z","level":"INFO","msg":"sender: started","stream_id":"td5k6fth"}
+{"time":"2025-03-27T13:51:27.218002634Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-27T14:17:19.01192604Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-27T14:17:19.012310361Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-27T14:17:20.013374173Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading Elliptic/models/elliptic_s2500_wd0.001.pth","runtime_seconds":0.411558932,"progress":"10.1KB/10.1KB"},{"desc":"uploading wandb-summary.json","runtime_seconds":0.411534624,"progress":"374B/374B"},{"desc":"saving job artifact","runtime_seconds":0.411051804},{"desc":"uploading config.yaml","runtime_seconds":0.202319536,"progress":"480B/480B"},{"desc":"uploading output.log","runtime_seconds":0.202286418}],"total_operations":5}}
+{"time":"2025-03-27T14:17:20.931754241Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-27T14:17:22.257569307Z","level":"INFO","msg":"stream: closing","id":"td5k6fth"}
+{"time":"2025-03-27T14:17:22.25758663Z","level":"INFO","msg":"handler: closed","stream_id":"td5k6fth"}
+{"time":"2025-03-27T14:17:22.25759827Z","level":"INFO","msg":"writer: Close: closed","stream_id":"td5k6fth"}
+{"time":"2025-03-27T14:17:22.257651587Z","level":"INFO","msg":"sender: closed","stream_id":"td5k6fth"}
+{"time":"2025-03-27T14:17:22.257675809Z","level":"INFO","msg":"stream: closed","id":"td5k6fth"}

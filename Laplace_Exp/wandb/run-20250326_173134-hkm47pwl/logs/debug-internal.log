@@ -1,0 +1,17 @@
+{"time":"2025-03-26T17:31:34.41218583Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-26T17:31:34.412194712Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_173134-hkm47pwl/logs/debug-core.log"}
+{"time":"2025-03-26T17:31:34.515709664Z","level":"INFO","msg":"created new stream","id":"hkm47pwl"}
+{"time":"2025-03-26T17:31:34.515777225Z","level":"INFO","msg":"stream: started","id":"hkm47pwl"}
+{"time":"2025-03-26T17:31:34.515889754Z","level":"INFO","msg":"sender: started","stream_id":"hkm47pwl"}
+{"time":"2025-03-26T17:31:34.515925373Z","level":"INFO","msg":"writer: Do: started","stream_id":"hkm47pwl"}
+{"time":"2025-03-26T17:31:34.515950453Z","level":"INFO","msg":"handler: started","stream_id":"hkm47pwl"}
+{"time":"2025-03-26T17:31:34.968884536Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-26T17:32:51.172502622Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-26T17:32:51.172980985Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-26T17:32:52.173199686Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.430298867},{"desc":"uploading config.yaml","runtime_seconds":0.222844882,"progress":"500B/500B"},{"desc":"uploading output.log","runtime_seconds":0.22281125,"progress":"35B/35B"}],"total_operations":3}}
+{"time":"2025-03-26T17:32:53.072254337Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-26T17:32:54.394623753Z","level":"INFO","msg":"stream: closing","id":"hkm47pwl"}
+{"time":"2025-03-26T17:32:54.394655892Z","level":"INFO","msg":"handler: closed","stream_id":"hkm47pwl"}
+{"time":"2025-03-26T17:32:54.394673538Z","level":"INFO","msg":"writer: Close: closed","stream_id":"hkm47pwl"}
+{"time":"2025-03-26T17:32:54.394749221Z","level":"INFO","msg":"sender: closed","stream_id":"hkm47pwl"}
+{"time":"2025-03-26T17:32:54.394806104Z","level":"INFO","msg":"stream: closed","id":"hkm47pwl"}

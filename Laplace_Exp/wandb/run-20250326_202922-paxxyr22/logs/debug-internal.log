@@ -1,0 +1,17 @@
+{"time":"2025-03-26T20:29:22.308991268Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-26T20:29:22.309005874Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_202922-paxxyr22/logs/debug-core.log"}
+{"time":"2025-03-26T20:29:22.412588321Z","level":"INFO","msg":"created new stream","id":"paxxyr22"}
+{"time":"2025-03-26T20:29:22.412617957Z","level":"INFO","msg":"stream: started","id":"paxxyr22"}
+{"time":"2025-03-26T20:29:22.412647553Z","level":"INFO","msg":"writer: Do: started","stream_id":"paxxyr22"}
+{"time":"2025-03-26T20:29:22.412698122Z","level":"INFO","msg":"handler: started","stream_id":"paxxyr22"}
+{"time":"2025-03-26T20:29:22.412736041Z","level":"INFO","msg":"sender: started","stream_id":"paxxyr22"}
+{"time":"2025-03-26T20:29:22.725734623Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-26T20:30:19.645920071Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-26T20:30:19.646357582Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-26T20:30:20.646775675Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.489273554},{"desc":"uploading output.log","runtime_seconds":0.305064814,"progress":"35B/35B"},{"desc":"uploading config.yaml","runtime_seconds":0.305038642,"progress":"500B/500B"}],"total_operations":3}}
+{"time":"2025-03-26T20:30:21.5365757Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-26T20:30:22.799885507Z","level":"INFO","msg":"stream: closing","id":"paxxyr22"}
+{"time":"2025-03-26T20:30:22.799913051Z","level":"INFO","msg":"handler: closed","stream_id":"paxxyr22"}
+{"time":"2025-03-26T20:30:22.799927137Z","level":"INFO","msg":"writer: Close: closed","stream_id":"paxxyr22"}
+{"time":"2025-03-26T20:30:22.799934013Z","level":"INFO","msg":"sender: closed","stream_id":"paxxyr22"}
+{"time":"2025-03-26T20:30:22.800027271Z","level":"INFO","msg":"stream: closed","id":"paxxyr22"}

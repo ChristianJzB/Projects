@@ -1,0 +1,17 @@
+{"time":"2025-03-26T18:09:18.321595249Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-26T18:09:18.321631148Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_180918-k1064739/logs/debug-core.log"}
+{"time":"2025-03-26T18:09:18.428610613Z","level":"INFO","msg":"created new stream","id":"k1064739"}
+{"time":"2025-03-26T18:09:18.428671723Z","level":"INFO","msg":"stream: started","id":"k1064739"}
+{"time":"2025-03-26T18:09:18.428754138Z","level":"INFO","msg":"handler: started","stream_id":"k1064739"}
+{"time":"2025-03-26T18:09:18.428795355Z","level":"INFO","msg":"writer: Do: started","stream_id":"k1064739"}
+{"time":"2025-03-26T18:09:18.428874294Z","level":"INFO","msg":"sender: started","stream_id":"k1064739"}
+{"time":"2025-03-26T18:09:18.822142074Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-26T18:16:38.187211709Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-26T18:16:38.187678746Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-26T18:16:39.188560359Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading wandb-summary.json","runtime_seconds":0.373221452,"progress":"350B/350B"},{"desc":"uploading models/dnn_models/Burgers_MDNN_s1500.pth","runtime_seconds":0.373201519,"progress":"19.6KB/19.6KB"},{"desc":"saving job artifact","runtime_seconds":0.372571656},{"desc":"uploading config.yaml","runtime_seconds":0.162924432,"progress":"500B/500B"},{"desc":"uploading output.log","runtime_seconds":0.162901695,"progress":"35B/35B"}],"total_operations":5}}
+{"time":"2025-03-26T18:16:40.162029076Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-26T18:16:41.509920486Z","level":"INFO","msg":"stream: closing","id":"k1064739"}
+{"time":"2025-03-26T18:16:41.509949757Z","level":"INFO","msg":"handler: closed","stream_id":"k1064739"}
+{"time":"2025-03-26T18:16:41.509964132Z","level":"INFO","msg":"writer: Close: closed","stream_id":"k1064739"}
+{"time":"2025-03-26T18:16:41.510052347Z","level":"INFO","msg":"sender: closed","stream_id":"k1064739"}
+{"time":"2025-03-26T18:16:41.510066497Z","level":"INFO","msg":"stream: closed","id":"k1064739"}

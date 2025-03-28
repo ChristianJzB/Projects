@@ -179,7 +179,6 @@ class dgala(torch.nn.Module):
     
     def full_Hessian(self,fit_data, damping_factor=1e-6):
         parameters_ = list(self.dgala.model.output_layer.parameters())
-        #parameters_ = list(self.model.last_layer.parameters())
         damping = torch.eye(self.n_params,device=self._device)*damping_factor
 
         for key,dt_fit in fit_data["data_fit"].items():
@@ -271,17 +270,19 @@ class dgala(torch.nn.Module):
 
         return self.log_likelihood - 0.5 * (self.log_det_ratio + self.scatter)
     
-    def optimize_marginal_likelihood(self, error_tolerance=1e-3, max_iter=300, lr=1e-2):
+    def optimize_marginal_likelihoodb(self, error_tolerance=1e-3, max_iter=300, lr=1e-2):
         """Optimize the log prior and log sigma by maximizing the marginal likelihood."""
-        log_prior_prec = self.prior_precision.log().requires_grad_(True)
+        #log_prior_prec = self.prior_precision.log().requires_grad_(True)
 
         log_sigma_noise = self.sigma_noise.log().requires_grad_(True)
+        log_prior_prec = self.prior_precision.log().requires_grad_(True)
 
         hyper_optimizer = torch.optim.Adam([log_prior_prec, log_sigma_noise], lr=lr)
 
         error,n_iter = float('inf'),0  # Initialize error
 
         while error > error_tolerance and n_iter < max_iter:
+            #prev_log_prior, prev_log_sigma = log_prior_prec.detach().clone(), log_sigma_noise.detach().clone()
             prev_log_prior, prev_log_sigma = log_prior_prec.detach().clone(), log_sigma_noise.detach().clone()
 
             hyper_optimizer.zero_grad()
@@ -302,6 +303,43 @@ class dgala(torch.nn.Module):
                 print(f"Iteration {n_iter}, Error: {error:.5f}, neg_marglik: {neg_marglik.item():.5f}")
 
         self.prior_precision = log_prior_prec.detach().exp()
+        self.sigma_noise = log_sigma_noise.detach().exp()
+
+        if n_iter == max_iter:
+            print(f"Maximum iterations ({max_iter})reached, sigma : {self.sigma_noise.item()}, prior: {self.prior_precision.item()}.")
+
+    def optimize_marginal_likelihood(self, error_tolerance=1e-3, max_iter=300, lr=1e-2):
+        """Optimize the log prior and log sigma by maximizing the marginal likelihood."""
+        #log_prior_prec = self.prior_precision.log().requires_grad_(True)
+
+        log_sigma_noise = self.sigma_noise.log().requires_grad_(True)
+
+        hyper_optimizer = torch.optim.Adam([ log_sigma_noise], lr=lr)
+
+        error,n_iter = float('inf'),0  # Initialize error
+
+        while error > error_tolerance and n_iter < max_iter:
+            #prev_log_prior, prev_log_sigma = log_prior_prec.detach().clone(), log_sigma_noise.detach().clone()
+            prev_log_sigma = log_sigma_noise.detach().clone()
+
+            hyper_optimizer.zero_grad()
+
+            # Calculate negative marginal likelihood
+            neg_marglik = -self.log_marginal_likelihood(sigma_noise=log_sigma_noise.exp())
+            neg_marglik.backward(retain_graph=True)
+
+            # Perform optimization step
+            hyper_optimizer.step()
+
+            # Calculate the error based on the change in hyperparameters
+            error = torch.abs(log_sigma_noise - prev_log_sigma).item()
+            n_iter += 1
+
+            # Optional: log progress for monitoring
+            if n_iter % 100 == 0:
+                print(f"Iteration {n_iter}, Error: {error:.5f}, neg_marglik: {neg_marglik.item():.5f}")
+
+        #self.prior_precision = log_prior_prec.detach().exp()
         self.sigma_noise = log_sigma_noise.detach().exp()
 
         if n_iter == max_iter:

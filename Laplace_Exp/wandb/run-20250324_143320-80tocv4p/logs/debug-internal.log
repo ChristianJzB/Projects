@@ -1,0 +1,17 @@
+{"time":"2025-03-24T14:33:20.284769475Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-24T14:33:20.284794709Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250324_143320-80tocv4p/logs/debug-core.log"}
+{"time":"2025-03-24T14:33:20.38868389Z","level":"INFO","msg":"created new stream","id":"80tocv4p"}
+{"time":"2025-03-24T14:33:20.38871412Z","level":"INFO","msg":"stream: started","id":"80tocv4p"}
+{"time":"2025-03-24T14:33:20.388752885Z","level":"INFO","msg":"handler: started","stream_id":"80tocv4p"}
+{"time":"2025-03-24T14:33:20.388775273Z","level":"INFO","msg":"writer: Do: started","stream_id":"80tocv4p"}
+{"time":"2025-03-24T14:33:20.388788601Z","level":"INFO","msg":"sender: started","stream_id":"80tocv4p"}
+{"time":"2025-03-24T14:33:20.747897648Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-24T14:34:02.726472852Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-24T14:34:02.726832039Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-24T14:34:03.727429172Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading models/dnn_models/Burgers_MDNN_s1500.pth","runtime_seconds":0.029878429,"progress":"9.7KB/9.7KB"},{"desc":"uploading wandb-summary.json","runtime_seconds":0.029843869,"progress":"363B/363B"},{"desc":"saving job artifact","runtime_seconds":0.024199962}],"total_operations":3}}
+{"time":"2025-03-24T14:34:05.654418504Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-24T14:34:09.118472003Z","level":"INFO","msg":"stream: closing","id":"80tocv4p"}
+{"time":"2025-03-24T14:34:09.118493354Z","level":"INFO","msg":"handler: closed","stream_id":"80tocv4p"}
+{"time":"2025-03-24T14:34:09.118513671Z","level":"INFO","msg":"sender: closed","stream_id":"80tocv4p"}
+{"time":"2025-03-24T14:34:09.118513339Z","level":"INFO","msg":"writer: Close: closed","stream_id":"80tocv4p"}
+{"time":"2025-03-24T14:34:09.118582881Z","level":"INFO","msg":"stream: closed","id":"80tocv4p"}

@@ -1,0 +1,17 @@
+{"time":"2025-03-26T22:22:33.619008205Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-26T22:22:33.619022559Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_222233-8hlkien1/logs/debug-core.log"}
+{"time":"2025-03-26T22:22:33.723610117Z","level":"INFO","msg":"created new stream","id":"8hlkien1"}
+{"time":"2025-03-26T22:22:33.723704461Z","level":"INFO","msg":"stream: started","id":"8hlkien1"}
+{"time":"2025-03-26T22:22:33.723750732Z","level":"INFO","msg":"writer: Do: started","stream_id":"8hlkien1"}
+{"time":"2025-03-26T22:22:33.72379372Z","level":"INFO","msg":"handler: started","stream_id":"8hlkien1"}
+{"time":"2025-03-26T22:22:33.723883232Z","level":"INFO","msg":"sender: started","stream_id":"8hlkien1"}
+{"time":"2025-03-26T22:22:34.244332588Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-26T22:24:34.431064972Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-26T22:24:34.431566557Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-26T22:24:35.431865136Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.241547197},{"desc":"uploading config.yaml","runtime_seconds":0.058519311,"progress":"500B/500B"},{"desc":"uploading output.log","runtime_seconds":0.058483893}],"total_operations":3}}
+{"time":"2025-03-26T22:24:36.914396799Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-26T22:24:38.239460186Z","level":"INFO","msg":"stream: closing","id":"8hlkien1"}
+{"time":"2025-03-26T22:24:38.239493789Z","level":"INFO","msg":"handler: closed","stream_id":"8hlkien1"}
+{"time":"2025-03-26T22:24:38.239510542Z","level":"INFO","msg":"writer: Close: closed","stream_id":"8hlkien1"}
+{"time":"2025-03-26T22:24:38.239577218Z","level":"INFO","msg":"sender: closed","stream_id":"8hlkien1"}
+{"time":"2025-03-26T22:24:38.239625956Z","level":"INFO","msg":"stream: closed","id":"8hlkien1"}

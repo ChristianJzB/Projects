@@ -1,0 +1,17 @@
+{"time":"2025-03-26T20:53:52.376073733Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-26T20:53:52.376087617Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_205352-spm2jstl/logs/debug-core.log"}
+{"time":"2025-03-26T20:53:52.47934624Z","level":"INFO","msg":"created new stream","id":"spm2jstl"}
+{"time":"2025-03-26T20:53:52.479386277Z","level":"INFO","msg":"stream: started","id":"spm2jstl"}
+{"time":"2025-03-26T20:53:52.479544796Z","level":"INFO","msg":"writer: Do: started","stream_id":"spm2jstl"}
+{"time":"2025-03-26T20:53:52.479598269Z","level":"INFO","msg":"handler: started","stream_id":"spm2jstl"}
+{"time":"2025-03-26T20:53:52.47961049Z","level":"INFO","msg":"sender: started","stream_id":"spm2jstl"}
+{"time":"2025-03-26T20:53:52.980207398Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-26T20:55:12.924542591Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-26T20:55:12.924950654Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-26T20:55:13.925803217Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.357263849},{"desc":"uploading config.yaml","runtime_seconds":0.166869946,"progress":"500B/500B"},{"desc":"uploading output.log","runtime_seconds":0.166843093,"progress":"35B/35B"}],"total_operations":3}}
+{"time":"2025-03-26T20:55:14.89868333Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-26T20:55:16.120014612Z","level":"INFO","msg":"stream: closing","id":"spm2jstl"}
+{"time":"2025-03-26T20:55:16.120049007Z","level":"INFO","msg":"handler: closed","stream_id":"spm2jstl"}
+{"time":"2025-03-26T20:55:16.120065506Z","level":"INFO","msg":"writer: Close: closed","stream_id":"spm2jstl"}
+{"time":"2025-03-26T20:55:16.120134764Z","level":"INFO","msg":"sender: closed","stream_id":"spm2jstl"}
+{"time":"2025-03-26T20:55:16.120175129Z","level":"INFO","msg":"stream: closed","id":"spm2jstl"}

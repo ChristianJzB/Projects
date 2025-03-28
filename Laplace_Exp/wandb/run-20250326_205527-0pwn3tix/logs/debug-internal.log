@@ -1,0 +1,17 @@
+{"time":"2025-03-26T20:55:27.329938029Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-26T20:55:27.329953574Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_205527-0pwn3tix/logs/debug-core.log"}
+{"time":"2025-03-26T20:55:27.434366881Z","level":"INFO","msg":"created new stream","id":"0pwn3tix"}
+{"time":"2025-03-26T20:55:27.434434545Z","level":"INFO","msg":"stream: started","id":"0pwn3tix"}
+{"time":"2025-03-26T20:55:27.434527854Z","level":"INFO","msg":"handler: started","stream_id":"0pwn3tix"}
+{"time":"2025-03-26T20:55:27.434590857Z","level":"INFO","msg":"writer: Do: started","stream_id":"0pwn3tix"}
+{"time":"2025-03-26T20:55:27.434584458Z","level":"INFO","msg":"sender: started","stream_id":"0pwn3tix"}
+{"time":"2025-03-26T20:55:27.776297505Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-26T21:01:02.820978357Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-26T21:01:02.821545952Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-26T21:01:03.783500711Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.415336752},{"desc":"uploading config.yaml","runtime_seconds":0.211097083,"progress":"500B/500B"},{"desc":"uploading output.log","runtime_seconds":0.211066487,"progress":"35B/35B"}],"total_operations":3}}
+{"time":"2025-03-26T21:01:04.700152118Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-26T21:01:06.029726343Z","level":"INFO","msg":"stream: closing","id":"0pwn3tix"}
+{"time":"2025-03-26T21:01:06.029752476Z","level":"INFO","msg":"handler: closed","stream_id":"0pwn3tix"}
+{"time":"2025-03-26T21:01:06.029764634Z","level":"INFO","msg":"writer: Close: closed","stream_id":"0pwn3tix"}
+{"time":"2025-03-26T21:01:06.029802935Z","level":"INFO","msg":"sender: closed","stream_id":"0pwn3tix"}
+{"time":"2025-03-26T21:01:06.029828817Z","level":"INFO","msg":"stream: closed","id":"0pwn3tix"}

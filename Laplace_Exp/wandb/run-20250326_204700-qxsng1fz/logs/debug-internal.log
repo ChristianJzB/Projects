@@ -1,0 +1,17 @@
+{"time":"2025-03-26T20:47:00.030578021Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-26T20:47:00.030592266Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_204700-qxsng1fz/logs/debug-core.log"}
+{"time":"2025-03-26T20:47:00.13405988Z","level":"INFO","msg":"created new stream","id":"qxsng1fz"}
+{"time":"2025-03-26T20:47:00.134119615Z","level":"INFO","msg":"stream: started","id":"qxsng1fz"}
+{"time":"2025-03-26T20:47:00.134192521Z","level":"INFO","msg":"writer: Do: started","stream_id":"qxsng1fz"}
+{"time":"2025-03-26T20:47:00.134232911Z","level":"INFO","msg":"handler: started","stream_id":"qxsng1fz"}
+{"time":"2025-03-26T20:47:00.134198406Z","level":"INFO","msg":"sender: started","stream_id":"qxsng1fz"}
+{"time":"2025-03-26T20:47:00.437184043Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-26T20:47:36.843434225Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-26T20:47:36.843881384Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-26T20:47:37.844315834Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading wandb-summary.json","runtime_seconds":0.368747294,"progress":"332B/332B"},{"desc":"saving job artifact","runtime_seconds":0.368132941},{"desc":"uploading config.yaml","runtime_seconds":0.182142653,"progress":"500B/500B"},{"desc":"uploading output.log","runtime_seconds":0.182119512,"progress":"35B/35B"}],"total_operations":4}}
+{"time":"2025-03-26T20:47:38.908922269Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-26T20:47:40.228710091Z","level":"INFO","msg":"stream: closing","id":"qxsng1fz"}
+{"time":"2025-03-26T20:47:40.228736533Z","level":"INFO","msg":"handler: closed","stream_id":"qxsng1fz"}
+{"time":"2025-03-26T20:47:40.228746572Z","level":"INFO","msg":"writer: Close: closed","stream_id":"qxsng1fz"}
+{"time":"2025-03-26T20:47:40.228796984Z","level":"INFO","msg":"sender: closed","stream_id":"qxsng1fz"}
+{"time":"2025-03-26T20:47:40.228864388Z","level":"INFO","msg":"stream: closed","id":"qxsng1fz"}

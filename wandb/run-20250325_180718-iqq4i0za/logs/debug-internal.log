@@ -1,0 +1,10 @@
+{"time":"2025-03-25T18:07:18.294724706Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-25T18:07:18.294755403Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250325_180718-iqq4i0za/logs/debug-core.log"}
+{"time":"2025-03-25T18:07:18.40161302Z","level":"INFO","msg":"created new stream","id":"iqq4i0za"}
+{"time":"2025-03-25T18:07:18.401680617Z","level":"INFO","msg":"stream: started","id":"iqq4i0za"}
+{"time":"2025-03-25T18:07:18.401811521Z","level":"INFO","msg":"writer: Do: started","stream_id":"iqq4i0za"}
+{"time":"2025-03-25T18:07:18.401863089Z","level":"INFO","msg":"sender: started","stream_id":"iqq4i0za"}
+{"time":"2025-03-25T18:07:18.402003943Z","level":"INFO","msg":"handler: started","stream_id":"iqq4i0za"}
+{"time":"2025-03-25T18:07:18.808657017Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-25T18:08:04.482470633Z","level":"ERROR","msg":"HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/files/christian-jb07-univeristy-of-edinburgh/Experiment_NV/iqq4i0za/file_stream"}
+{"time":"2025-03-25T18:08:04.482624698Z","level":"ERROR+4","msg":"filestream: fatal error: filestream: failed to upload: 404 Not Found path=files/christian-jb07-univeristy-of-edinburgh/Experiment_NV/iqq4i0za/file_stream: {\"error\":\"run Experiment_NV/iqq4i0za not found while streaming file\"}"}

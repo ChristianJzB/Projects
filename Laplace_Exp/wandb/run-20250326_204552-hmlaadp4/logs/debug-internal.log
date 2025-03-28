@@ -1,0 +1,17 @@
+{"time":"2025-03-26T20:45:52.8658484Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-26T20:45:52.865874477Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_204552-hmlaadp4/logs/debug-core.log"}
+{"time":"2025-03-26T20:45:52.970996124Z","level":"INFO","msg":"created new stream","id":"hmlaadp4"}
+{"time":"2025-03-26T20:45:52.971144226Z","level":"INFO","msg":"stream: started","id":"hmlaadp4"}
+{"time":"2025-03-26T20:45:52.971272217Z","level":"INFO","msg":"handler: started","stream_id":"hmlaadp4"}
+{"time":"2025-03-26T20:45:52.971272399Z","level":"INFO","msg":"writer: Do: started","stream_id":"hmlaadp4"}
+{"time":"2025-03-26T20:45:52.971386041Z","level":"INFO","msg":"sender: started","stream_id":"hmlaadp4"}
+{"time":"2025-03-26T20:45:53.346390078Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-26T20:46:55.43311008Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-26T20:46:55.433707104Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-26T20:46:56.395161492Z","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-03-26T20:46:57.313150404Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-26T20:46:58.558572868Z","level":"INFO","msg":"stream: closing","id":"hmlaadp4"}
+{"time":"2025-03-26T20:46:58.558607476Z","level":"INFO","msg":"handler: closed","stream_id":"hmlaadp4"}
+{"time":"2025-03-26T20:46:58.558625064Z","level":"INFO","msg":"writer: Close: closed","stream_id":"hmlaadp4"}
+{"time":"2025-03-26T20:46:58.558667252Z","level":"INFO","msg":"sender: closed","stream_id":"hmlaadp4"}
+{"time":"2025-03-26T20:46:58.558710298Z","level":"INFO","msg":"stream: closed","id":"hmlaadp4"}

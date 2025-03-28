@@ -1,0 +1,17 @@
+{"time":"2025-03-27T13:24:39.314493576Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-27T13:24:39.314518904Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250327_132439-fkl3vlpx/logs/debug-core.log"}
+{"time":"2025-03-27T13:24:39.419327278Z","level":"INFO","msg":"created new stream","id":"fkl3vlpx"}
+{"time":"2025-03-27T13:24:39.419431907Z","level":"INFO","msg":"stream: started","id":"fkl3vlpx"}
+{"time":"2025-03-27T13:24:39.419560847Z","level":"INFO","msg":"writer: Do: started","stream_id":"fkl3vlpx"}
+{"time":"2025-03-27T13:24:39.419611074Z","level":"INFO","msg":"handler: started","stream_id":"fkl3vlpx"}
+{"time":"2025-03-27T13:24:39.419753082Z","level":"INFO","msg":"sender: started","stream_id":"fkl3vlpx"}
+{"time":"2025-03-27T13:24:39.828512105Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-27T13:35:22.595647058Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-27T13:35:22.595979915Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-27T13:35:23.596715744Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.618896933}],"total_operations":1}}
+{"time":"2025-03-27T13:35:24.534101302Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-27T13:35:25.952348526Z","level":"INFO","msg":"stream: closing","id":"fkl3vlpx"}
+{"time":"2025-03-27T13:35:25.952364905Z","level":"INFO","msg":"handler: closed","stream_id":"fkl3vlpx"}
+{"time":"2025-03-27T13:35:25.952373553Z","level":"INFO","msg":"writer: Close: closed","stream_id":"fkl3vlpx"}
+{"time":"2025-03-27T13:35:25.952422087Z","level":"INFO","msg":"sender: closed","stream_id":"fkl3vlpx"}
+{"time":"2025-03-27T13:35:25.95242839Z","level":"INFO","msg":"stream: closed","id":"fkl3vlpx"}

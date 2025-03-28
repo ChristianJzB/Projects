@@ -1,0 +1,37 @@
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_setup.py:_flush():79] Current SDK version is 0.18.7
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_setup.py:_flush():79] Configure stats pid to 708321
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_setup.py:_flush():79] Loading settings from /home/s2113174/.config/wandb/settings
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_setup.py:_flush():79] Loading settings from /home/s2113174/Projects-1/Laplace_Exp/wandb/settings
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_setup.py:_flush():79] Loading settings from environment variables: {}
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_setup.py:_flush():79] Applying setup settings: {'mode': None, '_disable_service': None}
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_setup.py:_flush():79] Inferring run settings from compute environment: {'program': '<python with no main file>'}
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_setup.py:_flush():79] Applying login settings: {}
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_init.py:_log_setup():533] Logging user logs to /home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_204741-avy22nua/logs/debug.log
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_init.py:_log_setup():534] Logging internal logs to /home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_204741-avy22nua/logs/debug-internal.log
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_init.py:_jupyter_setup():479] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x753b31856210>
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_init.py:init():619] calling init triggers
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_init.py:init():626] wandb.init called with sweep_config: {}
+config: {}
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_init.py:init():669] starting backend
+2025-03-26 20:47:41,415 INFO    MainThread:708321 [wandb_init.py:init():673] sending inform_init request
+2025-03-26 20:47:41,416 INFO    MainThread:708321 [backend.py:_multiprocessing_setup():104] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2025-03-26 20:47:41,416 INFO    MainThread:708321 [wandb_init.py:init():686] backend started and connected
+2025-03-26 20:47:41,417 INFO    MainThread:708321 [wandb_run.py:_label_probe_notebook():1339] probe notebook
+2025-03-26 20:47:41,417 INFO    MainThread:708321 [wandb_init.py:init():781] updated telemetry
+2025-03-26 20:47:41,419 INFO    MainThread:708321 [wandb_init.py:init():814] communicating run to backend with 90.0 second timeout
+2025-03-26 20:47:42,198 INFO    MainThread:708321 [wandb_init.py:init():867] starting run threads in backend
+2025-03-26 20:47:42,253 INFO    MainThread:708321 [wandb_run.py:_console_start():2456] atexit reg
+2025-03-26 20:47:42,253 INFO    MainThread:708321 [wandb_run.py:_redirect():2305] redirect: wrap_raw
+2025-03-26 20:47:42,253 INFO    MainThread:708321 [wandb_run.py:_redirect():2370] Wrapping output streams.
+2025-03-26 20:47:42,253 INFO    MainThread:708321 [wandb_run.py:_redirect():2395] Redirects installed.
+2025-03-26 20:47:42,253 INFO    MainThread:708321 [wandb_init.py:init():911] run started, returning control to user process
+2025-03-26 20:48:44,702 INFO    MainThread:708321 [wandb_run.py:_finish():2155] finishing run christian-jb07-univeristy-of-edinburgh/PDEs-training/avy22nua
+2025-03-26 20:48:44,703 ERROR   MainThread:708321 [jupyter.py:save_history():451] Run pip install nbformat to save notebook history
+2025-03-26 20:48:44,703 INFO    MainThread:708321 [jupyter.py:save_ipynb():387] not saving jupyter notebook
+2025-03-26 20:48:44,703 INFO    MainThread:708321 [wandb_init.py:_jupyter_teardown():461] cleaning up jupyter logic
+2025-03-26 20:48:44,703 INFO    MainThread:708321 [wandb_run.py:_atexit_cleanup():2420] got exitcode: 0
+2025-03-26 20:48:44,703 INFO    MainThread:708321 [wandb_run.py:_restore():2402] restore
+2025-03-26 20:48:44,703 INFO    MainThread:708321 [wandb_run.py:_restore():2408] restore done
+2025-03-26 20:48:47,808 INFO    MainThread:708321 [wandb_run.py:_footer_history_summary_info():3960] rendering history
+2025-03-26 20:48:47,810 INFO    MainThread:708321 [wandb_run.py:_footer_history_summary_info():3992] rendering summary
+2025-03-26 20:48:47,820 INFO    MainThread:708321 [wandb_run.py:_footer_sync_info():3921] logging synced files

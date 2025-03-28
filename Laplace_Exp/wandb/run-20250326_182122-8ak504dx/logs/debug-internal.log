@@ -1,0 +1,18 @@
+{"time":"2025-03-26T18:21:22.267312714Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-26T18:21:22.267326848Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_182122-8ak504dx/logs/debug-core.log"}
+{"time":"2025-03-26T18:21:22.372182116Z","level":"INFO","msg":"created new stream","id":"8ak504dx"}
+{"time":"2025-03-26T18:21:22.372242973Z","level":"INFO","msg":"stream: started","id":"8ak504dx"}
+{"time":"2025-03-26T18:21:22.372313932Z","level":"INFO","msg":"writer: Do: started","stream_id":"8ak504dx"}
+{"time":"2025-03-26T18:21:22.372346592Z","level":"INFO","msg":"handler: started","stream_id":"8ak504dx"}
+{"time":"2025-03-26T18:21:22.372345177Z","level":"INFO","msg":"sender: started","stream_id":"8ak504dx"}
+{"time":"2025-03-26T18:21:22.799353793Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-26T18:30:24.07190654Z","level":"INFO","msg":"api: retrying HTTP error","status":502,"url":"https://api.wandb.ai/files/christian-jb07-univeristy-of-edinburgh/Elliptic-training/8ak504dx/file_stream"}
+{"time":"2025-03-26T18:51:16.832154586Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-26T18:51:16.832598921Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-26T18:51:17.832778281Z","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-03-26T18:51:18.777636575Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-26T18:51:20.210707265Z","level":"INFO","msg":"stream: closing","id":"8ak504dx"}
+{"time":"2025-03-26T18:51:20.210730298Z","level":"INFO","msg":"handler: closed","stream_id":"8ak504dx"}
+{"time":"2025-03-26T18:51:20.210743368Z","level":"INFO","msg":"writer: Close: closed","stream_id":"8ak504dx"}
+{"time":"2025-03-26T18:51:20.210798678Z","level":"INFO","msg":"sender: closed","stream_id":"8ak504dx"}
+{"time":"2025-03-26T18:51:20.21084032Z","level":"INFO","msg":"stream: closed","id":"8ak504dx"}

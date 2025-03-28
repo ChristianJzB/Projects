@@ -1,0 +1,17 @@
+{"time":"2025-03-26T17:30:44.323150643Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-26T17:30:44.323194727Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/Laplace_Exp/wandb/run-20250326_173044-4jg1rjpy/logs/debug-core.log"}
+{"time":"2025-03-26T17:30:44.430463245Z","level":"INFO","msg":"created new stream","id":"4jg1rjpy"}
+{"time":"2025-03-26T17:30:44.430603161Z","level":"INFO","msg":"stream: started","id":"4jg1rjpy"}
+{"time":"2025-03-26T17:30:44.430704649Z","level":"INFO","msg":"sender: started","stream_id":"4jg1rjpy"}
+{"time":"2025-03-26T17:30:44.430705444Z","level":"INFO","msg":"writer: Do: started","stream_id":"4jg1rjpy"}
+{"time":"2025-03-26T17:30:44.430831152Z","level":"INFO","msg":"handler: started","stream_id":"4jg1rjpy"}
+{"time":"2025-03-26T17:30:45.037755455Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-26T17:31:29.719338496Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-26T17:31:29.720439926Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-26T17:31:30.680935806Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.279864796},{"desc":"uploading config.yaml","runtime_seconds":0.072247688,"progress":"500B/500B"},{"desc":"uploading output.log","runtime_seconds":0.072228828,"progress":"35B/35B"},{"desc":"uploading summary","runtime_seconds":0.002895749}],"total_operations":4}}
+{"time":"2025-03-26T17:31:32.129393877Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-26T17:31:34.370199021Z","level":"INFO","msg":"stream: closing","id":"4jg1rjpy"}
+{"time":"2025-03-26T17:31:34.370219931Z","level":"INFO","msg":"handler: closed","stream_id":"4jg1rjpy"}
+{"time":"2025-03-26T17:31:34.370230794Z","level":"INFO","msg":"writer: Close: closed","stream_id":"4jg1rjpy"}
+{"time":"2025-03-26T17:31:34.370250131Z","level":"INFO","msg":"sender: closed","stream_id":"4jg1rjpy"}
+{"time":"2025-03-26T17:31:34.370298924Z","level":"INFO","msg":"stream: closed","id":"4jg1rjpy"}

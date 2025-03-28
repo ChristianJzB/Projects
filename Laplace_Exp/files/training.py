@@ -66,13 +66,13 @@ def train_dga(config, device):
     dg_model = problem(config=config, device=device)
 
     loss_fn = torch.nn.MSELoss(reduction ='mean')
-    optimizer = torch.optim.Adam(dg_model.model.parameters(), lr=config.learning_rate)
+    optimizer = torch.optim.AdamW(dg_model.model.parameters(), lr=config.learning_rate,weight_decay= config.weight_decay)
     scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer, gamma=config.decay_rate)  # Exponential decay scheduler
 
     for epoch in range(config.epochs):
         epoch_train_loss = 0.0  # Accumulate loss over all batches for this epoch
 
-        data_int,ini_c, left_bc, right_bc = generate_data(size= config.batch_size,seed = seed + epoch, burgers= type_problem)
+        data_int,ini_c, left_bc, right_bc = generate_data(size= config.samples,seed = seed + epoch, burgers= type_problem)
         data_int,ini_c, left_bc, right_bc = data_int.to(device),ini_c.to(device),left_bc.to(device), right_bc.to(device)
 
         optimizer.zero_grad()
@@ -106,7 +106,7 @@ def train_dga(config, device):
     
     print("Starting Training: LBFGS optimizer")
 
-    data_int,ini_c, left_bc, right_bc = generate_data(size= config.batch_size,seed = seed + epoch, burgers= type_problem)
+    data_int,ini_c, left_bc, right_bc = generate_data(size= config.samples,seed = seed + epoch, burgers= type_problem)
     data_int,ini_c, left_bc, right_bc = data_int.to(device),ini_c.to(device),left_bc.to(device), right_bc.to(device)    
 
     def loss_func_train():
@@ -121,8 +121,8 @@ def train_dga(config, device):
 
 
     # Save final model
-    torch.save(dg_model, f"./models/dnn_models/{wandb_config.name}.pth")
-    wandb.save(f"./models/dnn_models/{wandb_config.name}.pth")
+    torch.save(dg_model, f"./models/{wandb_config.name}.pth")
+    wandb.save(f"./models/{wandb_config.name}.pth")
 
     # Finish W&B run
     wandb.finish()

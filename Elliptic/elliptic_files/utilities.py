@@ -35,7 +35,7 @@ def generate_data_elliptic(size, param = None, nparam = 2, seed = 65647437836358
         return data_int, left_bc, right_bc  
 
 
-def deepgala_data_fit(samples,nparameters,device,seed):
+def deepgala_data_fit(samples,nparameters,device,seed = 65647437836358831880808032086803839626):
     # data_parameters = samples_param(samples*2, nparam=nparameters)
     # param_train, param_test = data_parameters[:samples,:],  data_parameters[samples:,:]
     data_int,left_bc,right_bc = generate_data_elliptic(samples, nparam=nparameters,seed=seed)

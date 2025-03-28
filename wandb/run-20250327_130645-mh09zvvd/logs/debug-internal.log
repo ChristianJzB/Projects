@@ -1,0 +1,17 @@
+{"time":"2025-03-27T13:06:45.058655553Z","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-03-27T13:06:45.058669714Z","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250327_130645-mh09zvvd/logs/debug-core.log"}
+{"time":"2025-03-27T13:06:45.163462627Z","level":"INFO","msg":"created new stream","id":"mh09zvvd"}
+{"time":"2025-03-27T13:06:45.163527207Z","level":"INFO","msg":"stream: started","id":"mh09zvvd"}
+{"time":"2025-03-27T13:06:45.16374474Z","level":"INFO","msg":"writer: Do: started","stream_id":"mh09zvvd"}
+{"time":"2025-03-27T13:06:45.163772631Z","level":"INFO","msg":"handler: started","stream_id":"mh09zvvd"}
+{"time":"2025-03-27T13:06:45.1639027Z","level":"INFO","msg":"sender: started","stream_id":"mh09zvvd"}
+{"time":"2025-03-27T13:06:45.570260136Z","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-03-27T13:09:45.193700501Z","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-03-27T13:09:45.194104224Z","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-03-27T13:09:46.1943781Z","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.434653212},{"desc":"uploading config.yaml","runtime_seconds":0.226731904,"progress":"480B/480B"},{"desc":"uploading output.log","runtime_seconds":0.226708124},{"desc":"uploading history, summary","runtime_seconds":0.069388842}],"total_operations":4}}
+{"time":"2025-03-27T13:09:47.089474767Z","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-03-27T13:09:48.781491408Z","level":"INFO","msg":"stream: closing","id":"mh09zvvd"}
+{"time":"2025-03-27T13:09:48.781507857Z","level":"INFO","msg":"handler: closed","stream_id":"mh09zvvd"}
+{"time":"2025-03-27T13:09:48.781515988Z","level":"INFO","msg":"writer: Close: closed","stream_id":"mh09zvvd"}
+{"time":"2025-03-27T13:09:48.781523551Z","level":"INFO","msg":"sender: closed","stream_id":"mh09zvvd"}
+{"time":"2025-03-27T13:09:48.781554408Z","level":"INFO","msg":"stream: closed","id":"mh09zvvd"}
