@@ -175,6 +175,7 @@ def run_experiment(config_experiment,device):
         print("Starting MCMC with NN" + model_specific)
         nn_surrogate_model = torch.load(nn_path_model)
         nn_surrogate_model.eval()
+        nn_surrogate_model.to(device)
         nn_samples = run_mcmc_chain(nn_surrogate_model, obs_points, sol_test, config_experiment,device)
         np.save("./Navier-Stokes/results/nn" + model_specific + f"_var{config_experiment.noise_level}.npy", nn_samples[0])
     
@@ -191,6 +192,7 @@ def run_experiment(config_experiment,device):
         print("Starting MCMC-DA with NN" + model_specific + "and PSM")
         nn_surrogate_model = torch.load(nn_path_model)
         nn_surrogate_model.eval()
+        nn_surrogate_model.to(device)
 
         nv_mcmcda = NVMCMCDA(nn_surrogate_model,observation_locations= obs_points, observations_values = sol_test, 
                         nparameters=2*config_experiment.KL_expansion,observation_noise=np.sqrt(config_experiment.noise_level),
@@ -198,8 +200,11 @@ def run_experiment(config_experiment,device):
                         fs_indices_sol=obs_indices,iter_mcmc=config_experiment.iter_mcmc, iter_da = config_experiment.iter_da,
                         step_size=config_experiment.proposal_variance, device=device )
         
-        acceptance_res = nv_mcmcda.run_chain(verbose=config_experiment.verbose)
+        acceptance_res,proposal_thetas,lh_val_nn,lh_val_solver = nv_mcmcda.run_chain(verbose=config_experiment.verbose)
         np.save("./Navier-Stokes/results/mcmc_da_nn" + model_specific + f"_var{config_experiment.noise_level}.npy", acceptance_res)
+        np.save("./Navier-Stokes/results/mcmc_da_nn_proposal_thetas" + model_specific + f"_var{config_experiment.noise_level}.npy", proposal_thetas)
+        np.save("./Navier-Stokes/results/mcmc_da_nn_lh_nn" + model_specific + f"_var{config_experiment.noise_level}.npy", lh_val_nn)
+        np.save("./Navier-Stokes/results/mcmc_da_nn_lh_solver" + model_specific + f"_var{config_experiment.noise_level}.npy", lh_val_solver)
 
     # Step 8: Delayed Acceptance for Dgala
     if config_experiment.da_mcmc_dgala:
@@ -250,8 +255,11 @@ if __name__ == "__main__":
     parser.add_argument("--da_mcmc_dgala", action="store_true", help="Run DA-MCMC for DeepGala")
 
     args = parser.parse_args()
+    torch.set_default_dtype(torch.float64)
+
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    print(device)
 
     # Pass all arguments
     main(args.verbose, args.N, args.hidden_layers, args.num_neurons,args.train, args.deepgala, args.noise_level,  

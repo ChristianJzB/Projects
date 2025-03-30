@@ -29,6 +29,8 @@ class MetropolisHastings(torch.nn.Module):
         self.burnin = int(self.nsamples * 0.1) if burnin is None else burnin
         self.proposal_type = proposal_type
         self.dt = step_size  # Step size for proposals
+        self.to(device)
+
 
     def log_prior(self, theta):
         """Define the prior distribution (e.g., Gaussian, Uniform, etc.). Must be overridden."""
@@ -131,6 +133,9 @@ class MCMCDA(torch.nn.Module):
         self.observations_values = torch.tensor(observations_values, dtype=torch.float64, device=self.device)
         self.observation_noise = observation_noise
         self.nparameters = nparameters
+
+        self.outer_likelihood_value = None
+        self.inner_likelihood_value = None
         
         # MCMC settings
         self.iter_da = iter_da
@@ -167,6 +172,10 @@ class MCMCDA(torch.nn.Module):
         theta = torch.empty((self.nparameters), device=self.device).uniform_(-1, 1)
         acceptance_list = torch.zeros((self.iter_da), device=self.device)
         samples_outer = torch.zeros((self.iter_mcmc, self.nparameters), device=self.device)
+        theta_inner =  torch.zeros((self.iter_da,self.nparameters), device=self.device)
+        likelihoods_val_nn = torch.zeros((self.iter_da,self.observation_locations.shape[0]), device=self.device)
+        likelihoods_val_solver = torch.zeros((self.iter_da,self.observation_locations.shape[0]), device=self.device)
+
         samples_inner = []
         # Initialize separate dt for each chai
         dt =  self.dt
@@ -225,6 +234,10 @@ class MCMCDA(torch.nn.Module):
                 log_posterior_inner = self.log_prior(theta) + self.log_likelihood_inner(theta)
                 log_posterior_proposal_inner = self.log_prior(theta_proposal) + self.log_likelihood_inner(theta_proposal)
 
+                theta_inner[inner_mh-1,:] = theta_proposal.clone()
+                likelihoods_val_nn[inner_mh-1,:] = self.outer_likelihood_value.T.clone()
+                likelihoods_val_solver[inner_mh-1,:]  = self.inner_likelihood_value.T.clone()
+
                 # Compute the acceptance ratio
                 a = torch.clamp(torch.exp(log_posterior_proposal_inner - (log_posterior_inner))*(1/a), max=1.0)
 
@@ -254,7 +267,7 @@ class MCMCDA(torch.nn.Module):
         if samples:
             return torch.tensor(samples_inner),samples_outer
         else:
-            return acceptance_list
+            return acceptance_list.cpu(),theta_inner.cpu(),likelihoods_val_nn.cpu(),likelihoods_val_solver.cpu()
     
 
             
