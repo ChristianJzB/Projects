@@ -9,6 +9,7 @@ from nv_files.NavierStokes import Vorticity
 from nv_files.Pseudo_Spectral_Solver import VorticitySolver2D,torch_NVSolver2D
 from nv_files.Field_Generator import omega0_samples_torch
 
+#torch.set_default_dtype(torch.float64)
 
 class NVMCMC(MetropolisHastings):
     def __init__(self, surrogate, observation_locations, observations_values, nparameters=2, 
@@ -32,10 +33,9 @@ class NVMCMC(MetropolisHastings):
             raise ValueError(f"Surrogate of type {surrogate_type.__name__} is not supported.")
 
     def log_prior(self, theta):
-        if not ((theta >= -1) & (theta <= 1)).all():
-            return -torch.inf
-        else:
-            return 0
+        if not torch.logical_and(theta >= -2, theta <= 2).all():
+            return torch.tensor(-float("inf"))  # Ensure it remains a tensor
+        return torch.tensor(0.0)  # Keep consistency
 
     def nn_log_likelihood(self, theta):
         """

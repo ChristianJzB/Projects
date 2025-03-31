@@ -41,7 +41,7 @@ def nv_experiment():
     config.dgala_mcmc = False
 
     config.proposal = "random_walk"
-    config.proposal_variance = 1e-3
+    config.proposal_variance = 5e-1
     config.samples = 1_000_000
     
     # Num Solver Config
@@ -255,11 +255,8 @@ if __name__ == "__main__":
     parser.add_argument("--da_mcmc_dgala", action="store_true", help="Run DA-MCMC for DeepGala")
 
     args = parser.parse_args()
-    torch.set_default_dtype(torch.float64)
-
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-    print(device)
 
     # Pass all arguments
     main(args.verbose, args.N, args.hidden_layers, args.num_neurons,args.train, args.deepgala, args.noise_level,  
