@@ -107,7 +107,7 @@ class NVMCMCDA(MCMCDA):
         return  (torch.sin(X + Y) + torch.cos(X + Y))
     
     def log_prior(self, theta):
-        if not ((theta >= -1) & (theta <= 1)).all():
+        if not ((theta >= -2) & (theta <= 2)).all():
             return -torch.inf
         else:
             return 0
