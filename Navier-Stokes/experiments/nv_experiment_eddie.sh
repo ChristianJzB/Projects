@@ -8,7 +8,7 @@ N_LAYERS=(1 2 3)  # Define hidden layers
 VERBOSE=""
 TRAIN=""  # Set empty "" if you want default (False)
 DEEPGALA=""  # Empty means default (False)
-NOISE_LEVEL="--noise_level 1e-3"
+NOISE_LEVEL="--noise_level 1e-2"
 NN_MCMC="--nn_mcmc"  # Example: enabled
 DGALA_MCMC=""
 DA_MCMC_NN="--da_mcmc_nn"
@@ -21,8 +21,8 @@ for N in "${N_VALUES[@]}"; do
         qsub -N "nv_N${N}_L${L}" <<EOF
 #!/bin/bash
 #$ -cwd
-#$ -q gpu
-#$ -l gpu=1 
+# -q gpu
+# -l gpu=1 
 #$ -l h_vmem=40G
 #$ -l h_rt=15:00:00 
 
