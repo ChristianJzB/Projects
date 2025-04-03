@@ -6,13 +6,13 @@ N_VALUES=(150 250 500 750 1000 1500 2500)
 # Define default values for parameters (change as needed)
 VERBOSE="--verbose"
 TRAIN=""  # Set empty "" if you want default (False)
-WEIGHT_DECAY="--weight_decay 1e-3"
-DEEPGALA="--deepgala"      # Empty means default (False)
+WEIGHT_DECAY="--weight_decay 0."
+DEEPGALA=""      # Empty means default (False)
 NOISE_LEVEL="--noise_level 1e-4"
 FEM_MCMC=""
 NN_MCMC="--nn_mcmc"  # Example: enabled
-DGALA_MCMC="--dgala_mcmc"
-DA_MCMC_NN=""
+DGALA_MCMC=""
+DA_MCMC_NN="--da_mcmc_nn"
 DA_MCMC_DGALA=""
 
 # Flag to check if FEM_MCMC has been added
