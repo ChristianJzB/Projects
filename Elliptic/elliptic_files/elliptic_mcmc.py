@@ -112,6 +112,7 @@ class EllipticMCMCDA(MCMCDA):
         surrogate.solve()
         surg = surrogate.eval_at_points(self.observation_locations.cpu().numpy()).reshape(-1, 1)
         surg = torch.tensor(surg, device=self.device)
+        self.inner_likelihood_value = surg
         return -0.5 * torch.sum(((self.observations_values - surg) ** 2) / (self.observation_noise ** 2))
 
     def nn_log_likelihood(self,surrogate,theta):
@@ -120,6 +121,7 @@ class EllipticMCMCDA(MCMCDA):
         """
         data = torch.cat([self.observation_locations, theta.repeat(self.observation_locations.size(0), 1)], dim=1).float()
         surg = surrogate.u(data.float()).detach()
+        self.outer_likelihood_value = surg
         return -0.5 * torch.sum(((self.observations_values - surg) ** 2) / (self.observation_noise ** 2))
 
     def dgala_log_likelihood(self, surrogate,theta):
