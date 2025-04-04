@@ -7,11 +7,11 @@ N_VALUES=(150 250 500 750 1000 1500 2500)
 VERBOSE="--verbose"
 TRAIN=""  # Set empty "" if you want default (False)
 WEIGHT_DECAY="--weight_decay 0."
-DEEPGALA=""      # Empty means default (False)
+DEEPGALA="--deepgala"      # Empty means default (False)
 NOISE_LEVEL="--noise_level 1e-4"
 FEM_MCMC=""
-NN_MCMC=""  # Example: enabled
-DGALA_MCMC=""
+NN_MCMC="--nn_mcmc"  # Example: enabled
+DGALA_MCMC="--dgala_mcmc"
 DA_MCMC_NN="--da_mcmc_nn"
 DA_MCMC_DGALA=""
 

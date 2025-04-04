@@ -49,7 +49,7 @@ def elliptic_experiment():
     config.da_mcmc_nn = False
     config.da_mcmc_dgala = False
     config.iter_mcmc = 1000000
-    config.iter_da = 20000
+    config.iter_da = 200000
 
     return config
 
