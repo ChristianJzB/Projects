@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "/home/christianjb/Projects/NN_Inverse_Problems/Navier-Stokes/experiments/nv_experiment.py", line 266, in <module>
+    main(args.verbose, args.N, args.hidden_layers, args.num_neurons,args.kl,args.train, args.deepgala, args.noise_level,
+  File "/home/christianjb/Projects/NN_Inverse_Problems/Navier-Stokes/experiments/nv_experiment.py", line 243, in main
+    run_experiment(config_experiment,device)
+  File "/home/christianjb/Projects/NN_Inverse_Problems/Navier-Stokes/experiments/nv_experiment.py", line 154, in run_experiment
+    pinn_nvs = train_vorticity_dg(config, device=device)
+  File "/home/christianjb/Projects/NN_Inverse_Problems/Navier-Stokes/nv_files/train_nvs.py", line 472, in train_vorticity_dg
+    optimizer = torch.optim.Adam(dg_NVs.model.parameters(), lr=config.learning_rate)
+  File "/home/christianjb/anaconda3/envs/experiments/lib/python3.9/site-packages/torch/optim/adam.py", line 73, in __init__
+    super().__init__(params, defaults)
+  File "/home/christianjb/anaconda3/envs/experiments/lib/python3.9/site-packages/torch/optim/optimizer.py", line 367, in __init__
+    self.add_param_group(cast(dict, param_group))
+  File "/home/christianjb/anaconda3/envs/experiments/lib/python3.9/site-packages/torch/_compile.py", line 26, in inner
+    import torch._dynamo
+  File "/home/christianjb/anaconda3/envs/experiments/lib/python3.9/site-packages/torch/_dynamo/__init__.py", line 2, in <module>
+    from . import convert_frame, eval_frame, resume_execution
+  File "/home/christianjb/anaconda3/envs/experiments/lib/python3.9/site-packages/torch/_dynamo/convert_frame.py", line 48, in <module>
+    from . import config, exc, trace_rules
+  File "/home/christianjb/anaconda3/envs/experiments/lib/python3.9/site-packages/torch/_dynamo/trace_rules.py", line 52, in <module>
+    from .variables import (
+  File "/home/christianjb/anaconda3/envs/experiments/lib/python3.9/site-packages/torch/_dynamo/variables/__init__.py", line 38, in <module>
+    from .higher_order_ops import (
+  File "/home/christianjb/anaconda3/envs/experiments/lib/python3.9/site-packages/torch/_dynamo/variables/higher_order_ops.py", line 14, in <module>
+    import torch.onnx.operators
+  File "/home/christianjb/anaconda3/envs/experiments/lib/python3.9/site-packages/torch/onnx/__init__.py", line 49, in <module>
+    from ._internal.exporter import (  # usort:skip. needs to be last to avoid circular import
+ImportError: cannot import name 'DiagnosticOptions' from 'torch.onnx._internal.exporter' (/home/christianjb/anaconda3/envs/experiments/lib/python3.9/site-packages/torch/onnx/_internal/exporter/__init__.py)

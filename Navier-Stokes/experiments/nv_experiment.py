@@ -143,12 +143,18 @@ def run_experiment(config_experiment,device):
         print(f"Running training with the specifics" + model_specific)
         config = get_vorticity_train_config()
         config.wandb.name = "vorticity" + model_specific
+        
         config.iterations = config_experiment.iterations
-        config.model.num_layers = config_experiment.num_layers
-        config.model.hidden_dim = config_experiment.hidden_dim
         config.points_per_chunk = config_experiment.nn_model
         config.batch_ic = 16*config_experiment.nn_model
+        
+        config.model.input_dim = 3 + 2*config_experiment.KL_expansion
+        config.model.num_layers = config_experiment.num_layers
+        config.model.hidden_dim = config_experiment.hidden_dim
+        config.model.fourier_emb["exclude_last_n"] = 2*config_experiment.KL_expansion
         config.nparameters = config_experiment.KL_expansion
+        config.NKL = config_experiment.KL_expansion
+
         pinn_nvs = train_vorticity_dg(config, device=device)
         print(f"Completed training with {config_experiment.nn_model} samples.")
 
@@ -224,12 +230,13 @@ def run_experiment(config_experiment,device):
 
 
 # Main loop for different sample sizes
-def main(verbose,N,hidden_layers,num_neurons,train,deepgala,noise_level,nn_mcmc,dgala_mcmc,da_mcmc_nn,da_mcmc_dgala, device):
+def main(verbose,N,hidden_layers,num_neurons,kl,train,deepgala,noise_level,nn_mcmc,dgala_mcmc,da_mcmc_nn,da_mcmc_dgala, device):
     config_experiment = nv_experiment()
     config_experiment.verbose = verbose
     config_experiment.nn_model = N
     config_experiment.num_layers = hidden_layers 
     config_experiment.hidden_dim = num_neurons
+    config_experiment.KL_expansion = kl
     config_experiment.train = train
     config_experiment.deepgala = deepgala
     config_experiment.noise_level = noise_level
@@ -246,6 +253,7 @@ if __name__ == "__main__":
     parser.add_argument("--N", type=int, required=True, help="Number of training samples")
     parser.add_argument("--hidden_layers", type=int,default=3, help="Number of hidden layers of the NN")
     parser.add_argument("--num_neurons", type=int,default=300, help="Number of neurons per layer")
+    parser.add_argument("--kl", type=int,default=1, help="KL expansion for RF")
     parser.add_argument("--train", action="store_true", help="Train NN")
     parser.add_argument("--deepgala", action="store_true", help="Fit DeepGala")
     parser.add_argument("--noise_level", type=float,default=1e-3,help="Noise level for IP")
@@ -259,5 +267,5 @@ if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     # Pass all arguments
-    main(args.verbose, args.N, args.hidden_layers, args.num_neurons,args.train, args.deepgala, args.noise_level,  
+    main(args.verbose, args.N, args.hidden_layers, args.num_neurons,args.kl,args.train, args.deepgala, args.noise_level,  
          args.nn_mcmc, args.dgala_mcmc, args.da_mcmc_nn, args.da_mcmc_dgala, device)

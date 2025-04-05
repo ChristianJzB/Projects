@@ -1,0 +1,49 @@
+{
+  "os": "Linux-6.11.0-21-generic-x86_64-with-glibc2.39",
+  "python": "CPython 3.9.21",
+  "startedAt": "2025-04-05T15:07:48.092190Z",
+  "args": [
+    "--N",
+    "100",
+    "--kl",
+    "10",
+    "--train"
+  ],
+  "program": "/home/christianjb/Projects/NN_Inverse_Problems/Navier-Stokes/experiments/nv_experiment.py",
+  "codePath": "Navier-Stokes/experiments/nv_experiment.py",
+  "git": {
+    "remote": "https://github.com/ChristianJzB/NN_Inverse_Problems.git",
+    "commit": "652024abb0ed456a17ea45951354319ea4cef8cd"
+  },
+  "email": "s2113174@ed.ac.uk",
+  "root": "/home/christianjb/Projects/NN_Inverse_Problems",
+  "host": "christianjb",
+  "executable": "/home/christianjb/anaconda3/envs/experiments/bin/python",
+  "codePathLocal": "Navier-Stokes/experiments/nv_experiment.py",
+  "cpu_count": 6,
+  "cpu_count_logical": 12,
+  "gpu": "NVIDIA GeForce RTX 2060",
+  "gpu_count": 1,
+  "disk": {
+    "/": {
+      "total": "486838099968",
+      "used": "89349607424"
+    }
+  },
+  "memory": {
+    "total": "16628277248"
+  },
+  "cpu": {
+    "count": 6,
+    "countLogical": 12
+  },
+  "gpu_nvidia": [
+    {
+      "name": "NVIDIA GeForce RTX 2060",
+      "memoryTotal": "6442450944",
+      "cudaCores": 1920,
+      "architecture": "Turing"
+    }
+  ],
+  "cudaVersion": "12.6"
+}

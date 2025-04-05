@@ -490,18 +490,18 @@ def train_vorticity_dg(config,device):
         optimizer.zero_grad()
 
         # Timer for loss computation
-        start_time = time.time()
+        #start_time = time.time()
         total_loss,losses = dg_NVs.total_loss(sorted_batch,initial_condition,initial_points_,
                                                 loss_fn = loss_fn,update_weights=update_weights)
 
-        loss_computation_time = time.time() - start_time  # Time taken for loss computation
+        #loss_computation_time = time.time() - start_time  # Time taken for loss computation
 
         total_loss.backward()
         optimizer.step()
 
-        if (epoch % 1000 == 0) and (epoch != 0):
-            test_w = test_valuation(config, dg_NVs,ip_test,w0_test,theta_test)
-            wandb.log({"test_w":test_w})
+        # if (epoch % 1000 == 0) and (epoch != 0):
+        #     test_w = test_valuation(config, dg_NVs,ip_test,w0_test,theta_test)
+        #     wandb.log({"test_w":test_w})
 
         # Scheduler step
         if epoch >= start_scheduler and (epoch - start_scheduler) % config.scheduler_step == 0:
@@ -511,7 +511,7 @@ def train_vorticity_dg(config,device):
         wandb.log({
             "epoch": epoch,
             "train_loss": total_loss.item(),
-            "loss_computation_time": loss_computation_time,
+            #"loss_computation_time": loss_computation_time,
             "learning_rate": scheduler.get_last_lr()[0],
             **{key: loss.item() for key,loss in losses.items()},
             **{f"weight_{key}": value for key, value in dg_NVs.lambdas.items()}
