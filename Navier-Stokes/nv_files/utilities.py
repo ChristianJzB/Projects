@@ -54,7 +54,7 @@ def deepgala_data_fit(config,device):
 
     dom = torch.tensor([[0, 2 * torch.pi], [0, 2 * torch.pi],[0,config.time_domain]])
 
-    samples_interior = iter(UniformSampler(dom, batch_size_interior))
+    samples_interior = iter(UniformSampler(dom, batch_size_interior,device="cpu"))
 
     batch = next(samples_interior)
 

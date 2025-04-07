@@ -199,7 +199,7 @@ class dgala(torch.nn.Module):
                     self.n_data[fit_data["outputs"][key][z]] = fout.shape[0]
                 
     def compute_hessian (self,output,parameters_,key):
-        hessian_loss = torch.zeros(self.n_params,self.n_params)
+        hessian_loss = torch.zeros(self.n_params,self.n_params,device = self._device)
 
         if self.chunks: 
             nitems_chunk = output.shape[0] // self.chunks

@@ -66,7 +66,6 @@ class NavierStokes(deepGalerkin):
 
         loss_nvs = torch.mean(nvs_pred**2, dim =1).to(self.device)
         loss_cont = torch.mean(cont**2, dim = 1).to(self.device)
-
         # Update weights_nvs_cont using exponential decay
         nvs_gamma = torch.exp(-tol * (self.M @ loss_nvs)).detach()
         cont_gamma = torch.exp(-tol * (self.M @ loss_cont)).detach()

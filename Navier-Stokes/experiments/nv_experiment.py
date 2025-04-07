@@ -161,10 +161,17 @@ def run_experiment(config_experiment,device):
     # Step 2: Fit deepGALA
     if config_experiment.deepgala:
         print("Starting DeepGaLA fitting for NN" + model_specific)
+        config = get_vorticity_train_config()
+        config.points_per_chunk = config_experiment.nn_model
+        config.batch_ic = 16*config_experiment.nn_model
+
         nn_surrogate_model = torch.load(nn_path_model)
         nn_surrogate_model.eval()
+        nn_surrogate_model.to(device)
+        nn_surrogate_model.M = nn_surrogate_model.M.to(device)
 
-        data_fit = deepgala_data_fit(config_experiment.nn_model,config_experiment.KL_expansion,device)
+        data_fit = deepgala_data_fit(config, device)
+
         llp = dgala(nn_surrogate_model)
         llp.fit(data_fit)
         llp.optimize_marginal_likelihood()

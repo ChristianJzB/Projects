@@ -41,7 +41,7 @@ class deepGalerkin(torch.nn.Module):
     def init_M(self):  # Separate method for initializing M
         if hasattr(self, 'chunks'):
             self.M = torch.triu(torch.ones((self.chunks, self.chunks), device=self.device), diagonal=1).T
-
+            #self.register_buffer("M", M)  # Registers M as a buffer
     def losses(self,*args):
         raise NotImplementedError("Subclasses should implement this!")
     
