@@ -1,6 +1,7 @@
 
 import torch
 import numpy as np
+from torch.distributions import MultivariateNormal
 
 from Base.mcmc import MetropolisHastings,MCMCDA
 from Base.lla import dgala
@@ -13,13 +14,22 @@ from nv_files.Field_Generator import omega0_samples_torch
 
 class NVMCMC(MetropolisHastings):
     def __init__(self, surrogate, observation_locations, observations_values, nparameters=2, 
-                 observation_noise=0.5, nsamples=1000000, burnin=None, proposal_type="random_walk", 
-                 step_size=0.1, device="cpu"):
+                 observation_noise=0.5, nsamples=1000000, burnin=None, proposal_type="random_walk", step_size=0.1, my_reg = 1e-3, pcn_mu=0, pcn_sigma=1,
+                  device="cpu"):
         
         super(NVMCMC, self).__init__(observation_locations, observations_values, nparameters, 
                  observation_noise, nsamples, burnin, proposal_type, step_size, device)
         self.device = device
         self.surrogate = surrogate
+
+        if proposal_type == "langevin":
+            self.my_reg = torch.tensor(my_reg, device=device)
+            self.my_scaling_term = 1 / (2 + torch.sqrt(2 * torch.pi * self.my_reg)).to(self.device)  # Calculate once
+        elif proposal_type == "pCN":
+            self.pcn_mu = pcn_mu*torch.ones(self.nparameters,device=self.device)
+            self.pcn_cov= pcn_sigma*torch.eye(self.nparameters,device=self.device)
+            self.normal_dist = MultivariateNormal(self.pcn_mu, self.pcn_cov)
+
 
         # Dictionary to map surrogate classes to their likelihood functions
         likelihood_methods = {Vorticity: self.nn_log_likelihood,
@@ -31,11 +41,50 @@ class NVMCMC(MetropolisHastings):
             self.log_likelihood_func = likelihood_methods[surrogate_type]
         else:
             raise ValueError(f"Surrogate of type {surrogate_type.__name__} is not supported.")
+        
+        # Dictionary to map surrogate classes to their likelihood functions
+        prior_methods = {"random_walk": self.log_uniform,
+                        "pCN": self.log_normal,
+                        "langevin": self.log_MY_envelope}
 
-    def log_prior(self, theta):
+        if proposal_type in prior_methods:
+            self.log_prior_func = prior_methods[proposal_type]
+        else:
+            raise ValueError(f"Prior of type {proposal_type.__name__} is not supported.")
+        
+        
+    def log_MY_envelope(self, theta):
+        """
+        Log prior with Moreau-Yosida regularization for the uniform distribution between -1 and 1.
+        """
+        # Regularization term for all theta values
+        regularization_term = -(torch.clamp(torch.abs(theta) - 1, min=0) ** 2) / (2 * self.my_reg)
+        return regularization_term + torch.log(self.my_scaling_term)
+    
+    def log_normal(self, theta):
+        return self.normal_dist.log_prob(theta)
+    
+    def log_uniform(self, theta):
         if not torch.logical_and(theta >= -2, theta <= 2).all():
             return torch.tensor(-float("inf"))  # Ensure it remains a tensor
         return torch.tensor(0.0)  # Keep consistency
+
+    def nn_grad_log_likelihood(self, theta):
+        """
+        Evaluates the gradient of log-likelihood given a NN.
+        """
+        theta.requires_grad_(True)
+        data = torch.cat([self.observation_locations, theta.repeat(self.observation_locations.size(0), 1)], dim=1).float().to(self.device)
+        surg = self.surrogate.w(data).clone()
+        
+        grad_nn_theta = torch.autograd.grad(surg, data, grad_outputs=torch.ones_like(surg), create_graph=True)[0][:, 3:].detach()
+        grad_lh_theta = - (self.observations_values - surg) / (self.observation_noise ** 2)
+        
+        return grad_nn_theta * grad_lh_theta
+    
+    def MYULA(self, theta):
+        return self.nn_grad_log_likelihood(theta) + (theta - self.log_MY_envelope(theta)) / self.my_reg
+
 
     def nn_log_likelihood(self, theta):
         """
@@ -61,6 +110,10 @@ class NVMCMC(MetropolisHastings):
         cte = 0.5 * (dy * torch.log(torch.tensor(2 * torch.pi)) + torch.sum(torch.log(sigma)))
 
         return -0.5 * torch.sum(((self.observations_values - surg_mu.reshape(-1, 1)) ** 2) / sigma)- cte
+    
+    def log_prior(self, theta):
+        """Directly call the precomputed likelihood function."""
+        return self.log_prior_func(theta)
     
     def log_likelihood(self, theta):
         """Directly call the precomputed likelihood function."""

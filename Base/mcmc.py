@@ -28,7 +28,9 @@ class MetropolisHastings(torch.nn.Module):
         self.nsamples = nsamples
         self.burnin = int(self.nsamples * 0.1) if burnin is None else burnin
         self.proposal_type = proposal_type
-        self.dt = step_size  # Step size for proposals
+        #self.ideal_acceptace_rate = 0.234 if self.proposal_type == "random_walk" else 0.576
+        self.ideal_acceptace_rate = 0.234
+        self.dt = torch.tensor(step_size, dtype=torch.float64, device=self.device)  # Step size for proposals
         self.to(device)
 
 
@@ -39,16 +41,21 @@ class MetropolisHastings(torch.nn.Module):
     def log_likelihood(self, theta):
         """Define the likelihood function. Must be overridden."""
         raise NotImplementedError("log_likelihood must be implemented in a subclass.")
+    
+    # def MYULA(self, theta):
+    #     """Define the likelihood function. Must be overridden."""
+    #     raise NotImplementedError("log_likelihood must be implemented in a subclass.")
 
     def proposal(self, theta, dt):
         """Proposal with independent step sizes for each chain."""
         if self.proposal_type == "random_walk":
-            return theta + torch.normal(mean=torch.zeros_like(theta), std=dt).to(self.device)  # Scale noise by dt (per chain)
-        elif self.proposal_type == "langevin":
-            if not theta.requires_grad:
-                theta.requires_grad_()  # Ensure theta is differentiable
-            gradient = torch.autograd.grad(self.log_likelihood(theta), theta, retain_graph=True)[0]
-            return theta + 0.5 * dt * gradient + dt * torch.randn_like(theta)
+            return theta + torch.normal(mean=torch.zeros_like(theta), std=dt)  # Scale noise by dt (per chain)
+        
+        elif self.proposal_type == "pCN":
+            return theta*torch.sqrt(1-dt**2) + torch.normal(mean=torch.zeros_like(theta), std=dt)  
+        
+        # elif self.proposal_type == "langevin":
+        #     return theta + dt * self.MYULA(theta) + torch.sqrt(2*dt) * torch.randn_like(theta)
 
 
     def run_chain(self, verbose=True):
@@ -82,7 +89,7 @@ class MetropolisHastings(torch.nn.Module):
             samples[i, :] = theta
 
             # Adaptive step size adjustment (each chain updates its own dt)
-            dt += dt * (a.item() - 0.234) / (i + 1)
+            dt += dt * (a - self.ideal_acceptace_rate) / (i + 1)
 
             if verbose and (i % (self.nsamples // 10) == 0)and (i!=0):
                 pbar.set_postfix(acceptance_rate=f"{accepted_proposals / (i+1):.4f}", proposal_variance=f"{dt:.4f}")
@@ -339,170 +346,3 @@ class MoreauYosidaPrior(Distribution):
     def expand(self, batch_shape, _instance=None):
         """Expand the distribution to a new batch shape."""
         return MoreauYosidaPrior(self.lam, batch_shape, self.device)
-
-
-
-class DAHM:
-    """
-    A class to perform Metropolis-Hastings sampling for parameter inference.
-    It can use a neural network surrogate model or a numerical solver for likelihood evaluation.
-    """
-
-    def __init__(self, x, y, vert1=2, vert2 = 100, nparam=2, sig=1.0, dt_init=0.5, 
-                  lam = 1 /4, M = 2, reg=1e-3, device='cpu'):
-        """
-        Initialize the Metropolis-Hastings sampler.
-        
-        Args:
-            surrogate: Surrogate neural network model.
-            x: Input data (independent variables).
-            y: Observed data (dependent variables).
-            sig: Standard deviation of the noise in the observations (default 1.0).
-            dt_init: Initial step size for the proposal distribution (default 0.5).
-            numerical: Whether to use a numerical solver instead of the surrogate model (default False).
-            roots: Roots for FEM solver, used if numerical=True (optional).
-            vert: Vertices for FEM solver, used if numerical=True (optional).
-            lam: Regularization parameter for the Moreau-Yosida regularization.
-            device: Device to run the model (default 'cpu').
-        """
-        self.device = device
-
-        self.x = torch.tensor(x, dtype=torch.float32, device=self.device)
-        self.y = torch.tensor(y, dtype=torch.float32, device=self.device)
-        self.sig = torch.tensor(sig, dtype=torch.float32, device=self.device)
-        self.dt = torch.tensor(dt_init, dtype=torch.float32, device=self.device)
-        self.reg = torch.tensor(reg,dtype=torch.float32, device=self.device)  # Regularization parameter
-        self.lam = lam
-        self.M = M
-
-        self.nparam = nparam
-        self.vert1 = vert1
-        self.vert2 = vert2
-
-
-        # Initialize the FEMSolver once, if numerical solver is used
-        self.solver1 = FEMSolver(np.zeros(self.nparam), self.lam,self.M, vert=self.vert1)
-        self.solver2 = FEMSolver(np.zeros(self.nparam), self.lam,self.M, vert=self.vert2)
-
-
-        self.scaling_term = 1 / (2 + torch.sqrt(2 * torch.pi * self.reg)).to(self.device)  # Calculate once
-
-
-    def log_prior_alpha(self, theta):
-        """
-        Log prior with Moreau-Yosida regularization for the uniform distribution between -1 and 1.
-        """
-        # Regularization term for all theta values
-        regularization_term = -(torch.clamp(torch.abs(theta) - 1, min=0) ** 2) / (2 * self.reg)
-        return torch.sum(regularization_term + torch.log(self.scaling_term))
-
-    def proposals(self, alpha):
-        """
-        Generates proposals for the next step in the Metropolis-Hastings algorithm using a normal distribution.
-        Args:
-            alpha: Current parameter values.
-        
-        Returns:
-            New proposed parameter values.
-        """
-        # Generate normal proposals
-        proposal = alpha + torch.normal(mean=torch.zeros_like(alpha), std=self.dt).to(self.device)
-        
-        return proposal
-
-    def log_likelihood(self,solver,pr):
-
-        """
-        Evaluates the log-likelihood given the surrogate model or numerical solver.
-        
-        Args:
-            pr: Current parameters.
-        
-        Returns:
-            Log-likelihood value.
-        """
-        solver.theta = pr.cpu().numpy()  # Convert to numpy for FEM solver
-        solver.solve()
-        surg = solver.eval_at_points(self.x.cpu().numpy()).reshape(-1, 1)
-
-        surg = torch.tensor(surg, device=self.device)
-
-        return -0.5 * torch.sum(((self.y - surg) ** 2) / (self.sig ** 2))
-
-        
-    def log_posterior(self, solver,pr):
-        """
-        Evaluates the log-posterior using the surrogate model.
-        
-        Args:
-            pr: Current parameters.
-        
-        Returns:
-            Log-posterior value.
-        """
-        return self.log_likelihood(solver,pr) + self.log_prior_alpha(pr)
-
-    def run_sampler(self, n_chains, verbose=True):
-        """
-        Run the Metropolis-Hastings sampling process sequentially.
-        
-        Args:
-            n_chains: Number of steps in the chain.
-            verbose: Whether to print progress (default True).
-        
-        Returns:
-            alpha_samp: Sampled parameter values.
-            dt_tracker: Step size progression over the chain.
-        """
-        # Initialize the parameters randomly within the prior range
-        alpha = torch.empty(self.nparam, device=self.device).uniform_(-1, 1)
-        alpha_samp = torch.zeros((n_chains, self.nparam), device=self.device)
-        #dt_tracker = torch.zeros(n_chains, device=self.device)
-        acceptance_rate = 0
-        inner_mh = 0
-
-        for i in range(n_chains):
-            # Propose new alpha values
-            alpha_proposal = self.proposals(alpha)
-            
-            # Compute the current log-posterior
-            log_posterior_current = self.log_posterior(self.solver1,alpha)
-            log_posterior_proposal = self.log_posterior(self.solver1,alpha_proposal)
-
-            # Compute the acceptance ratio
-            a = torch.clamp(torch.exp(log_posterior_proposal - log_posterior_current), max=1.0)
-
-            # Accept or reject the proposal
-            if torch.rand(1, device=self.device) < a:
-                inner_mh += 1
-                log_posterior_current2 = self.log_posterior(self.solver2,alpha)
-                log_posterior_proposal2 = self.log_posterior(self.solver2,alpha_proposal)
-
-                # Compute the acceptance ratio
-                a = torch.clamp(torch.exp(log_posterior_proposal2 - (log_posterior_current2))*(1/a), max=1.0)
-
-                if torch.rand(1, device=self.device) < a:
-                    alpha = alpha_proposal
-                    acceptance_rate += 1
-
-            # Store the current sample and step size
-            alpha_samp[i] = alpha
-            #dt_tracker[i] = self.dt
-
-            # Adaptive step size adjustment 
-            #self.dt += self.dt * (a - 0.234) / (i + 1)
-
-            del log_posterior_current, log_posterior_proposal, alpha_proposal
-            if self.device != "cpu":
-                torch.cuda.empty_cache()
-
-            # Print progress every 10% of the steps
-            if verbose and i % (n_chains // 10) == 0 and (i!=0):
-                print(f"Iteration {i}, Acceptance Rate: {acceptance_rate / inner_mh:.3f}, Step Size: {self.dt:.4f}")
-                #print(f"Iteration {i}, Acceptance Rate: {acceptance_rate / (i + 1):.3f}, Step Size: {self.dt:.4f}")
-
-        # if verbose:
-        #     print(f"Final Acceptance Rate: {acceptance_rate / n_chains:.3f}")
-            
-        return alpha_samp.detach().cpu().numpy()
-        #return alpha_samp.detach().cpu().numpy(), dt_tracker.detach().cpu().numpy()

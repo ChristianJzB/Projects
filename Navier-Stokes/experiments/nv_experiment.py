@@ -178,7 +178,7 @@ def run_experiment(config_experiment,device):
     print(config_experiment.noise_level)
     # Step 4: Neural Network Surrogate for MCMC
     if config_experiment.nn_mcmc:
-        print("Starting MCMC with NN" + model_specific)
+        print(f"Starting {config_experiment.proposal}-MCMC with NN" + model_specific)
         nn_surrogate_model = torch.load(nn_path_model)
         nn_surrogate_model.eval()
         nn_surrogate_model.to(device)
@@ -187,7 +187,7 @@ def run_experiment(config_experiment,device):
     
     # Step 5: DeepGaLA Surrogate for MCMC
     if config_experiment.dgala_mcmc:
-        print("Starting MCMC with DeepGaLA" + model_specific)
+        print(f"Starting {config_experiment.proposal}-MCMC with DeepGaLA" + model_specific)
         llp = torch.load(dgala_path_model)
         llp.model.set_last_layer("output_layer")  # Re-register hooks
         nn_samples = run_mcmc_chain(llp, obs_points, sol_test, config_experiment, device)
@@ -195,7 +195,7 @@ def run_experiment(config_experiment,device):
 
     # Step 7: Delayed Acceptance for NN
     if config_experiment.da_mcmc_nn:
-        print("Starting MCMC-DA with NN" + model_specific + "and PSM")
+        print(f"Starting {config_experiment.proposal}-MCMC-DA with NN" + model_specific + "and PSM")
         nn_surrogate_model = torch.load(nn_path_model)
         nn_surrogate_model.eval()
         nn_surrogate_model.to(device)
@@ -214,7 +214,7 @@ def run_experiment(config_experiment,device):
 
     # Step 8: Delayed Acceptance for Dgala
     if config_experiment.da_mcmc_dgala:
-        print(f"Starting MCMC-DA with DGALA" + model_specific + "and PSM")
+        print(f"Starting {config_experiment.proposal}-MCMC-DA with DGALA" + model_specific + "and PSM")
 
         llp = torch.load(dgala_path_model)
         llp.model.set_last_layer("output_layer")  # Re-register hooks
@@ -230,7 +230,7 @@ def run_experiment(config_experiment,device):
 
 
 # Main loop for different sample sizes
-def main(verbose,N,hidden_layers,num_neurons,kl,train,deepgala,noise_level,nn_mcmc,dgala_mcmc,da_mcmc_nn,da_mcmc_dgala, device):
+def main(verbose,N,hidden_layers,num_neurons,kl,train,deepgala,noise_level,proposal,nn_mcmc,dgala_mcmc,da_mcmc_nn,da_mcmc_dgala, device):
     config_experiment = nv_experiment()
     config_experiment.verbose = verbose
     config_experiment.nn_model = N
@@ -240,6 +240,7 @@ def main(verbose,N,hidden_layers,num_neurons,kl,train,deepgala,noise_level,nn_mc
     config_experiment.train = train
     config_experiment.deepgala = deepgala
     config_experiment.noise_level = noise_level
+    config_experiment.proposal = proposal
     config_experiment.nn_mcmc = nn_mcmc
     config_experiment.dgala_mcmc = dgala_mcmc
     config_experiment.da_mcmc_nn = da_mcmc_nn
@@ -257,6 +258,7 @@ if __name__ == "__main__":
     parser.add_argument("--train", action="store_true", help="Train NN")
     parser.add_argument("--deepgala", action="store_true", help="Fit DeepGala")
     parser.add_argument("--noise_level", type=float,default=1e-3,help="Noise level for IP")
+    parser.add_argument("--proposal", type=str,default="random_walk",help="MCMC Proposal")
     parser.add_argument("--nn_mcmc", action="store_true", help="Run MCMC for NN")
     parser.add_argument("--dgala_mcmc", action="store_true", help="Run MCMC for dgala")
     parser.add_argument("--da_mcmc_nn", action="store_true", help="Run DA-MCMC for NN")
@@ -267,5 +269,5 @@ if __name__ == "__main__":
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     # Pass all arguments
-    main(args.verbose, args.N, args.hidden_layers, args.num_neurons,args.kl,args.train, args.deepgala, args.noise_level,  
+    main(args.verbose, args.N, args.hidden_layers, args.num_neurons,args.kl,args.train, args.deepgala, args.noise_level, args.proposal,
          args.nn_mcmc, args.dgala_mcmc, args.da_mcmc_nn, args.da_mcmc_dgala, device)
