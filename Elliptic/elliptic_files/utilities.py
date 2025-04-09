@@ -49,17 +49,6 @@ def deepgala_data_fit(samples,nparameters,device,seed = 656474378363588318808080
 def generate_noisy_obs(obs, theta_t=np.array([0.098, 0.430]),vert=1000, mean=0, std=np.sqrt(1e-4)):
     """
     Generates noisy observations for given parameters and observation points.
-    
-    Parameters:
-    - obs: Number of observation points (integer)
-    - theta_t: True parameter values for the FEM solver (default is np.array([0.098, 0.430]))
-    - vert: Number of vertices in the FEM mesh (default is 1000)
-    - mean: Mean of the noise distribution (default is 0)
-    - std: Standard deviation of the noise distribution (default is sqrt(1e-4))
-
-    Returns:
-    - obs_points: The observation points (shape: (obs, 1))
-    - sol_test: Noisy solution points (shape: (obs, 1))
     """
 
     # Solve the FEM problem using the given theta values and roots

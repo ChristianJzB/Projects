@@ -23,7 +23,7 @@ def nv_experiment():
 
     # Train config
     config.train = False
-    config.iterations  = 5000
+    config.iterations  = 10_000
     config.nn_model = 250
     config.hidden_dim = 300
     config.num_layers = 2
@@ -174,7 +174,7 @@ def run_experiment(config_experiment,device):
 
         llp = dgala(nn_surrogate_model)
         llp.fit(data_fit)
-        llp.optimize_marginal_likelihood()
+        llp.optimize_marginal_likelihoodb(error_tolerance=1e-4, max_iter=5000)
         clear_hooks(llp)
         torch.save(llp, dgala_path_model)
 

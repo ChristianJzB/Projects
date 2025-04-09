@@ -42,9 +42,9 @@ class MetropolisHastings(torch.nn.Module):
         """Define the likelihood function. Must be overridden."""
         raise NotImplementedError("log_likelihood must be implemented in a subclass.")
     
-    # def MYULA(self, theta):
-    #     """Define the likelihood function. Must be overridden."""
-    #     raise NotImplementedError("log_likelihood must be implemented in a subclass.")
+    def MYULA(self, theta):
+        """Define the likelihood function. Must be overridden."""
+        raise NotImplementedError("log_likelihood must be implemented in a subclass.")
 
     def proposal(self, theta, dt):
         """Proposal with independent step sizes for each chain."""
@@ -54,8 +54,8 @@ class MetropolisHastings(torch.nn.Module):
         elif self.proposal_type == "pCN":
             return theta*torch.sqrt(1-dt**2) + torch.normal(mean=torch.zeros_like(theta), std=dt)  
         
-        # elif self.proposal_type == "langevin":
-        #     return theta + dt * self.MYULA(theta) + torch.sqrt(2*dt) * torch.randn_like(theta)
+        elif self.proposal_type == "langevin":
+            return theta + dt * self.MYULA(theta) + torch.sqrt(2*dt) * torch.randn_like(theta)
 
 
     def run_chain(self, verbose=True):
@@ -76,10 +76,12 @@ class MetropolisHastings(torch.nn.Module):
             theta_proposal = self.proposal(theta, dt)  # Pass dt to proposal
 
             log_posterior = self.log_prior(theta) + self.log_likelihood(theta)
+            print(self.log_prior(theta).shape,self.log_likelihood(theta).shape)
             log_posterior_proposal = self.log_prior(theta_proposal) + self.log_likelihood(theta_proposal)
 
             # Compute acceptance probabilities (vectorized)
             a = torch.exp(log_posterior_proposal - log_posterior).clamp(max=1.0)
+            print(a.shape)
 
             if torch.rand(1, device=self.device) < a:
                 theta = theta_proposal
@@ -90,6 +92,9 @@ class MetropolisHastings(torch.nn.Module):
 
             # Adaptive step size adjustment (each chain updates its own dt)
             dt += dt * (a - self.ideal_acceptace_rate) / (i + 1)
+
+            if self.proposal_type == "pCN":
+                dt = dt.clamp(max=1.0)
 
             if verbose and (i % (self.nsamples // 10) == 0)and (i!=0):
                 pbar.set_postfix(acceptance_rate=f"{accepted_proposals / (i+1):.4f}", proposal_variance=f"{dt:.4f}")
@@ -148,7 +153,8 @@ class MCMCDA(torch.nn.Module):
         self.iter_da = iter_da
         self.iter_mcmc = iter_mcmc
         self.proposal_type = proposal_type
-        self.dt = step_size  # Step size for proposals
+        self.ideal_acceptace_rate = 0.234
+        self.dt = torch.tensor(step_size, dtype=torch.float64, device=self.device)  # Step size for proposals
         self.to(device)
 
     def log_prior(self, theta):
@@ -167,11 +173,14 @@ class MCMCDA(torch.nn.Module):
         """Proposal with independent step sizes for each chain."""
         if self.proposal_type == "random_walk":
             return theta + torch.normal(mean=torch.zeros_like(theta), std=dt).to(self.device)  # Scale noise by dt (per chain)
-        elif self.proposal_type == "langevin":
-            if not theta.requires_grad:
-                theta.requires_grad_()  # Ensure theta is differentiable
-            gradient = torch.autograd.grad(self.log_likelihood(theta), theta, retain_graph=True)[0]
-            return theta + 0.5 * dt * gradient + dt * torch.randn_like(theta)
+        elif self.proposal_type == "pCN":
+            return theta*torch.sqrt(1-dt**2) + torch.normal(mean=torch.zeros_like(theta), std=dt)  
+        
+        # elif self.proposal_type == "langevin":
+        #     if not theta.requires_grad:
+        #         theta.requires_grad_()  # Ensure theta is differentiable
+        #     gradient = torch.autograd.grad(self.log_likelihood(theta), theta, retain_graph=True)[0]
+        #     return theta + 0.5 * dt * gradient + dt * torch.randn_like(theta)
 
 
     def run_chain(self, samples = False, verbose=True):
@@ -211,8 +220,11 @@ class MCMCDA(torch.nn.Module):
             if samples:
                 samples_outer[i,:] = theta
 
-            # Adaptive step size adjustment 
-            dt += dt * (a.item() - 0.234) / (i + 1)
+            # Adaptive step size adjustment (each chain updates its own dt)
+            dt += dt * (a - self.ideal_acceptace_rate) / (i + 1)
+
+            if self.proposal_type == "pCN":
+                dt = dt.clamp(max=1.0)
 
             if verbose and i % (self.iter_mcmc // 10) == 0 and (i!=0):
                 pbar.set_postfix(acceptance_rate=f"{outer_mh / (i+1):.4f}", proposal_variance=f"{dt:.4f}")

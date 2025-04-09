@@ -77,10 +77,10 @@ class NVMCMC(MetropolisHastings):
         data = torch.cat([self.observation_locations, theta.repeat(self.observation_locations.size(0), 1)], dim=1).float().to(self.device)
         surg = self.surrogate.w(data).clone()
         
-        grad_nn_theta = torch.autograd.grad(surg, data, grad_outputs=torch.ones_like(surg), create_graph=True)[0][:, 3:].detach()
+        grad_nn_theta = torch.autograd.grad(surg, data, grad_outputs=torch.ones_like(surg), create_graph=True)[0][:, 3:].detach().double()
         grad_lh_theta = - (self.observations_values - surg) / (self.observation_noise ** 2)
-        
-        return grad_nn_theta * grad_lh_theta
+    
+        return (grad_nn_theta.T @ grad_lh_theta).flatten()
     
     def MYULA(self, theta):
         return self.nn_grad_log_likelihood(theta) + (theta - self.log_MY_envelope(theta)) / self.my_reg

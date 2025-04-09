@@ -9,10 +9,11 @@ VERBOSE=""
 KL="--kl 10"
 TRAIN=""  # Set empty "" if you want default (False)
 DEEPGALA=""  # Empty means default (False)
-NOISE_LEVEL="--noise_level 1e-2"
+NOISE_LEVEL="--noise_level 1e-3"
+PROPOSAL="--proposal pCN"
 NN_MCMC=""  # Example: enabled
 DGALA_MCMC=""
-DA_MCMC_NN=""
+DA_MCMC_NN="--da_mcmc_nn"
 DA_MCMC_DGALA=""
 
 for N in "${N_VALUES[@]}"; do
@@ -25,7 +26,7 @@ for N in "${N_VALUES[@]}"; do
 # -q gpu
 # -l gpu=1 
 #$ -l h_vmem=40G
-#$ -l h_rt=15:00:00 
+#$ -l h_rt=5:00:00 
 
 # Load necessary modules
 . /etc/profile.d/modules.sh
@@ -34,7 +35,7 @@ module load miniforge
 conda activate experiments
 
 # Run the experiment with dynamic and fixed arguments
-python Navier-Stokes/experiments/nv_experiment.py --N $N --hidden_layers $L --num_neurons 300 $KL $TRAIN $DEEPGALA $NOISE_LEVEL $NN_MCMC $DGALA_MCMC $DA_MCMC_NN $DA_MCMC_DGALA
+python Navier-Stokes/experiments/nv_experiment.py --N $N --hidden_layers $L --num_neurons 300 $KL $TRAIN $DEEPGALA $NOISE_LEVEL $PROPOSAL $NN_MCMC $DGALA_MCMC $DA_MCMC_NN $DA_MCMC_DGALA
 EOF
 
     done
