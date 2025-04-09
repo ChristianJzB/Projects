@@ -7,11 +7,11 @@ N_LAYERS=(1 2 3)  # Define hidden layers
 # Define default values for parameters
 VERBOSE=""
 KL="--kl 10"
-TRAIN=""  # Set empty "" if you want default (False)
-DEEPGALA=""  # Empty means default (False)
+TRAIN="--train"  # Set empty "" if you want default (False)
+DEEPGALA="--deepgala"  # Empty means default (False)
 NOISE_LEVEL="--noise_level 1e-3"
 PROPOSAL="--proposal pCN"
-NN_MCMC=""  # Example: enabled
+NN_MCMC="--nn_mcmc"  # Example: enabled
 DGALA_MCMC=""
 DA_MCMC_NN="--da_mcmc_nn"
 DA_MCMC_DGALA=""
@@ -23,10 +23,10 @@ for N in "${N_VALUES[@]}"; do
         qsub -N "nv_N${N}_L${L}" <<EOF
 #!/bin/bash
 #$ -cwd
-# -q gpu
-# -l gpu=1 
+#$ -q gpu
+#$ -l gpu=1 
 #$ -l h_vmem=40G
-#$ -l h_rt=5:00:00 
+#$ -l h_rt=36:00:00 
 
 # Load necessary modules
 . /etc/profile.d/modules.sh
