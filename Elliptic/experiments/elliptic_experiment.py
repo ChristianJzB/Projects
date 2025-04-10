@@ -23,8 +23,8 @@ def elliptic_experiment():
     config.verbose = False
     config.train = False
     config.nn_model = 5000
-    config.weight_decay = 1e-3
-    config.KL_expansion = 2
+    config.weight_decay = 0.
+    config.KL_expansion = 10
 
     # DeepGala
     config.deepgala = False
@@ -32,7 +32,7 @@ def elliptic_experiment():
     # Inverse problem parameters
     config.noise_level = 1e-4
     config.num_observations = 6
-    config.theta_thruth = np.array([0.098, 0.430])
+    config.theta_thruth = np.array([0.098, 0.430, 0.206, 0.090, -0.153, 0.292, -0.125, 0.784, 0.927, -0.233])
     config.fem_solver = 50
 
     # MCMC configuration
@@ -67,7 +67,7 @@ def get_deepgalerkin_config():
     config.nn_model = "MDNN"
     config.lambdas = {"elliptic": 1, "ubcl": 1, "ubcr": 1}
     config.model = ConfigDict()
-    config.model.input_dim = 3
+    config.model.input_dim = 11
     config.model.hidden_dim = 20
     config.model.num_layers = 2
     config.model.out_dim = 1
@@ -115,10 +115,10 @@ def run_mcmc_chain(surrogate_model, obs_points, sol_test, config_experiment,devi
 # Main experiment runner
 def run_experiment(config_experiment,device):
     # Step 1: Training Phase (if needed)
-    model_specific = f"_s{config_experiment.nn_model}"
+    model_specific = f"_s{config_experiment.nn_model}_kl{config_experiment.KL_expansion}"
     path_nn_model = f"./Elliptic/models/elliptic"+model_specific+".pth"
     path_dgala_model = f"./Elliptic/models/elliptic_dgala"+model_specific+".pth"
-    fem_path = f'./Elliptic/results/FEM_var{config_experiment.noise_level}.npy'
+    fem_path = f'./Elliptic/results/FEM_kl{config_experiment.KL_expansion}_var{config_experiment.noise_level}.npy'
 
     if config_experiment.train:
         print(f"Running training with {config_experiment.nn_model} samples...")

@@ -1,0 +1,30 @@
+Traceback (most recent call last):
+  File "/home/s2113174/Projects-1/Elliptic/experiments/elliptic_experiment.py", line 247, in <module>
+    main(args.verbose, args.N, args.train, args.weight_decay, args.deepgala, args.noise_level, args.fem_mcmc,
+  File "/home/s2113174/Projects-1/Elliptic/experiments/elliptic_experiment.py", line 223, in main
+    run_experiment(config_experiment,device)
+  File "/home/s2113174/Projects-1/Elliptic/experiments/elliptic_experiment.py", line 130, in run_experiment
+    pinn_nvs = train_elliptic(config, device=device)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/train_elliptic.py", line 151, in train_elliptic
+    total_loss,losses = dg_elliptic.total_loss(data_int, left_bc, right_bc, loss_fn)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Base/dg.py", line 49, in total_loss
+    losses = self.losses(*args,**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/elliptic.py", line 65, in losses
+    loss_pde = self.pde_loss(data_interior,loss_fn)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/elliptic.py", line 48, in pde_loss
+    elliptic_pred = self.elliptic_pde(data_interior)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Base/dg.py", line 36, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/elliptic.py", line 39, in elliptic_pde
+    k = k_function(data_domain,self.roots)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/elliptic.py", line 16, in k_function
+    return torch.sum(an*bn*theta,dim=1)
+                     ~~~~~^~~~~~
+RuntimeError: The size of tensor a (2) must match the size of tensor b (10) at non-singleton dimension 1

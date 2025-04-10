@@ -76,12 +76,10 @@ class MetropolisHastings(torch.nn.Module):
             theta_proposal = self.proposal(theta, dt)  # Pass dt to proposal
 
             log_posterior = self.log_prior(theta) + self.log_likelihood(theta)
-            print(self.log_prior(theta).shape,self.log_likelihood(theta).shape)
             log_posterior_proposal = self.log_prior(theta_proposal) + self.log_likelihood(theta_proposal)
 
             # Compute acceptance probabilities (vectorized)
             a = torch.exp(log_posterior_proposal - log_posterior).clamp(max=1.0)
-            print(a.shape)
 
             if torch.rand(1, device=self.device) < a:
                 theta = theta_proposal

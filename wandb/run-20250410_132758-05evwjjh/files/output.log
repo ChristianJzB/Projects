@@ -1,0 +1,45 @@
+Traceback (most recent call last):
+  File "/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/site-packages/dolfinx/fem/function.py", line 492, in interpolate
+    _interpolate(u, cells)
+  File "/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/functools.py", line 907, in wrapper
+    return dispatch(args[0].__class__)(*args, **kw)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/site-packages/dolfinx/fem/function.py", line 455, in _interpolate
+    self._cpp_object.interpolate(u, cells, nmm_interpolation_data)  # type: ignore
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: interpolate(): incompatible function arguments. The following argument types are supported:
+    1. interpolate(self, f: ndarray[dtype=float64, writable=False, shape=(*), order='C'], cells: ndarray[dtype=int32, writable=False, shape=(*), order='C']) -> None
+    2. interpolate(self, f: ndarray[dtype=float64, writable=False, shape=(*, *), order='C'], cells: ndarray[dtype=int32, writable=False, shape=(*), order='C']) -> None
+    3. interpolate(self, u: dolfinx.cpp.fem.Function_float64, cells: ndarray[dtype=int32, writable=False, shape=(*), order='C'], cell_map: ndarray[dtype=int32, writable=False, shape=(*), order='C'], nmm_interpolation_data: tuple[ndarray[dtype=int32, writable=False, shape=(*), order='C'], ndarray[dtype=int32, writable=False, shape=(*), order='C'], ndarray[dtype=float64, writable=False, shape=(*), order='C'], ndarray[dtype=int32, writable=False, shape=(*), order='C']]) -> None
+    4. interpolate(self, expr: dolfinx.cpp.fem.Expression_float64, cells: ndarray[dtype=int32, writable=False, order='C'], expr_mesh: dolfinx.cpp.mesh.Mesh_float64, cell_map: ndarray[dtype=int32, writable=False, order='C']) -> None
+
+Invoked with types: dolfinx.cpp.fem.Function_float64, method, ndarray, dolfinx.fem.function.PointOwnershipData
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/s2113174/Projects-1/Elliptic/experiments/elliptic_experiment.py", line 247, in <module>
+    main(args.verbose, args.N, args.train, args.weight_decay, args.deepgala, args.noise_level, args.fem_mcmc,
+  File "/home/s2113174/Projects-1/Elliptic/experiments/elliptic_experiment.py", line 223, in main
+    run_experiment(config_experiment,device)
+  File "/home/s2113174/Projects-1/Elliptic/experiments/elliptic_experiment.py", line 130, in run_experiment
+    pinn_nvs = train_elliptic(config, device=device)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/train_elliptic.py", line 131, in train_elliptic
+    x_val,param_val, sol_val = generate_test_data(config.samples,param =param_test, vert=30,nparam=config.nparameters)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/train_elliptic.py", line 91, in generate_test_data
+    solver = FEMSolver(np.zeros(nparam), lam, M, vert=vert)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/FEM_Solver.py", line 96, in __init__
+    self.k = self.interpolate_k()
+             ^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/FEM_Solver.py", line 105, in interpolate_k
+    k.interpolate(k_an.eval)
+  File "/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/site-packages/dolfinx/fem/function.py", line 497, in interpolate
+    self._cpp_object.interpolate(np.asarray(u(x), dtype=self.dtype), cells)  # type: ignore
+                                            ^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/FEM_Solver.py", line 76, in eval
+    result += self.theta[i] * self.an[i] * self.A[i] * (
+                              ~~~~~~~^^^
+IndexError: index 2 is out of bounds for axis 0 with size 2

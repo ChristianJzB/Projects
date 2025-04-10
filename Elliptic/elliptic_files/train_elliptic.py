@@ -128,7 +128,8 @@ def train_elliptic(config, device):
 
     dataset = dGDataset(size = config.samples, param=param_train)
 
-    x_val,param_val, sol_val = generate_test_data(config.samples,param =param_test, vert=30)
+    x_val,param_val, sol_val = generate_test_data(config.samples,param =param_test, vert=30,
+                                                  nparam=config.nparameters,M = config.nparameters)
 
     dataloader = DataLoader(dataset, batch_size=config.batch_size, shuffle=False)
 

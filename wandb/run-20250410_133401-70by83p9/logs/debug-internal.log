@@ -1,0 +1,10 @@
+{"time":"2025-04-10T13:34:01.353247839+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-04-10T13:34:01.353276814+01:00","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250410_133401-70by83p9/logs/debug-core.log"}
+{"time":"2025-04-10T13:34:01.459314539+01:00","level":"INFO","msg":"created new stream","id":"70by83p9"}
+{"time":"2025-04-10T13:34:01.459388363+01:00","level":"INFO","msg":"stream: started","id":"70by83p9"}
+{"time":"2025-04-10T13:34:01.45943455+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"70by83p9"}
+{"time":"2025-04-10T13:34:01.459640069+01:00","level":"INFO","msg":"sender: started","stream_id":"70by83p9"}
+{"time":"2025-04-10T13:34:01.459697987+01:00","level":"INFO","msg":"handler: started","stream_id":"70by83p9"}
+{"time":"2025-04-10T13:34:01.886237093+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-10T13:42:02.689660009+01:00","level":"ERROR","msg":"HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/files/christian-jb07-univeristy-of-edinburgh/Elliptic-training/70by83p9/file_stream"}
+{"time":"2025-04-10T13:42:02.689736617+01:00","level":"ERROR+4","msg":"filestream: fatal error: filestream: failed to upload: 404 Not Found path=files/christian-jb07-univeristy-of-edinburgh/Elliptic-training/70by83p9/file_stream: {\"error\":\"run Elliptic-training/70by83p9 not found while streaming file\"}"}
