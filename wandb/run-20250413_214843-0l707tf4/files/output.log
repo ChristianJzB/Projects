@@ -1,0 +1,45 @@
+Traceback (most recent call last):
+  File "/home/s2113174/Projects-1/Elliptic/experiments/elliptic_experiment.py", line 247, in <module>
+    main(args.verbose, args.N, args.train, args.weight_decay, args.deepgala, args.noise_level, args.fem_mcmc,
+  File "/home/s2113174/Projects-1/Elliptic/experiments/elliptic_experiment.py", line 223, in main
+    run_experiment(config_experiment,device)
+  File "/home/s2113174/Projects-1/Elliptic/experiments/elliptic_experiment.py", line 130, in run_experiment
+    pinn_nvs = train_elliptic(config, device=device)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/train_elliptic.py", line 151, in train_elliptic
+    total_loss,losses = dg_elliptic.total_loss(data_int, left_bc, right_bc, loss_fn)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Base/dg.py", line 49, in total_loss
+    losses = self.losses(*args,**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/elliptic.py", line 66, in losses
+    loss_pde = self.pde_loss(data_interior,loss_fn)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/elliptic.py", line 49, in pde_loss
+    elliptic_pred = self.elliptic_pde(data_interior)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Base/dg.py", line 36, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/elliptic.py", line 35, in elliptic_pde
+    u = self.model(data_domain)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Base/deep_models.py", line 270, in forward
+    u = self.activation_fn(self.u_layer(x))
+                           ^^^^^^^^^^^^^^^
+  File "/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1532, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1541, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/site-packages/torch/nn/modules/linear.py", line 116, in forward
+    return F.linear(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: mat1 and mat2 shapes cannot be multiplied (150x3 and 11x20)

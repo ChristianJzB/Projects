@@ -1,0 +1,10 @@
+{"time":"2025-04-13T21:47:53.83910906+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-04-13T21:47:53.839123553+01:00","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250413_214753-dbooja7q/logs/debug-core.log"}
+{"time":"2025-04-13T21:47:53.943989816+01:00","level":"INFO","msg":"created new stream","id":"dbooja7q"}
+{"time":"2025-04-13T21:47:53.944074542+01:00","level":"INFO","msg":"stream: started","id":"dbooja7q"}
+{"time":"2025-04-13T21:47:53.94416604+01:00","level":"INFO","msg":"handler: started","stream_id":"dbooja7q"}
+{"time":"2025-04-13T21:47:53.944173445+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"dbooja7q"}
+{"time":"2025-04-13T21:47:53.94425652+01:00","level":"INFO","msg":"sender: started","stream_id":"dbooja7q"}
+{"time":"2025-04-13T21:47:54.256388356+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-13T21:50:40.035094049+01:00","level":"ERROR","msg":"HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/files/christian-jb07-univeristy-of-edinburgh/Elliptic-training/dbooja7q/file_stream"}
+{"time":"2025-04-13T21:50:40.035141864+01:00","level":"ERROR+4","msg":"filestream: fatal error: filestream: failed to upload: 404 Not Found path=files/christian-jb07-univeristy-of-edinburgh/Elliptic-training/dbooja7q/file_stream: {\"error\":\"run Elliptic-training/dbooja7q not found while streaming file\"}"}

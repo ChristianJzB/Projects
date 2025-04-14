@@ -1,0 +1,17 @@
+{"time":"2025-04-14T03:44:00.316726448+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-04-14T03:44:00.316739779+01:00","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250414_034400-bx5nebbm/logs/debug-core.log"}
+{"time":"2025-04-14T03:44:00.421855769+01:00","level":"INFO","msg":"created new stream","id":"bx5nebbm"}
+{"time":"2025-04-14T03:44:00.421988646+01:00","level":"INFO","msg":"stream: started","id":"bx5nebbm"}
+{"time":"2025-04-14T03:44:00.422051252+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"bx5nebbm"}
+{"time":"2025-04-14T03:44:00.422144493+01:00","level":"INFO","msg":"sender: started","stream_id":"bx5nebbm"}
+{"time":"2025-04-14T03:44:00.422274186+01:00","level":"INFO","msg":"handler: started","stream_id":"bx5nebbm"}
+{"time":"2025-04-14T03:44:00.758431456+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-14T07:35:14.194890506+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-14T07:35:14.195278909+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-14T07:35:15.195810057+01:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading Elliptic/models/elliptic_s500_kl10.pth","runtime_seconds":0.06776618,"progress":"81.4KB/81.4KB"}],"total_operations":1}}
+{"time":"2025-04-14T07:35:16.078291365+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-14T07:35:17.439187602+01:00","level":"INFO","msg":"stream: closing","id":"bx5nebbm"}
+{"time":"2025-04-14T07:35:17.43920269+01:00","level":"INFO","msg":"handler: closed","stream_id":"bx5nebbm"}
+{"time":"2025-04-14T07:35:17.439210409+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"bx5nebbm"}
+{"time":"2025-04-14T07:35:17.43925426+01:00","level":"INFO","msg":"sender: closed","stream_id":"bx5nebbm"}
+{"time":"2025-04-14T07:35:17.439260688+01:00","level":"INFO","msg":"stream: closed","id":"bx5nebbm"}

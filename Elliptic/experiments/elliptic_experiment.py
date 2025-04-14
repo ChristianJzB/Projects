@@ -23,7 +23,6 @@ def elliptic_experiment():
     config.verbose = False
     config.train = False
     config.nn_model = 5000
-    config.weight_decay = 0.
     config.KL_expansion = 10
 
     # DeepGala
@@ -68,7 +67,7 @@ def get_deepgalerkin_config():
     config.lambdas = {"elliptic": 1, "ubcl": 1, "ubcr": 1}
     config.model = ConfigDict()
     config.model.input_dim = 11
-    config.model.hidden_dim = 20
+    config.model.hidden_dim = 120
     config.model.num_layers = 2
     config.model.out_dim = 1
     config.model.activation = "tanh"
@@ -87,11 +86,10 @@ def get_deepgalerkin_config():
     config.seed = 42
     config.learning_rate = 0.001
     config.decay_rate = 0.95
-    config.weight_decay = 1e-3
-    config.epochs = 5000
+    config.epochs = 50000
     config.start_scheduler = 0.5
-    config.scheduler_step = 50
-    config.samples = 5000
+    config.scheduler_step = 1000
+    config.samples = 2500
     config.batch_size = 150
     # config.alpha = 0.9  # For updating loss weights
     # config.weights_update = 250
@@ -124,7 +122,6 @@ def run_experiment(config_experiment,device):
         print(f"Running training with {config_experiment.nn_model} samples...")
         config = get_deepgalerkin_config()
         config.wandb.name = "elliptic" + model_specific
-        config.weight_decay = config_experiment.weight_decay
         config.samples = config_experiment.nn_model
         config.nparameters = config_experiment.KL_expansion
         pinn_nvs = train_elliptic(config, device=device)
@@ -137,7 +134,7 @@ def run_experiment(config_experiment,device):
         nn_surrogate_model.eval()
 
         data_fit = deepgala_data_fit(config_experiment.nn_model,config_experiment.KL_expansion,device)
-        llp = dgala(nn_surrogate_model,prior_precision = 1. if config_experiment.weight_decay==0. else config_experiment.weight_decay)
+        llp = dgala(nn_surrogate_model)
         llp.fit(data_fit)
         llp.optimize_marginal_likelihoodb()
         clear_hooks(llp)
@@ -207,14 +204,14 @@ def run_experiment(config_experiment,device):
         np.save('./Elliptic/results/mcmc_da_dgala' +model_specific+'_{config_experiment.noise_level}.npy', acceptance_res)
 
 # Main loop for different sample sizes
-def main(verbose,N,train,weight_decay,deepgala, noise_level,fem_mcmc,nn_mcmc,dgala_mcmc,da_mcmc_nn,da_mcmc_dgala, device):
+def main(verbose,N,train,deepgala, noise_level,proposal,fem_mcmc,nn_mcmc,dgala_mcmc,da_mcmc_nn,da_mcmc_dgala, device):
     config_experiment = elliptic_experiment()
     config_experiment.verbose = verbose
     config_experiment.nn_model = N 
     config_experiment.train = train
-    config_experiment.weight_decay = weight_decay
     config_experiment.deepgala = deepgala
     config_experiment.noise_level = noise_level
+    config_experiment.proposal = proposal
     config_experiment.fem_mcmc = fem_mcmc
     config_experiment.nn_mcmc = nn_mcmc
     config_experiment.dgala_mcmc = dgala_mcmc
@@ -228,9 +225,9 @@ if __name__ == "__main__":
     parser.add_argument("--verbose", action="store_true", help="Verbose")
     parser.add_argument("--N", type=int, required=True, help="Number of training samples")
     parser.add_argument("--train", action="store_true", help="Train NN")
-    parser.add_argument("--weight_decay", type=float,default=0, help="L2 regularizer")
     parser.add_argument("--deepgala", action="store_true", help="Fit DeepGala")
     parser.add_argument("--noise_level", type=float,default=1e-4,help="Noise level for IP")
+    parser.add_argument("--proposal", type=str,default="random_walk",help="MCMC Proposal")
     parser.add_argument("--fem_mcmc", action="store_true", help="Run MCMC for FEM")
     parser.add_argument("--nn_mcmc", action="store_true", help="Run MCMC for NN")
     parser.add_argument("--dgala_mcmc", action="store_true", help="Run MCMC for dgala")
@@ -244,5 +241,5 @@ if __name__ == "__main__":
     print(os.getcwd())
 
     # Pass all arguments
-    main(args.verbose, args.N, args.train, args.weight_decay, args.deepgala, args.noise_level, args.fem_mcmc, 
+    main(args.verbose, args.N, args.train, args.deepgala, args.noise_level, args.proposal, args.fem_mcmc, 
          args.nn_mcmc, args.dgala_mcmc, args.da_mcmc_nn, args.da_mcmc_dgala, device)

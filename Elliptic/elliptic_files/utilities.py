@@ -52,7 +52,7 @@ def generate_noisy_obs(obs, theta_t=np.array([0.098, 0.430]),vert=1000, mean=0, 
     """
 
     # Solve the FEM problem using the given theta values and roots
-    solver = FEMSolver(theta_t,vert=vert)
+    solver = FEMSolver(theta_t,vert=vert,M=theta_t.shape[0])
     solution = solver.solve()
 
     # Extract observation points and the solution points

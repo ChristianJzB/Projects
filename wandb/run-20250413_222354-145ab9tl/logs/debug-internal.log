@@ -1,0 +1,17 @@
+{"time":"2025-04-13T22:23:54.970032981+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-04-13T22:23:54.97003968+01:00","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250413_222354-145ab9tl/logs/debug-core.log"}
+{"time":"2025-04-13T22:23:55.075603511+01:00","level":"INFO","msg":"created new stream","id":"145ab9tl"}
+{"time":"2025-04-13T22:23:55.075664012+01:00","level":"INFO","msg":"stream: started","id":"145ab9tl"}
+{"time":"2025-04-13T22:23:55.07584341+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"145ab9tl"}
+{"time":"2025-04-13T22:23:55.07600911+01:00","level":"INFO","msg":"handler: started","stream_id":"145ab9tl"}
+{"time":"2025-04-13T22:23:55.07584952+01:00","level":"INFO","msg":"sender: started","stream_id":"145ab9tl"}
+{"time":"2025-04-13T22:23:55.402954279+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-13T22:29:16.348738379+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-13T22:29:16.34917035+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-13T22:29:17.350327668+01:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading config.yaml","runtime_seconds":0.432220259,"progress":"480B/480B"},{"desc":"uploading output.log","runtime_seconds":0.432191625}],"total_operations":2}}
+{"time":"2025-04-13T22:29:18.13558046+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-13T22:29:19.531595026+01:00","level":"INFO","msg":"stream: closing","id":"145ab9tl"}
+{"time":"2025-04-13T22:29:19.531610445+01:00","level":"INFO","msg":"handler: closed","stream_id":"145ab9tl"}
+{"time":"2025-04-13T22:29:19.531618874+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"145ab9tl"}
+{"time":"2025-04-13T22:29:19.531631636+01:00","level":"INFO","msg":"sender: closed","stream_id":"145ab9tl"}
+{"time":"2025-04-13T22:29:19.531663472+01:00","level":"INFO","msg":"stream: closed","id":"145ab9tl"}

@@ -1,0 +1,17 @@
+{"time":"2025-04-13T21:53:11.759143349+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-04-13T21:53:11.759158867+01:00","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250413_215311-sb43evrn/logs/debug-core.log"}
+{"time":"2025-04-13T21:53:11.864797662+01:00","level":"INFO","msg":"created new stream","id":"sb43evrn"}
+{"time":"2025-04-13T21:53:11.864869444+01:00","level":"INFO","msg":"stream: started","id":"sb43evrn"}
+{"time":"2025-04-13T21:53:11.865099722+01:00","level":"INFO","msg":"handler: started","stream_id":"sb43evrn"}
+{"time":"2025-04-13T21:53:11.865106272+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"sb43evrn"}
+{"time":"2025-04-13T21:53:11.865149122+01:00","level":"INFO","msg":"sender: started","stream_id":"sb43evrn"}
+{"time":"2025-04-13T21:53:12.218186333+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-13T21:56:27.124728737+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-13T21:56:27.125226064+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-13T21:56:28.126140575+01:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.657943985},{"desc":"uploading history, summary","runtime_seconds":0.349706252},{"desc":"uploading Elliptic/models/elliptic_s150_kl10.pth","runtime_seconds":0.111580814,"progress":"30.3KB/30.3KB"}],"total_operations":3}}
+{"time":"2025-04-13T21:56:30.4389441+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-13T21:56:31.69726768+01:00","level":"INFO","msg":"stream: closing","id":"sb43evrn"}
+{"time":"2025-04-13T21:56:31.697281127+01:00","level":"INFO","msg":"handler: closed","stream_id":"sb43evrn"}
+{"time":"2025-04-13T21:56:31.697288888+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"sb43evrn"}
+{"time":"2025-04-13T21:56:31.697307463+01:00","level":"INFO","msg":"sender: closed","stream_id":"sb43evrn"}
+{"time":"2025-04-13T21:56:31.697332581+01:00","level":"INFO","msg":"stream: closed","id":"sb43evrn"}

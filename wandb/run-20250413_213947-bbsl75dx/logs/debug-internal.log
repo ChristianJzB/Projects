@@ -1,0 +1,10 @@
+{"time":"2025-04-13T21:39:47.376540531+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-04-13T21:39:47.376551037+01:00","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250413_213947-bbsl75dx/logs/debug-core.log"}
+{"time":"2025-04-13T21:39:47.480388837+01:00","level":"INFO","msg":"created new stream","id":"bbsl75dx"}
+{"time":"2025-04-13T21:39:47.480451312+01:00","level":"INFO","msg":"stream: started","id":"bbsl75dx"}
+{"time":"2025-04-13T21:39:47.480579773+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"bbsl75dx"}
+{"time":"2025-04-13T21:39:47.480644482+01:00","level":"INFO","msg":"handler: started","stream_id":"bbsl75dx"}
+{"time":"2025-04-13T21:39:47.480863066+01:00","level":"INFO","msg":"sender: started","stream_id":"bbsl75dx"}
+{"time":"2025-04-13T21:39:47.844360758+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-13T21:50:48.630910064+01:00","level":"ERROR","msg":"HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/files/christian-jb07-univeristy-of-edinburgh/Elliptic-training/bbsl75dx/file_stream"}
+{"time":"2025-04-13T21:50:48.630971597+01:00","level":"ERROR+4","msg":"filestream: fatal error: filestream: failed to upload: 404 Not Found path=files/christian-jb07-univeristy-of-edinburgh/Elliptic-training/bbsl75dx/file_stream: {\"error\":\"run Elliptic-training/bbsl75dx not found while streaming file\"}"}

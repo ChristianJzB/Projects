@@ -1,0 +1,10 @@
+{"time":"2025-04-13T21:50:03.51995672+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-04-13T21:50:03.519991284+01:00","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250413_215003-w2qo1n5s/logs/debug-core.log"}
+{"time":"2025-04-13T21:50:03.625867919+01:00","level":"INFO","msg":"created new stream","id":"w2qo1n5s"}
+{"time":"2025-04-13T21:50:03.625928321+01:00","level":"INFO","msg":"stream: started","id":"w2qo1n5s"}
+{"time":"2025-04-13T21:50:03.625996146+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"w2qo1n5s"}
+{"time":"2025-04-13T21:50:03.626083043+01:00","level":"INFO","msg":"handler: started","stream_id":"w2qo1n5s"}
+{"time":"2025-04-13T21:50:03.626153889+01:00","level":"INFO","msg":"sender: started","stream_id":"w2qo1n5s"}
+{"time":"2025-04-13T21:50:03.959683766+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-13T22:02:34.741016835+01:00","level":"ERROR","msg":"HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/files/christian-jb07-univeristy-of-edinburgh/Elliptic-training/w2qo1n5s/file_stream"}
+{"time":"2025-04-13T22:02:34.741065583+01:00","level":"ERROR+4","msg":"filestream: fatal error: filestream: failed to upload: 404 Not Found path=files/christian-jb07-univeristy-of-edinburgh/Elliptic-training/w2qo1n5s/file_stream: {\"error\":\"run Elliptic-training/w2qo1n5s not found while streaming file\"}"}
