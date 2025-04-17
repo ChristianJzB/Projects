@@ -19,7 +19,7 @@ def k_function(data_domain,w):
 class Elliptic(deepGalerkin):
     def __init__(self, config,device, lam = 1/4):
         super().__init__(config,device)
-        self.root_finder = RootFinder(lam, config.nparameters)
+        self.root_finder = RootFinder(lam, config.KL_expansion)
         self.roots = torch.tensor(self.root_finder.find_roots())
     
     @deepGalerkin.laplace_approx()

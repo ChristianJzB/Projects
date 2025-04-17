@@ -355,7 +355,7 @@ def ic_vort_samples(config):
     torch.manual_seed(config.seed)  # Replace 42 with your desired seed value
 
     # Generate uniformly distributed values for `theta` in the range [-1, 1]
-    theta = torch.rand(config.NKL, 2, config.samples_size_initial) * 2 - 1  # Uniform(-1, 1)
+    theta = torch.rand(config.KL_expansion, 2, config.samples_size_initial) * 2 - 1  # Uniform(-1, 1)
 
     w0 = omega0_samples_torch(X, Y, theta, d=config.d, tau=config.tau)
         
@@ -416,7 +416,7 @@ def ic_vort_test_set(config):
     torch.manual_seed(config.seed +1)  # Replace 42 with your desired seed value
 
     # Generate uniformly distributed values for `theta` in the range [-1, 1]
-    theta = torch.rand(config.NKL, 2, config.samples_size_initial) * 2 - 1  # Uniform(-1, 1)
+    theta = torch.rand(config.KL_expansion, 2, config.samples_size_initial) * 2 - 1  # Uniform(-1, 1)
 
     w0 = omega0_samples_torch(X, Y, theta, d=config.d, tau=config.tau)
         

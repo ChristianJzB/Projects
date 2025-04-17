@@ -122,14 +122,14 @@ def train_elliptic(config, device):
     torch.manual_seed(config.seed)
     start_scheduler = int(config.epochs * config.start_scheduler )
 
-    data_parameters = samples_param(config.samples*2, nparam=config.nparameters)
+    data_parameters = samples_param(config.nn_samples*2, nparam=config.KL_expansion)
     
-    param_train, param_test = data_parameters[:config.samples,:],  data_parameters[config.samples:,:]
+    param_train, param_test = data_parameters[:config.nn_samples,:],  data_parameters[config.nn_samples:,:]
 
-    dataset = dGDataset(size = config.samples, param=param_train)
+    dataset = dGDataset(size = config.nn_samples, param=param_train)
 
-    x_val,param_val, sol_val = generate_test_data(config.samples,param =param_test, vert=30,
-                                                  nparam=config.nparameters,M = config.nparameters)
+    x_val,param_val, sol_val = generate_test_data(config.nn_samples,param =param_test, vert=30,
+                                                  nparam=config.KL_expansion,M = config.KL_expansion)
 
     dataloader = DataLoader(dataset, batch_size=config.batch_size, shuffle=False)
 

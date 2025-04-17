@@ -1,0 +1,16 @@
+{"time":"2025-04-16T16:32:42.300840316+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-04-16T16:32:42.300847613+01:00","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250416_163242-v2jdhrnm/logs/debug-core.log"}
+{"time":"2025-04-16T16:32:42.405094331+01:00","level":"INFO","msg":"created new stream","id":"v2jdhrnm"}
+{"time":"2025-04-16T16:32:42.405168484+01:00","level":"INFO","msg":"stream: started","id":"v2jdhrnm"}
+{"time":"2025-04-16T16:32:42.405253436+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"v2jdhrnm"}
+{"time":"2025-04-16T16:32:42.405302725+01:00","level":"INFO","msg":"sender: started","stream_id":"v2jdhrnm"}
+{"time":"2025-04-16T16:32:42.405455657+01:00","level":"INFO","msg":"handler: started","stream_id":"v2jdhrnm"}
+{"time":"2025-04-16T16:32:42.835827833+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-16T16:32:44.807314948+01:00","level":"INFO","msg":"stream: closing","id":"v2jdhrnm"}
+{"time":"2025-04-16T16:32:44.807419287+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-16T16:32:44.809097331+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-16T16:32:46.01429048+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-16T16:32:46.312391471+01:00","level":"INFO","msg":"handler: closed","stream_id":"v2jdhrnm"}
+{"time":"2025-04-16T16:32:46.312479505+01:00","level":"INFO","msg":"sender: closed","stream_id":"v2jdhrnm"}
+{"time":"2025-04-16T16:32:46.312458452+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"v2jdhrnm"}
+{"time":"2025-04-16T16:32:46.312657367+01:00","level":"INFO","msg":"stream: closed","id":"v2jdhrnm"}

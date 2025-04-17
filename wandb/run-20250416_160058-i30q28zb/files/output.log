@@ -1,0 +1,35 @@
+Traceback (most recent call last):
+  File "/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/site-packages/ml_collections/config_dict/config_dict.py", line 947, in __getitem__
+    field = self._fields[key]
+            ~~~~~~~~~~~~^^^^^
+KeyError: 'nparameters'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/site-packages/ml_collections/config_dict/config_dict.py", line 849, in __getattr__
+    return self[attribute]
+           ~~~~^^^^^^^^^^^
+  File "/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/site-packages/ml_collections/config_dict/config_dict.py", line 953, in __getitem__
+    raise KeyError(self._generate_did_you_mean_message(key, str(e)))
+KeyError: "'nparameters'"
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/s2113174/Projects-1/Elliptic/experiments/elliptic_experiment.py", line 237, in <module>
+    main(args.verbose, args.N, args.train, args.deepgala, args.noise_level, args.proposal, args.fem_mcmc,
+  File "/home/s2113174/Projects-1/Elliptic/experiments/elliptic_experiment.py", line 213, in main
+    run_experiment(config_experiment,device)
+  File "/home/s2113174/Projects-1/Elliptic/experiments/elliptic_experiment.py", line 129, in run_experiment
+    pinn_nvs = train_elliptic(config_experiment, device=device)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/train_elliptic.py", line 136, in train_elliptic
+    dg_elliptic = Elliptic(config=config, device=device)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/Projects-1/Elliptic/elliptic_files/elliptic.py", line 22, in __init__
+    self.root_finder = RootFinder(lam, config.nparameters)
+                                       ^^^^^^^^^^^^^^^^^^
+  File "/home/s2113174/anaconda3/envs/fenicsx-env/lib/python3.12/site-packages/ml_collections/config_dict/config_dict.py", line 851, in __getattr__
+    raise AttributeError(e)
+AttributeError: "'nparameters'"

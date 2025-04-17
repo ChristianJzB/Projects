@@ -1,0 +1,17 @@
+{"time":"2025-04-16T16:17:07.599167556+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-04-16T16:17:07.599189591+01:00","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250416_161707-uklwcqdn/logs/debug-core.log"}
+{"time":"2025-04-16T16:17:07.704224606+01:00","level":"INFO","msg":"created new stream","id":"uklwcqdn"}
+{"time":"2025-04-16T16:17:07.704270636+01:00","level":"INFO","msg":"stream: started","id":"uklwcqdn"}
+{"time":"2025-04-16T16:17:07.70432564+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"uklwcqdn"}
+{"time":"2025-04-16T16:17:07.704363423+01:00","level":"INFO","msg":"sender: started","stream_id":"uklwcqdn"}
+{"time":"2025-04-16T16:17:07.704446572+01:00","level":"INFO","msg":"handler: started","stream_id":"uklwcqdn"}
+{"time":"2025-04-16T16:17:08.089518836+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-16T16:28:46.036648454+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-16T16:28:46.037031783+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-16T16:28:47.038127475+01:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading Elliptic/models/elliptic_s150_kl10.pth","runtime_seconds":0.571708938,"progress":"170.0KB/170.0KB"},{"desc":"saving job artifact","runtime_seconds":0.571701258},{"desc":"uploading config.yaml","runtime_seconds":0.365856215,"progress":"480B/480B"}],"total_operations":3}}
+{"time":"2025-04-16T16:28:48.546432065+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-16T16:28:49.876643411+01:00","level":"INFO","msg":"stream: closing","id":"uklwcqdn"}
+{"time":"2025-04-16T16:28:49.876654294+01:00","level":"INFO","msg":"handler: closed","stream_id":"uklwcqdn"}
+{"time":"2025-04-16T16:28:49.876659605+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"uklwcqdn"}
+{"time":"2025-04-16T16:28:49.876702182+01:00","level":"INFO","msg":"sender: closed","stream_id":"uklwcqdn"}
+{"time":"2025-04-16T16:28:49.876706006+01:00","level":"INFO","msg":"stream: closed","id":"uklwcqdn"}

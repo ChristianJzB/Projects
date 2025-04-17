@@ -14,7 +14,8 @@ from nv_files.Field_Generator import omega0_samples_torch
 
 class NVMCMC(MetropolisHastings):
     def __init__(self, surrogate, observation_locations, observations_values, nparameters=2, 
-                 observation_noise=0.5, nsamples=1000000, burnin=None, proposal_type="random_walk", step_size=0.1, my_reg = 1e-3, pcn_mu=0, pcn_sigma=1,
+                 observation_noise=0.5, nsamples=1000000, burnin=None, proposal_type="random_walk", step_size=0.1,
+                 my_reg = 1e-3, pcn_mu=0, pcn_sigma=1,
                   device="cpu"):
         
         super(NVMCMC, self).__init__(observation_locations, observations_values, nparameters, 
@@ -123,13 +124,19 @@ class NVMCMC(MetropolisHastings):
 class NVMCMCDA(MCMCDA):
     def __init__(self,coarse_surrogate,observation_locations, observations_values, nparameters=2, fs_indices_sol = None,
                  fs_n = 128, fs_T=2,fs_steps =5e-4,observation_noise=1e-3, iter_mcmc=1000000, iter_da = 20000,                 
-                 proposal_type="random_walk", step_size=1e-3, device="cpu" ):
+                 proposal_type="random_walk", step_size=1e-3,pcn_mu=0, pcn_sigma=1, device="cpu" ):
         
         super(NVMCMCDA, self).__init__(observation_locations, observations_values, nparameters, 
                  observation_noise, iter_mcmc, iter_da,proposal_type, step_size, device)
         self.device = device
         self.coarse_surrogate = coarse_surrogate
         self.fs_indices_sol = fs_indices_sol
+
+        if proposal_type == "pCN":
+            self.pcn_mu = pcn_mu*torch.ones(self.nparameters,device=self.device)
+            self.pcn_cov= pcn_sigma*torch.eye(self.nparameters,device=self.device)
+            self.normal_dist = MultivariateNormal(self.pcn_mu, self.pcn_cov)
+
         
         # self.finer_surrogate = VorticitySolver2D(N=fs_n, L=2*np.pi, T=fs_T, nu=1e-2, 
         #                                dt=fs_steps,num_sol=2, method='CN', force= self.force_function)
@@ -156,10 +163,32 @@ class NVMCMCDA(MCMCDA):
         self.log_likelihood_outer_func = self.get_likelihood_function(coarse_surrogate, likelihood_methods)
         self.log_likelihood_inner_func = self.psm_log_likelihood
 
+                # Dictionary to map surrogate classes to their likelihood functions
+        prior_methods = {"random_walk": self.log_uniform,
+                        "pCN": self.log_normal,
+                        "langevin": self.log_MY_envelope}
+
+        if proposal_type in prior_methods:
+            self.log_prior_func = prior_methods[proposal_type]
+        else:
+            raise ValueError(f"Prior of type {proposal_type.__name__} is not supported.")
+        
+
     def force_function(self,X,Y):
         return  (torch.sin(X + Y) + torch.cos(X + Y))
     
-    def log_prior(self, theta):
+    def log_MY_envelope(self, theta):
+        """
+        Log prior with Moreau-Yosida regularization for the uniform distribution between -1 and 1.
+        """
+        # Regularization term for all theta values
+        regularization_term = -(torch.clamp(torch.abs(theta) - 1, min=0) ** 2) / (2 * self.my_reg)
+        return regularization_term + torch.log(self.my_scaling_term)
+    
+    def log_normal(self, theta):
+        return self.normal_dist.log_prob(theta)
+    
+    def log_uniform(self, theta):
         if not ((theta >= -2) & (theta <= 2)).all():
             return -torch.inf
         else:
@@ -211,6 +240,10 @@ class NVMCMCDA(MCMCDA):
             if isinstance(surrogate, surrogate_type):
                 return lambda theta: likelihood_func(surrogate, theta)
         raise ValueError(f"Surrogate of type {type(surrogate).__name__} is not supported.")
+    
+    def log_prior(self, theta):
+        """Directly call the precomputed likelihood function."""
+        return self.log_prior_func(theta)
 
     def log_likelihood_outer(self, theta):
         return self.log_likelihood_outer_func(theta)

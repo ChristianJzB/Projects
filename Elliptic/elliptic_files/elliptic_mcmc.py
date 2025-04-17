@@ -1,5 +1,6 @@
 
 import torch
+from torch.distributions import MultivariateNormal
 
 from Base.mcmc import MetropolisHastings,MCMCDA
 from Base.lla import dgala
@@ -10,13 +11,20 @@ from elliptic_files.elliptic import Elliptic
 
 class EllipticMCMC(MetropolisHastings):
     def __init__(self, surrogate, observation_locations, observations_values, nparameters=2, 
-                 observation_noise=0.5, nsamples=1000000, burnin=None, proposal_type="random_walk", 
+                 observation_noise=0.5, nsamples=1000000, burnin=None, proposal_type="random_walk", pcn_mu=0, pcn_sigma=1,
                  step_size=0.1, device="cpu"):
         
         super(EllipticMCMC, self).__init__(observation_locations, observations_values, nparameters, 
                  observation_noise, nsamples, burnin, proposal_type, step_size, device)
         
         self.surrogate = surrogate
+        self.device = device
+
+        if proposal_type == "pCN":
+            self.pcn_mu = pcn_mu*torch.ones(self.nparameters,device=self.device)
+            self.pcn_cov= pcn_sigma*torch.eye(self.nparameters,device=self.device)
+            self.normal_dist = MultivariateNormal(self.pcn_mu, self.pcn_cov)
+
 
         # Dictionary to map surrogate classes to their likelihood functions
         likelihood_methods = {FEMSolver: self.fem_log_likelihood,
@@ -29,8 +37,22 @@ class EllipticMCMC(MetropolisHastings):
             self.log_likelihood_func = likelihood_methods[surrogate_type]
         else:
             raise ValueError(f"Surrogate of type {surrogate_type.__name__} is not supported.")
+        
+         # Dictionary to map prior classes 
+        prior_methods = {"random_walk": self.log_uniform,
+                        "pCN": self.log_normal,
+                       }
 
-    def log_prior(self, theta):
+        if proposal_type in prior_methods:
+            self.log_prior_func = prior_methods[proposal_type]
+        else:
+            raise ValueError(f"Prior of type {proposal_type.__name__} is not supported.")
+        
+        
+    def log_normal(self, theta):
+        return self.normal_dist.log_prob(theta)
+
+    def log_uniform(self, theta):
         if not ((theta >= -1) & (theta <= 1)).all():
             return -torch.inf
         else:
@@ -71,6 +93,10 @@ class EllipticMCMC(MetropolisHastings):
 
         return -0.5 * torch.sum(((self.observations_values - surg_mu.reshape(-1, 1)) ** 2) / sigma)- cte
     
+    def log_prior(self, theta):
+        """Directly call the precomputed likelihood function."""
+        return self.log_prior_func(theta)
+    
     def log_likelihood(self, theta):
         """Directly call the precomputed likelihood function."""
         return self.log_likelihood_func(theta)
@@ -79,13 +105,19 @@ class EllipticMCMC(MetropolisHastings):
 class EllipticMCMCDA(MCMCDA):
     def __init__(self,coarse_surrogate,finer_surrogate, observation_locations, observations_values, nparameters=2, 
                  observation_noise=0.5, iter_mcmc=1000000, iter_da = 20000,                 
-                 proposal_type="random_walk", step_size=0.1, device="cpu" ):
+                 proposal_type="random_walk", step_size=0.1, pcn_mu=0, pcn_sigma=1, device="cpu" ):
         
         super(EllipticMCMCDA, self).__init__(observation_locations, observations_values, nparameters, 
                  observation_noise, iter_mcmc, iter_da,proposal_type, step_size, device)
         
         self.coarse_surrogate = coarse_surrogate
         self.finer_surrogate = finer_surrogate
+        self.device = device
+
+        if proposal_type == "pCN":
+            self.pcn_mu = pcn_mu*torch.ones(self.nparameters,device=self.device)
+            self.pcn_cov= pcn_sigma*torch.eye(self.nparameters,device=self.device)
+            self.normal_dist = MultivariateNormal(self.pcn_mu, self.pcn_cov)
 
         # Dictionary to map surrogate classes to likelihood functions
         likelihood_methods = {
@@ -98,7 +130,21 @@ class EllipticMCMCDA(MCMCDA):
         self.log_likelihood_outer_func = self.get_likelihood_function(coarse_surrogate, likelihood_methods)
         self.log_likelihood_inner_func = self.get_likelihood_function(finer_surrogate, likelihood_methods)
 
-    def log_prior(self, theta):
+         # Dictionary to map prior classes 
+        prior_methods = {"random_walk": self.log_uniform,
+                        "pCN": self.log_normal,
+                        }
+
+        if proposal_type in prior_methods:
+            self.log_prior_func = prior_methods[proposal_type]
+        else:
+            raise ValueError(f"Prior of type {proposal_type.__name__} is not supported.")
+        
+        
+    def log_normal(self, theta):
+        return self.normal_dist.log_prob(theta)
+
+    def log_uniform(self, theta):
         if not ((theta >= -1) & (theta <= 1)).all():
             return -torch.inf
         else:
@@ -147,6 +193,10 @@ class EllipticMCMCDA(MCMCDA):
                 return lambda theta: likelihood_func(surrogate, theta)
         raise ValueError(f"Surrogate of type {type(surrogate).__name__} is not supported.")
 
+    def log_prior(self, theta):
+        """Directly call the precomputed likelihood function."""
+        return self.log_prior_func(theta)
+    
     def log_likelihood_outer(self, theta):
         return self.log_likelihood_outer_func(theta)
 

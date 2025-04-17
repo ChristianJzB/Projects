@@ -1,0 +1,17 @@
+{"time":"2025-04-16T16:02:13.637330491+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-04-16T16:02:13.637338552+01:00","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250416_160213-vhfs8fbs/logs/debug-core.log"}
+{"time":"2025-04-16T16:02:13.742435975+01:00","level":"INFO","msg":"created new stream","id":"vhfs8fbs"}
+{"time":"2025-04-16T16:02:13.742547906+01:00","level":"INFO","msg":"stream: started","id":"vhfs8fbs"}
+{"time":"2025-04-16T16:02:13.742676215+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"vhfs8fbs"}
+{"time":"2025-04-16T16:02:13.742711958+01:00","level":"INFO","msg":"handler: started","stream_id":"vhfs8fbs"}
+{"time":"2025-04-16T16:02:13.742907772+01:00","level":"INFO","msg":"sender: started","stream_id":"vhfs8fbs"}
+{"time":"2025-04-16T16:02:14.073342164+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-16T16:12:50.64578909+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-16T16:12:50.646261102+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-16T16:12:51.647023567+01:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.557949655},{"desc":"uploading Elliptic/models/elliptic_s150_kl10.pth","runtime_seconds":0.527536323,"progress":"137.3KB/137.3KB"},{"desc":"uploading config.yaml","runtime_seconds":0.328827172,"progress":"480B/480B"},{"desc":"uploading output.log","runtime_seconds":0.32877456}],"total_operations":4}}
+{"time":"2025-04-16T16:12:54.656969233+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-16T16:12:56.006712736+01:00","level":"INFO","msg":"stream: closing","id":"vhfs8fbs"}
+{"time":"2025-04-16T16:12:56.00673487+01:00","level":"INFO","msg":"handler: closed","stream_id":"vhfs8fbs"}
+{"time":"2025-04-16T16:12:56.006745658+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"vhfs8fbs"}
+{"time":"2025-04-16T16:12:56.006788191+01:00","level":"INFO","msg":"sender: closed","stream_id":"vhfs8fbs"}
+{"time":"2025-04-16T16:12:56.006813053+01:00","level":"INFO","msg":"stream: closed","id":"vhfs8fbs"}

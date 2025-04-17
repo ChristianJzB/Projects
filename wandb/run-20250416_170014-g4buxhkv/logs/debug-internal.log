@@ -1,0 +1,17 @@
+{"time":"2025-04-16T17:00:14.982560674+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-04-16T17:00:14.982574858+01:00","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250416_170014-g4buxhkv/logs/debug-core.log"}
+{"time":"2025-04-16T17:00:15.08738502+01:00","level":"INFO","msg":"created new stream","id":"g4buxhkv"}
+{"time":"2025-04-16T17:00:15.087478593+01:00","level":"INFO","msg":"stream: started","id":"g4buxhkv"}
+{"time":"2025-04-16T17:00:15.08753063+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"g4buxhkv"}
+{"time":"2025-04-16T17:00:15.087715483+01:00","level":"INFO","msg":"handler: started","stream_id":"g4buxhkv"}
+{"time":"2025-04-16T17:00:15.087730037+01:00","level":"INFO","msg":"sender: started","stream_id":"g4buxhkv"}
+{"time":"2025-04-16T17:00:15.473380592+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-16T17:12:12.956719559+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2025-04-16T17:12:12.957189849+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2025-04-16T17:12:13.958008453+01:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.59538351},{"desc":"uploading Elliptic/models/elliptic_s150_kl6.pth","runtime_seconds":0.557258596,"progress":"186.6KB/186.6KB"},{"desc":"uploading config.yaml","runtime_seconds":0.375947726,"progress":"480B/480B"},{"desc":"uploading output.log","runtime_seconds":0.37591632}],"total_operations":4}}
+{"time":"2025-04-16T17:12:16.568329706+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-04-16T17:12:17.901290949+01:00","level":"INFO","msg":"stream: closing","id":"g4buxhkv"}
+{"time":"2025-04-16T17:12:17.90134109+01:00","level":"INFO","msg":"handler: closed","stream_id":"g4buxhkv"}
+{"time":"2025-04-16T17:12:17.901363127+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"g4buxhkv"}
+{"time":"2025-04-16T17:12:17.901459811+01:00","level":"INFO","msg":"sender: closed","stream_id":"g4buxhkv"}
+{"time":"2025-04-16T17:12:17.901542793+01:00","level":"INFO","msg":"stream: closed","id":"g4buxhkv"}
