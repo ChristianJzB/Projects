@@ -14,7 +14,8 @@ class MetropolisHastings(torch.nn.Module):
     
     def __init__(self, observation_locations, observations_values, nparameters=2, 
                  observation_noise=0.5, nsamples=1000000, burnin=None,  
-                 proposal_type="random_walk", step_size=0.1, device="cpu"):
+                 proposal_type="random_walk", step_size=0.1, 
+                 uniform_limit=1,my_reg = 1e-3,device="cpu"):
         super(MetropolisHastings, self).__init__()
 
         # Likelihood data
@@ -28,15 +29,46 @@ class MetropolisHastings(torch.nn.Module):
         self.nsamples = nsamples
         self.burnin = int(self.nsamples * 0.1) if burnin is None else burnin
         self.proposal_type = proposal_type
+        self.uniform_limit = torch.tensor(uniform_limit, dtype=torch.float64, device=self.device)
         #self.ideal_acceptace_rate = 0.234 if self.proposal_type == "random_walk" else 0.576
-        self.ideal_acceptace_rate = 0.234
+        self.ideal_acceptace_rate = torch.tensor( 0.234, dtype=torch.float64, device=self.device)
         self.dt = torch.tensor(step_size, dtype=torch.float64, device=self.device)  # Step size for proposals
+
+        if proposal_type == "langevin":
+            self.my_reg = torch.tensor(my_reg, device=device)
+            self.my_scaling_term = 1 / (2 + torch.sqrt(2 * torch.pi * self.my_reg)).to(self.device)  # Calculate once
+
+        # Dictionary to map proposal types to their prior functions
+        prior_methods = {
+            "random_walk": self.log_uniform,
+            "langevin": self.log_MY_envelope,
+            # "pCN" intentionally omitted
+        }
+
+        if proposal_type == "pCN":
+            self.log_prior_func = None  # Or set to a dummy function that returns 0
+        elif proposal_type in prior_methods:
+            self.log_prior_func = prior_methods[proposal_type]
+        else:
+            raise ValueError(f"Prior for proposal type '{proposal_type}' is not supported.")
         self.to(device)
 
+    def log_MY_envelope(self, theta):
+        """
+        Log prior with Moreau-Yosida regularization for the uniform distribution between -1 and 1.
+        """
+        # Regularization term for all theta values
+        regularization_term = -(torch.clamp(torch.abs(theta) - 1, min=0) ** 2) / (2 * self.my_reg)
+        return regularization_term + torch.log(self.my_scaling_term)
+
+    def log_uniform(self, theta):
+        if not torch.logical_and(theta >= -self.uniform_limit, theta <= self.uniform_limit).all():
+            return torch.tensor(-float("inf"))  # Ensure it remains a tensor
+        return torch.tensor(0.0)  # Keep consistency
 
     def log_prior(self, theta):
-        """Define the prior distribution (e.g., Gaussian, Uniform, etc.). Must be overridden."""
-        raise NotImplementedError("log_prior must be implemented in a subclass.")
+        """Directly call the precomputed likelihood function."""
+        return self.log_prior_func(theta)
 
     def log_likelihood(self, theta):
         """Define the likelihood function. Must be overridden."""
@@ -56,6 +88,12 @@ class MetropolisHastings(torch.nn.Module):
         
         elif self.proposal_type == "langevin":
             return theta + dt * self.MYULA(theta) + torch.sqrt(2*dt) * torch.randn_like(theta)
+    
+    def posterior_distribution(self,theta):
+        if self.proposal_type == "pCN":
+            return self.log_likelihood(theta)
+        else:
+            return self.log_prior(theta) + self.log_likelihood(theta)
 
 
     def run_chain(self, verbose=True):
@@ -75,8 +113,8 @@ class MetropolisHastings(torch.nn.Module):
         for i in pbar:
             theta_proposal = self.proposal(theta, dt)  # Pass dt to proposal
 
-            log_posterior = self.log_prior(theta) + self.log_likelihood(theta)
-            log_posterior_proposal = self.log_prior(theta_proposal) + self.log_likelihood(theta_proposal)
+            log_posterior = self.posterior_distribution(theta) 
+            log_posterior_proposal = self.posterior_distribution(theta_proposal)
 
             # Compute acceptance probabilities (vectorized)
             a = torch.exp(log_posterior_proposal - log_posterior).clamp(max=1.0)
@@ -134,7 +172,8 @@ class MCMCDA(torch.nn.Module):
     """
     def __init__(self, observation_locations, observations_values, nparameters=2, 
                  observation_noise=0.5, iter_mcmc=1000000, iter_da = 20000,                 
-                 proposal_type="random_walk", step_size=0.1, device="cpu"):
+                 proposal_type="random_walk",uniform_limit=1,my_reg = 1e-3,
+                 step_size=0.1, device="cpu"):
         super(MCMCDA, self).__init__()
 
         # Likelihood data
@@ -151,13 +190,51 @@ class MCMCDA(torch.nn.Module):
         self.iter_da = iter_da
         self.iter_mcmc = iter_mcmc
         self.proposal_type = proposal_type
-        self.ideal_acceptace_rate = 0.234
+        self.uniform_limit = torch.tensor(uniform_limit, dtype=torch.float64, device=self.device)
+
+        self.ideal_acceptace_rate = torch.tensor( 0.234, dtype=torch.float64, device=self.device)
         self.dt = torch.tensor(step_size, dtype=torch.float64, device=self.device)  # Step size for proposals
+
+        if proposal_type == "langevin":
+            self.my_reg = torch.tensor(my_reg, device=device)
+            self.my_scaling_term = 1 / (2 + torch.sqrt(2 * torch.pi * self.my_reg)).to(self.device)  # Calculate once
+        elif proposal_type == "pCN":
+            self.pcn_mu = torch.zeros(self.nparameters,device=self.device)
+            self.pcn_cov= torch.eye(self.nparameters,device=self.device)
+            self.normal_dist = dist.MultivariateNormal(self.pcn_mu, self.pcn_cov)
+
+        # Dictionary to map surrogate classes to their likelihood functions
+        prior_methods = {"random_walk": self.log_uniform,
+                        "pCN": self.log_normal,
+                        "langevin": self.log_MY_envelope}
+
+        if proposal_type in prior_methods:
+            self.log_prior_func = prior_methods[proposal_type]
+        else:
+            raise ValueError(f"Prior of type {proposal_type.__name__} is not supported.")
+        
         self.to(device)
 
+
+    def log_MY_envelope(self, theta):
+        """
+        Log prior with Moreau-Yosida regularization for the uniform distribution between -1 and 1.
+        """
+        # Regularization term for all theta values
+        regularization_term = -(torch.clamp(torch.abs(theta) - 1, min=0) ** 2) / (2 * self.my_reg)
+        return regularization_term + torch.log(self.my_scaling_term)
+
+    def log_uniform(self, theta):
+        if not torch.logical_and(theta >= -self.uniform_limit, theta <= self.uniform_limit).all():
+            return torch.tensor(-float("inf"))  # Ensure it remains a tensor
+        return torch.tensor(0.0)  # Keep consistency
+        
+    def log_normal(self, theta):
+        return self.normal_dist.log_prob(theta)
+
     def log_prior(self, theta):
-        """Define the prior distribution (e.g., Gaussian, Uniform, etc.). Must be overridden."""
-        raise NotImplementedError("log_prior must be implemented in a subclass.")
+        """Directly call the precomputed likelihood function."""
+        return self.log_prior_func(theta)
 
     def log_likelihood_outer(self, theta):
         """Define the likelihood function for the coarse model. Must be overridden."""
@@ -179,6 +256,16 @@ class MCMCDA(torch.nn.Module):
         #         theta.requires_grad_()  # Ensure theta is differentiable
         #     gradient = torch.autograd.grad(self.log_likelihood(theta), theta, retain_graph=True)[0]
         #     return theta + 0.5 * dt * gradient + dt * torch.randn_like(theta)
+
+    def posterior_distribution_outer(self,theta):
+
+        if self.proposal_type == "pCN":
+            return self.log_likelihood_outer(theta)
+        else:
+            return self.log_prior(theta) + self.log_likelihood_outer(theta)
+        
+    def posterior_distribution_inner(self,theta):
+        return self.log_prior(theta) + self.log_likelihood_inner(theta)
 
 
     def run_chain(self, samples = False, verbose=True):
@@ -205,8 +292,8 @@ class MCMCDA(torch.nn.Module):
             theta_proposal = self.proposal(theta,dt)
             
             # Compute the current log-posterior
-            log_posterior_outer = self.log_prior(theta) + self.log_likelihood_outer(theta)
-            log_posterior_proposal_outer = self.log_prior(theta_proposal) + self.log_likelihood_outer(theta_proposal)
+            log_posterior_outer = self.posterior_distribution_outer(theta)
+            log_posterior_proposal_outer = self.posterior_distribution_outer(theta_proposal)
 
             # Compute the acceptance ratio
             a = torch.exp(log_posterior_proposal_outer - log_posterior_outer).clamp(max=1.0)
@@ -220,7 +307,6 @@ class MCMCDA(torch.nn.Module):
 
             # Adaptive step size adjustment (each chain updates its own dt)
             dt += dt * (a - self.ideal_acceptace_rate) / (i + 1)
-
             if self.proposal_type == "pCN":
                 dt = dt.clamp(max=1.0)
 
@@ -239,8 +325,8 @@ class MCMCDA(torch.nn.Module):
             theta_proposal = self.proposal(theta,dt)
             
             # Compute the current log-posterior
-            log_posterior_outer = self.log_prior(theta) + self.log_likelihood_outer(theta)
-            log_posterior_proposal_outer = self.log_prior(theta_proposal) + self.log_likelihood_outer(theta_proposal)
+            log_posterior_outer = self.posterior_distribution_outer(theta) 
+            log_posterior_proposal_outer = self.posterior_distribution_outer(theta_proposal)
 
             # Compute the acceptance ratio
             a = torch.clamp(torch.exp(log_posterior_proposal_outer - log_posterior_outer), max=1.0)
@@ -248,8 +334,8 @@ class MCMCDA(torch.nn.Module):
             # Accept or reject the proposal
             if torch.rand(1, device=self.device) < a:
                 inner_mh += 1
-                log_posterior_inner = self.log_prior(theta) + self.log_likelihood_inner(theta)
-                log_posterior_proposal_inner = self.log_prior(theta_proposal) + self.log_likelihood_inner(theta_proposal)
+                log_posterior_inner = self.posterior_distribution_inner(theta) 
+                log_posterior_proposal_inner = self.posterior_distribution_inner(theta_proposal)
 
                 theta_inner[inner_mh-1,:] = theta_proposal.clone()
                 likelihoods_val_nn[inner_mh-1,:] = self.outer_likelihood_value.T.clone()

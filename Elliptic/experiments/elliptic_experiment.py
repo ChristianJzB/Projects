@@ -77,6 +77,7 @@ def elliptic_experiment():
 
     config.proposal = "random_walk"
     config.proposal_variance = 1e-3
+    config.uniform_limit = 1
     config.samples = 1000000
     config.FEM_h = 50
 
@@ -100,6 +101,7 @@ def run_mcmc_chain(surrogate_model, obs_points, sol_test, config_experiment,devi
         nsamples=config_experiment.samples,
         proposal_type=config_experiment.proposal,
         step_size=config_experiment.proposal_variance,
+        uniform_limit = config_experiment.uniform_limit,
         device=device
     )
     return mcmc.run_chain(verbose=config_experiment.verbose)
@@ -107,11 +109,13 @@ def run_mcmc_chain(surrogate_model, obs_points, sol_test, config_experiment,devi
 def run_da_mcmc_chain(nn_surrogate_model,fem_solver, obs_points, sol_test, config_experiment,device):
     elliptic_mcmcda =  EllipticMCMCDA(nn_surrogate_model,fem_solver, 
                         observation_locations= obs_points, observations_values = sol_test, 
-                        observation_noise=np.sqrt(config_experiment.noise_level),
                         nparameters=config_experiment.KL_expansion,
+                        observation_noise=np.sqrt(config_experiment.noise_level),
                         iter_mcmc=config_experiment.iter_mcmc, iter_da = config_experiment.iter_da,
                         proposal_type=config_experiment.proposal,
-                        step_size=config_experiment.proposal_variance, device=device )   
+                        uniform_limit = config_experiment.uniform_limit,
+                        step_size=config_experiment.proposal_variance, 
+                        device=device )   
     return elliptic_mcmcda.run_chain(verbose=config_experiment.verbose)
 
 

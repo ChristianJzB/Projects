@@ -5,7 +5,7 @@ N_VALUES=(150 250 500 750 1000 1500 2500)
 
 # Define default values for parameters (change as needed)
 VERBOSE="--verbose"
-TRAIN="--train"  # Set empty "" if you want default (False)
+TRAIN=""  # Set empty "" if you want default (False)
 DEEPGALA="--deepgala"      # Empty means default (False)
 NOISE_LEVEL="--noise_level 1e-4"
 PROPOSAL="--proposal pCN"
@@ -16,7 +16,7 @@ DA_MCMC_NN="--da_mcmc_nn"
 DA_MCMC_DGALA=""
 
 # Flag to check if FEM_MCMC has been added
-FEM_MCMC_ADDED=true
+FEM_MCMC_ADDED=false
 
 for N in "${N_VALUES[@]}"; do
     echo "Starting model with N=$N"

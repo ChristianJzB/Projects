@@ -1,0 +1,37 @@
+{
+  "os": "Linux-6.8.0-57-generic-x86_64-with-glibc2.35",
+  "python": "3.12.5",
+  "startedAt": "2025-04-17T15:12:15.523339Z",
+  "args": [
+    "--N",
+    "2",
+    "--train"
+  ],
+  "program": "/home/s2113174/Projects-1/Navier-Stokes/experiments/nv_experiment.py",
+  "codePath": "Navier-Stokes/experiments/nv_experiment.py",
+  "git": {
+    "remote": "https://github.com/ChristianJzB/Projects.git",
+    "commit": "b9c27e0b3f22c44b5e64e167987466cec1dcaa84"
+  },
+  "email": "s2113174@ed.ac.uk",
+  "root": "/home/s2113174/Projects-1",
+  "host": "MATHS-SELF-2016",
+  "username": "s2113174",
+  "executable": "/home/s2113174/anaconda3/envs/fenicsx-env/bin/python",
+  "codePathLocal": "Navier-Stokes/experiments/nv_experiment.py",
+  "cpu_count": 10,
+  "cpu_count_logical": 12,
+  "disk": {
+    "/": {
+      "total": "981132795904",
+      "used": "106471567360"
+    }
+  },
+  "memory": {
+    "total": "32809250816"
+  },
+  "cpu": {
+    "count": 10,
+    "countLogical": 12
+  }
+}

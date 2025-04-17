@@ -88,6 +88,7 @@ def nv_experiment():
     config.dgala_mcmc = False
 
     config.proposal = "random_walk"
+    config.uniform_limit = 2
     config.proposal_variance = 5e-1
     config.samples = 1_000_000
     
@@ -99,7 +100,7 @@ def nv_experiment():
     # Delayed Acceptance
     config.da_mcmc_nn = False
     config.da_mcmc_dgala = False
-    config.iter_mcmc = 1_000_000
+    config.iter_mcmc = 1_000
     config.iter_da = 5_000
 
     return config
@@ -173,6 +174,7 @@ def run_mcmc_chain(surrogate_model, obs_points, sol_test, config_experiment,devi
         nsamples=config_experiment.samples,
         proposal_type=config_experiment.proposal,
         step_size=config_experiment.proposal_variance,
+        uniform_limit = config_experiment.uniform_limit,
         device=device
     )
     return mcmc.run_chain(verbose=config_experiment.verbose)
@@ -182,7 +184,8 @@ def run_da_mcmc_chain(nn_surrogate_model, obs_points, sol_test,obs_indices, conf
                         nparameters=2*config_experiment.KL_expansion,observation_noise=np.sqrt(config_experiment.noise_level),
                         fs_n = config_experiment.fs_n, fs_T=config_experiment.fs_T,fs_steps =config_experiment.fs_steps,
                         fs_indices_sol=obs_indices,iter_mcmc=config_experiment.iter_mcmc, iter_da = config_experiment.iter_da,
-                        proposal_type=config_experiment.proposal,step_size=config_experiment.proposal_variance, device=device )
+                        proposal_type=config_experiment.proposal,step_size=config_experiment.proposal_variance,
+                        uniform_limit = config_experiment.uniform_limit, device=device )
 
     return da_mcmc.run_chain(verbose=config_experiment.verbose)
 

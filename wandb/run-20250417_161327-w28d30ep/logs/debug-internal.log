@@ -1,0 +1,10 @@
+{"time":"2025-04-17T16:13:27.982616587+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2025-04-17T16:13:27.982631599+01:00","level":"INFO","msg":"created symlink","path":"/home/s2113174/Projects-1/wandb/run-20250417_161327-w28d30ep/logs/debug-core.log"}
+{"time":"2025-04-17T16:13:28.087061374+01:00","level":"INFO","msg":"created new stream","id":"w28d30ep"}
+{"time":"2025-04-17T16:13:28.087386655+01:00","level":"INFO","msg":"stream: started","id":"w28d30ep"}
+{"time":"2025-04-17T16:13:28.087628277+01:00","level":"INFO","msg":"handler: started","stream_id":"w28d30ep"}
+{"time":"2025-04-17T16:13:28.087732896+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"w28d30ep"}
+{"time":"2025-04-17T16:13:28.087884864+01:00","level":"INFO","msg":"sender: started","stream_id":"w28d30ep"}
+{"time":"2025-04-17T16:13:28.477744932+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2025-04-17T16:14:14.270653176+01:00","level":"ERROR","msg":"HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/files/christian-jb07-univeristy-of-edinburgh/Experiment_NV/w28d30ep/file_stream"}
+{"time":"2025-04-17T16:14:14.270854076+01:00","level":"ERROR+4","msg":"filestream: fatal error: filestream: failed to upload: 404 Not Found path=files/christian-jb07-univeristy-of-edinburgh/Experiment_NV/w28d30ep/file_stream: {\"error\":\"run Experiment_NV/w28d30ep not found while streaming file\"}"}
