@@ -265,7 +265,10 @@ class MCMCDA(torch.nn.Module):
             return self.log_prior(theta) + self.log_likelihood_outer(theta)
         
     def posterior_distribution_inner(self,theta):
-        return self.log_prior(theta) + self.log_likelihood_inner(theta)
+        if self.proposal_type == "pCN":
+            return self.log_likelihood_inner(theta)
+        else:
+            return self.log_prior(theta) + self.log_likelihood_inner(theta)
 
 
     def run_chain(self, samples = False, verbose=True):
